@@ -6886,7 +6886,7 @@ async function handleTracking(event){
 
         /*
          * Preferred secure method:
-         * RPC function "track_orders_by_mobile"
+         * RPC function "track_orders"
          *
          * The SQL project should expose a secure
          * customer tracking function.
@@ -6895,7 +6895,7 @@ async function handleTracking(event){
         let response =
             await supabaseClient
                 .rpc(
-                    "track_orders_by_mobile",
+                    "track_orders",
                     {
                         p_mobile:
                             mobile
