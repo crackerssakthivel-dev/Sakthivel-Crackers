@@ -1,0 +1,6368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+
+<meta name="theme-color" content="#07152d">
+
+<title>SAKTHIVEL CRACKERS — Kundayiruppu, Sivakasi</title>
+
+<meta name="description"
+      content="SAKTHIVEL CRACKERS — Premium fireworks ordering website. Kundayiruppu, Sivakasi, Tamil Nadu, India.">
+
+<meta property="og:title" content="SAKTHIVEL CRACKERS">
+<meta property="og:description"
+      content="Premium fireworks ordering from Kundayiruppu, Sivakasi">
+<meta property="og:type" content="website">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+/* =========================================================
+   SAKTHIVEL CRACKERS
+   CUSTOMER WEBSITE
+   Premium Fireworks Theme
+   ========================================================= */
+
+:root {
+    --navy: #06142b;
+    --navy-2: #0b2040;
+    --blue: #123c78;
+    --royal: #1d5fc1;
+    --crimson: #b5122b;
+    --red: #e21c3d;
+    --gold: #ffd34d;
+    --gold-2: #ffb300;
+    --white: #ffffff;
+    --muted: #aebbd0;
+    --card: rgba(255,255,255,.075);
+    --border: rgba(255,211,77,.25);
+    --shadow: 0 18px 50px rgba(0,0,0,.30);
+    --radius: 20px;
+    --bottom-nav: 82px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family:
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    background:
+        radial-gradient(circle at 20% 10%, rgba(29,95,193,.30), transparent 30%),
+        radial-gradient(circle at 90% 20%, rgba(181,18,43,.24), transparent 30%),
+        linear-gradient(135deg, #040d1c, #071b37 55%, #030b18);
+
+    color: var(--white);
+    min-height: 100vh;
+    overflow-x: hidden;
+
+    padding-bottom: calc(
+        var(--bottom-nav) +
+        env(safe-area-inset-bottom) +
+        30px
+    );
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* =========================================================
+   BACKGROUND FIREWORK PARTICLES
+   ========================================================= */
+
+.firework {
+    position: fixed;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow:
+        0 0 8px var(--gold),
+        0 0 20px var(--gold);
+    opacity: .65;
+    pointer-events: none;
+    z-index: -1;
+    animation: floatFirework 5s linear infinite;
+}
+
+.firework:nth-child(1) {
+    left: 12%;
+    top: 30%;
+}
+
+.firework:nth-child(2) {
+    left: 75%;
+    top: 18%;
+    animation-delay: 1s;
+}
+
+.firework:nth-child(3) {
+    left: 55%;
+    top: 65%;
+    animation-delay: 2s;
+}
+
+.firework:nth-child(4) {
+    left: 90%;
+    top: 72%;
+    animation-delay: 3s;
+}
+
+@keyframes floatFirework {
+    0% {
+        transform: scale(.5);
+        opacity: 0;
+    }
+
+    20% {
+        opacity: .8;
+    }
+
+    50% {
+        transform: scale(2);
+        opacity: .6;
+    }
+
+    100% {
+        transform: translateY(-90px) scale(.5);
+        opacity: 0;
+    }
+}
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(4,15,32,.96),
+            rgba(8,30,59,.94),
+            rgba(4,15,32,.96)
+        );
+
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(255,211,77,.18);
+}
+
+.header-inner {
+    max-width: 1250px;
+    margin: auto;
+    min-height: 72px;
+    padding: 8px 16px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+.logo {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+
+    object-fit: cover;
+
+    background:
+        radial-gradient(circle, #ffd34d, #b5122b 55%, #07152d);
+
+    border: 1px solid rgba(255,211,77,.55);
+    box-shadow: 0 0 22px rgba(255,211,77,.18);
+}
+
+.brand-text {
+    min-width: 0;
+}
+
+.brand-name {
+    font-size: 15px;
+    font-weight: 900;
+    letter-spacing: .7px;
+    white-space: nowrap;
+}
+
+.brand-location {
+    color: var(--muted);
+    font-size: 10px;
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 210px;
+}
+
+.desktop-nav {
+    display: none;
+    align-items: center;
+    gap: 5px;
+}
+
+.desktop-nav a,
+.desktop-nav button {
+    border: 0;
+    background: transparent;
+    color: #e8eef8;
+    padding: 9px 8px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.desktop-nav a:hover,
+.desktop-nav button:hover {
+    background: rgba(255,255,255,.08);
+    color: var(--gold);
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.icon-button {
+    position: relative;
+
+    width: 42px;
+    height: 42px;
+
+    border: 1px solid rgba(255,255,255,.14);
+    border-radius: 13px;
+
+    background: rgba(255,255,255,.07);
+    color: white;
+
+    display: grid;
+    place-items: center;
+
+    font-size: 18px;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+
+    min-width: 20px;
+    height: 20px;
+
+    padding: 0 5px;
+
+    border-radius: 999px;
+
+    background: var(--red);
+    color: white;
+
+    display: grid;
+    place-items: center;
+
+    font-size: 10px;
+    font-weight: 900;
+
+    border: 2px solid var(--navy);
+}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.hero {
+    position: relative;
+    min-height: 470px;
+
+    display: flex;
+    align-items: center;
+
+    overflow: hidden;
+
+    background:
+        radial-gradient(
+            circle at 75% 35%,
+            rgba(255,211,77,.20),
+            transparent 18%
+        ),
+        radial-gradient(
+            circle at 15% 70%,
+            rgba(226,28,61,.20),
+            transparent 25%
+        );
+}
+
+.hero-inner {
+    width: min(1200px, 100%);
+    margin: auto;
+    padding: 48px 18px;
+
+    position: relative;
+    z-index: 2;
+}
+
+.hero-content {
+    max-width: 700px;
+}
+
+.hero-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+
+    color: var(--gold);
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+
+    padding: 7px 12px;
+
+    border: 1px solid rgba(255,211,77,.30);
+    background: rgba(255,211,77,.06);
+    border-radius: 999px;
+
+    margin-bottom: 16px;
+}
+
+.hero h1 {
+    font-size: clamp(36px, 10vw, 76px);
+    line-height: .98;
+    font-weight: 950;
+    letter-spacing: -2px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #ffd34d 48%,
+            #ff7b8f
+        );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+
+    text-shadow: 0 15px 50px rgba(255,211,77,.10);
+}
+
+.hero p {
+    color: #cbd7e8;
+    font-size: 15px;
+    line-height: 1.7;
+    margin: 20px 0 25px;
+    max-width: 620px;
+}
+
+.hero-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.primary-btn,
+.secondary-btn {
+    border: 0;
+    min-height: 46px;
+
+    padding: 0 20px;
+
+    border-radius: 14px;
+
+    font-weight: 900;
+    font-size: 13px;
+
+    transition: .25s ease;
+}
+
+.primary-btn {
+    background:
+        linear-gradient(
+            135deg,
+            var(--gold),
+            var(--gold-2)
+        );
+
+    color: #1c1704;
+
+    box-shadow:
+        0 8px 25px rgba(255,179,0,.20);
+}
+
+.primary-btn:hover {
+    transform: translateY(-2px);
+}
+
+.secondary-btn {
+    color: white;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.15);
+}
+
+.secondary-btn:hover {
+    background: rgba(255,255,255,.13);
+}
+
+/* =========================================================
+   SECTION
+   ========================================================= */
+
+.section {
+    width: min(1200px, calc(100% - 28px));
+    margin: 0 auto;
+    padding: 46px 0;
+    scroll-margin-top: 80px;
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.section-title {
+    font-size: 25px;
+    font-weight: 950;
+}
+
+.section-subtitle {
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.gold-line {
+    width: 55px;
+    height: 3px;
+    border-radius: 99px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    margin-top: 10px;
+}
+
+/* =========================================================
+   CATEGORY GRID
+   ========================================================= */
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 11px;
+}
+
+.category-card {
+    position: relative;
+    overflow: hidden;
+
+    min-height: 130px;
+
+    padding: 15px;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.10),
+            rgba(255,255,255,.035)
+        );
+
+    border: 1px solid rgba(255,255,255,.10);
+
+    box-shadow: var(--shadow);
+
+    transition: .25s ease;
+}
+
+.category-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(255,211,77,.35);
+}
+
+.category-icon {
+    width: 52px;
+    height: 52px;
+
+    border-radius: 15px;
+
+    display: grid;
+    place-items: center;
+
+    font-size: 25px;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,211,77,.25),
+            rgba(181,18,43,.12)
+        );
+
+    border: 1px solid rgba(255,211,77,.20);
+}
+
+.category-card h3 {
+    margin-top: 12px;
+    font-size: 13px;
+    line-height: 1.25;
+}
+
+.category-count {
+    color: var(--muted);
+    font-size: 10px;
+    margin-top: 4px;
+}
+
+/* =========================================================
+   PRODUCT TOOLBAR
+   ========================================================= */
+
+.toolbar {
+    display: grid;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.search-box {
+    position: relative;
+}
+
+.search-box input {
+    width: 100%;
+    height: 48px;
+
+    border-radius: 14px;
+
+    border: 1px solid rgba(255,255,255,.12);
+
+    background: rgba(255,255,255,.07);
+    color: white;
+
+    padding: 0 15px 0 44px;
+
+    outline: none;
+}
+
+.search-box input:focus {
+    border-color: rgba(255,211,77,.55);
+}
+
+.search-icon {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    opacity: .65;
+}
+
+.filters {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.filters select {
+    width: 100%;
+    height: 44px;
+
+    padding: 0 10px;
+
+    border-radius: 12px;
+
+    background: #0b2344;
+    color: white;
+
+    border: 1px solid rgba(255,255,255,.12);
+
+    outline: none;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+/* =========================================================
+   PRODUCT CARD
+   ========================================================= */
+
+.product-card {
+    position: relative;
+
+    overflow: hidden;
+
+    border-radius: 19px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.095),
+            rgba(255,255,255,.035)
+        );
+
+    border: 1px solid rgba(255,255,255,.10);
+
+    box-shadow: 0 15px 40px rgba(0,0,0,.20);
+
+    transition: .25s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(255,211,77,.30);
+}
+
+.product-image-wrap {
+    position: relative;
+    aspect-ratio: 1 / 1;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,211,77,.16),
+            rgba(7,21,45,.9)
+        );
+
+    overflow: hidden;
+}
+
+.product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.product-image-wrap::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background:
+        linear-gradient(
+            to top,
+            rgba(3,10,24,.40),
+            transparent 50%
+        );
+
+    pointer-events: none;
+}
+
+.availability {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+
+    z-index: 2;
+
+    padding: 5px 8px;
+
+    border-radius: 999px;
+
+    font-size: 8px;
+    font-weight: 900;
+
+    backdrop-filter: blur(8px);
+}
+
+.available {
+    background: rgba(26,170,100,.85);
+}
+
+.unavailable {
+    background: rgba(190,35,52,.90);
+}
+
+.product-body {
+    padding: 12px;
+}
+
+.product-category {
+    color: var(--gold);
+    font-size: 9px;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.product-name {
+    font-size: 13px;
+    font-weight: 850;
+
+    line-height: 1.3;
+
+    margin-top: 4px;
+
+    min-height: 34px;
+}
+
+.price-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+
+    margin-top: 7px;
+}
+
+.current-price {
+    font-size: 17px;
+    font-weight: 950;
+    color: var(--gold);
+}
+
+.mrp-price {
+    font-size: 10px;
+    color: #8d9bb0;
+    text-decoration: line-through;
+}
+
+.discount {
+    font-size: 8px;
+    font-weight: 900;
+
+    padding: 3px 5px;
+
+    border-radius: 6px;
+
+    background: rgba(226,28,61,.18);
+    color: #ff8092;
+}
+
+.unit {
+    color: var(--muted);
+    font-size: 9px;
+    margin-top: 4px;
+}
+
+.product-actions {
+    display: flex;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+.add-btn {
+    flex: 1;
+
+    min-height: 38px;
+
+    border: 0;
+    border-radius: 11px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--crimson),
+            var(--red)
+        );
+
+    color: white;
+
+    font-size: 10px;
+    font-weight: 950;
+
+    box-shadow: 0 8px 20px rgba(226,28,61,.15);
+}
+
+.detail-btn {
+    width: 38px;
+    min-height: 38px;
+
+    border-radius: 11px;
+
+    border: 1px solid rgba(255,255,255,.12);
+
+    background: rgba(255,255,255,.07);
+    color: white;
+}
+
+.qty-control {
+    display: flex;
+    align-items: center;
+
+    height: 38px;
+
+    border-radius: 11px;
+
+    overflow: hidden;
+
+    border: 1px solid rgba(255,255,255,.12);
+    background: rgba(255,255,255,.05);
+}
+
+.qty-control button {
+    width: 34px;
+    height: 100%;
+
+    border: 0;
+    background: transparent;
+    color: white;
+
+    font-weight: 900;
+}
+
+.qty-control span {
+    min-width: 27px;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 900;
+}
+
+/* =========================================================
+   OFFER GRID
+   ========================================================= */
+
+.offer-grid {
+    display: grid;
+    gap: 12px;
+}
+
+.offer-card {
+    overflow: hidden;
+
+    border-radius: 19px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(181,18,43,.25),
+            rgba(18,60,120,.20)
+        );
+
+    border: 1px solid rgba(255,211,77,.16);
+}
+
+.offer-image {
+    width: 100%;
+    aspect-ratio: 2 / 1;
+    object-fit: cover;
+}
+
+.offer-body {
+    padding: 15px;
+}
+
+.offer-body h3 {
+    font-size: 17px;
+}
+
+.offer-body p {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.6;
+    margin-top: 6px;
+}
+
+/* =========================================================
+   PRICE LIST
+   ========================================================= */
+
+.price-panel {
+    padding: 25px;
+
+    border-radius: 24px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,211,77,.10),
+            rgba(181,18,43,.12),
+            rgba(18,60,120,.15)
+        );
+
+    border: 1px solid rgba(255,211,77,.20);
+
+    box-shadow: var(--shadow);
+
+    text-align: center;
+}
+
+.price-icon {
+    font-size: 42px;
+}
+
+.price-panel h2 {
+    margin-top: 8px;
+    font-size: 23px;
+}
+
+.price-panel p {
+    color: var(--muted);
+    margin: 7px auto 18px;
+    max-width: 550px;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+/* =========================================================
+   CONTACT
+   ========================================================= */
+
+.contact-card {
+    padding: 25px;
+
+    border-radius: 24px;
+
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.10);
+}
+
+.contact-card h2 {
+    font-size: 22px;
+}
+
+.contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+
+    margin-top: 17px;
+}
+
+.contact-icon {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 12px;
+
+    display: grid;
+    place-items: center;
+
+    background: rgba(255,211,77,.10);
+}
+
+.contact-label {
+    color: var(--muted);
+    font-size: 10px;
+}
+
+.contact-value {
+    margin-top: 3px;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.footer {
+    width: min(1200px, calc(100% - 28px));
+    margin: auto;
+
+    padding: 30px 0 20px;
+
+    border-top: 1px solid rgba(255,255,255,.08);
+
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.footer-top {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.footer-brand {
+    color: white;
+    font-size: 16px;
+    font-weight: 950;
+}
+
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 15px;
+}
+
+.footer-links button {
+    border: 0;
+    background: transparent;
+    color: var(--muted);
+    font-size: 11px;
+}
+
+/* =========================================================
+   FIXED MOBILE BOTTOM NAV
+   ========================================================= */
+
+.bottom-nav {
+    position: fixed;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    z-index: 3000;
+
+    padding:
+        7px
+        8px
+        calc(7px + env(safe-area-inset-bottom));
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(4,14,30,.93),
+            rgba(2,8,20,.98)
+        );
+
+    backdrop-filter: blur(20px);
+
+    border-top: 1px solid rgba(255,211,77,.16);
+
+    box-shadow:
+        0 -15px 40px rgba(0,0,0,.30);
+}
+
+.bottom-nav-inner {
+    max-width: 600px;
+    margin: auto;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.35fr 1fr 1fr;
+
+    align-items: end;
+}
+
+.bottom-item {
+    min-height: 56px;
+
+    border: 0;
+    background: transparent;
+
+    color: #aebbd0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: 3px;
+
+    font-size: 9px;
+    font-weight: 800;
+
+    position: relative;
+}
+
+.bottom-item .nav-icon {
+    font-size: 19px;
+}
+
+.bottom-item.active {
+    color: var(--gold);
+}
+
+.bottom-cart {
+    position: relative;
+
+    width: 67px;
+    height: 67px;
+
+    margin: -28px auto 0;
+
+    border-radius: 22px;
+
+    border: 3px solid #07152d;
+
+    background:
+        linear-gradient(
+            145deg,
+            var(--gold),
+            var(--gold-2),
+            #e48b00
+        );
+
+    color: #1c1504;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    box-shadow:
+        0 8px 30px rgba(255,179,0,.28);
+
+    font-weight: 950;
+
+    transition: .2s ease;
+}
+
+.bottom-cart.pulse {
+    animation: cartPulse .45s ease;
+}
+
+@keyframes cartPulse {
+    0% {
+        transform: scale(1);
+    }
+
+    40% {
+        transform: scale(1.13) rotate(-2deg);
+    }
+
+    80% {
+        transform: scale(.96) rotate(2deg);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.bottom-cart .cart-icon {
+    font-size: 25px;
+    line-height: 22px;
+}
+
+.bottom-cart small {
+    font-size: 8px;
+    margin-top: 2px;
+}
+
+.bottom-cart .bottom-badge {
+    position: absolute;
+
+    top: -7px;
+    right: -6px;
+
+    min-width: 22px;
+    height: 22px;
+
+    padding: 0 5px;
+
+    border-radius: 99px;
+
+    background: var(--red);
+    color: white;
+
+    border: 2px solid #07152d;
+
+    display: grid;
+    place-items: center;
+
+    font-size: 9px;
+}
+
+/* =========================================================
+   DRAWER
+   ========================================================= */
+
+.drawer-backdrop {
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0,0,0,.60);
+
+    z-index: 4000;
+
+    backdrop-filter: blur(3px);
+}
+
+.drawer {
+    position: fixed;
+
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    width: min(340px, 88vw);
+
+    z-index: 4100;
+
+    background:
+        linear-gradient(
+            160deg,
+            #06152d,
+            #091f3c
+        );
+
+    border-right: 1px solid rgba(255,211,77,.18);
+
+    padding: 22px 18px;
+
+    transform: translateX(-100%);
+    transition: .28s ease;
+
+    overflow-y: auto;
+}
+
+.drawer.open {
+    transform: translateX(0);
+}
+
+.drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding-bottom: 18px;
+
+    border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.drawer-links {
+    display: grid;
+    gap: 5px;
+    margin-top: 20px;
+}
+
+.drawer-links button {
+    border: 0;
+
+    background: rgba(255,255,255,.045);
+
+    color: white;
+
+    text-align: left;
+
+    padding: 14px;
+
+    border-radius: 13px;
+
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.drawer-links button:hover {
+    color: var(--gold);
+}
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+.modal-layer {
+    position: fixed;
+    inset: 0;
+
+    z-index: 5000;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+
+    background: rgba(0,0,0,.65);
+
+    backdrop-filter: blur(6px);
+}
+
+.modal {
+    width: min(650px, 100%);
+
+    max-height: 92vh;
+
+    overflow-y: auto;
+
+    background:
+        linear-gradient(
+            160deg,
+            #071a35,
+            #061127
+        );
+
+    border:
+        1px solid rgba(255,211,77,.20);
+
+    border-radius: 25px 25px 0 0;
+
+    box-shadow: 0 -20px 60px rgba(0,0,0,.40);
+
+    padding: 20px;
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 15px;
+}
+
+.modal-header h2 {
+    font-size: 21px;
+}
+
+.close-btn {
+    width: 38px;
+    height: 38px;
+
+    border-radius: 12px;
+
+    border: 1px solid rgba(255,255,255,.12);
+
+    background: rgba(255,255,255,.07);
+    color: white;
+}
+
+/* =========================================================
+   PRODUCT DETAILS
+   ========================================================= */
+
+.detail-image {
+    width: 100%;
+    max-height: 350px;
+    object-fit: contain;
+
+    border-radius: 18px;
+
+    background: #041027;
+}
+
+.detail-title {
+    font-size: 25px;
+    margin-top: 16px;
+}
+
+.detail-description {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7;
+    margin-top: 10px;
+}
+
+.detail-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-top: 14px;
+}
+
+.meta-pill {
+    padding: 7px 9px;
+
+    border-radius: 9px;
+
+    background: rgba(255,255,255,.07);
+
+    font-size: 10px;
+}
+
+/* =========================================================
+   CART
+   ========================================================= */
+
+.cart-items {
+    display: grid;
+    gap: 10px;
+}
+
+.cart-item {
+    display: grid;
+    grid-template-columns: 62px 1fr auto;
+    gap: 10px;
+    align-items: center;
+
+    padding: 10px;
+
+    border-radius: 15px;
+
+    background: rgba(255,255,255,.055);
+
+    border: 1px solid rgba(255,255,255,.08);
+}
+
+.cart-item-image {
+    width: 62px;
+    height: 62px;
+
+    border-radius: 12px;
+
+    object-fit: cover;
+}
+
+.cart-item-name {
+    font-size: 12px;
+    font-weight: 850;
+}
+
+.cart-item-price {
+    color: var(--gold);
+    font-size: 11px;
+    margin-top: 3px;
+}
+
+.cart-qty {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    margin-top: 7px;
+}
+
+.cart-qty button {
+    width: 25px;
+    height: 25px;
+
+    border: 0;
+
+    border-radius: 7px;
+
+    background: rgba(255,255,255,.08);
+    color: white;
+
+    font-weight: 900;
+}
+
+.cart-qty span {
+    min-width: 20px;
+    text-align: center;
+    font-size: 11px;
+}
+
+.cart-subtotal {
+    text-align: right;
+
+    color: var(--gold);
+
+    font-size: 12px;
+    font-weight: 950;
+}
+
+.remove-cart {
+    border: 0;
+    background: transparent;
+    color: #ff7085;
+    font-size: 10px;
+    margin-top: 5px;
+}
+
+.cart-total-box {
+    margin-top: 15px;
+
+    padding: 18px;
+
+    border-radius: 17px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,211,77,.10),
+            rgba(181,18,43,.08)
+        );
+
+    border: 1px solid rgba(255,211,77,.15);
+}
+
+.total-row {
+    display: flex;
+    justify-content: space-between;
+
+    font-size: 14px;
+}
+
+.total-row strong {
+    color: var(--gold);
+    font-size: 21px;
+}
+
+/* =========================================================
+   FORMS
+   ========================================================= */
+
+.form-grid {
+    display: grid;
+    gap: 11px;
+}
+
+.form-group {
+    display: grid;
+    gap: 5px;
+}
+
+.form-group label {
+    font-size: 10px;
+    color: var(--muted);
+    font-weight: 800;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+
+    border-radius: 12px;
+
+    border: 1px solid rgba(255,255,255,.12);
+
+    background: rgba(255,255,255,.06);
+
+    color: white;
+
+    padding: 12px;
+
+    outline: none;
+}
+
+.form-group textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    border-color: rgba(255,211,77,.55);
+}
+
+.error-text {
+    color: #ff788c;
+    font-size: 10px;
+}
+
+/* =========================================================
+   ORDER SUCCESS
+   ========================================================= */
+
+.success-box {
+    text-align: center;
+    padding: 15px 0;
+}
+
+.success-icon {
+    font-size: 60px;
+}
+
+.success-box h2 {
+    font-size: 27px;
+    margin-top: 7px;
+}
+
+.order-number {
+    display: inline-block;
+
+    margin-top: 10px;
+
+    padding: 10px 15px;
+
+    border-radius: 12px;
+
+    background: rgba(255,211,77,.10);
+
+    border: 1px solid rgba(255,211,77,.25);
+
+    color: var(--gold);
+
+    font-weight: 950;
+}
+
+.status-badge {
+    display: inline-block;
+
+    margin-top: 9px;
+
+    padding: 7px 11px;
+
+    border-radius: 999px;
+
+    background: rgba(255,193,7,.15);
+
+    color: #ffd34d;
+
+    font-size: 10px;
+    font-weight: 900;
+}
+
+/* =========================================================
+   TOAST
+   ========================================================= */
+
+.toast {
+    position: fixed;
+
+    left: 50%;
+
+    bottom:
+        calc(
+            var(--bottom-nav) +
+            env(safe-area-inset-bottom) +
+            15px
+        );
+
+    transform: translate(-50%, 20px);
+
+    z-index: 9000;
+
+    background:
+        linear-gradient(
+            135deg,
+            #0c2850,
+            #07152d
+        );
+
+    border: 1px solid rgba(255,211,77,.25);
+
+    color: white;
+
+    padding: 12px 17px;
+
+    border-radius: 13px;
+
+    box-shadow: var(--shadow);
+
+    font-size: 12px;
+    font-weight: 800;
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition: .25s ease;
+
+    white-space: nowrap;
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.loading {
+    display: grid;
+    place-items: center;
+
+    min-height: 160px;
+
+    color: var(--muted);
+
+    font-size: 12px;
+}
+
+.spinner {
+    width: 30px;
+    height: 30px;
+
+    border-radius: 50%;
+
+    border:
+        3px solid rgba(255,255,255,.12);
+
+    border-top-color: var(--gold);
+
+    animation: spin .8s linear infinite;
+
+    margin-bottom: 10px;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.empty-state {
+    text-align: center;
+    padding: 35px 15px;
+    color: var(--muted);
+}
+
+.empty-state .empty-icon {
+    font-size: 40px;
+    margin-bottom: 8px;
+}
+
+.empty-state strong {
+    color: white;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* =========================================================
+   FLY TO CART ANIMATION
+   ========================================================= */
+
+.fly-image {
+    position: fixed;
+
+    z-index: 9500;
+
+    width: 55px;
+    height: 55px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    pointer-events: none;
+
+    box-shadow:
+        0 0 20px rgba(255,211,77,.60);
+
+    transition:
+        left .55s cubic-bezier(.2,.8,.3,1),
+        top .55s cubic-bezier(.2,.8,.3,1),
+        transform .55s cubic-bezier(.2,.8,.3,1),
+        opacity .55s ease;
+}
+
+/* =========================================================
+   DESKTOP
+   ========================================================= */
+
+@media (min-width: 760px) {
+
+    body {
+        padding-bottom: 20px;
+    }
+
+    .header-inner {
+        min-height: 82px;
+    }
+
+    .desktop-nav {
+        display: flex;
+    }
+
+    .mobile-menu-button {
+        display: none;
+    }
+
+    .hero {
+        min-height: 570px;
+    }
+
+    .hero-inner {
+        padding: 80px 25px;
+    }
+
+    .category-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .product-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .offer-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .toolbar {
+        grid-template-columns: 1.5fr 1fr;
+    }
+
+    .filters {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .bottom-nav {
+        display: none;
+    }
+
+    .modal-layer {
+        align-items: center;
+    }
+
+    .modal {
+        border-radius: 25px;
+        max-height: 88vh;
+    }
+
+    .footer-top {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Background decorative lights -->
+<div class="firework"></div>
+<div class="firework"></div>
+<div class="firework"></div>
+<div class="firework"></div>
+
+<!-- =======================================================
+     HEADER
+     ======================================================= -->
+
+<header class="header">
+    <div class="header-inner">
+
+        <a href="#home" class="brand">
+            <img
+                id="siteLogo"
+                class="logo"
+                alt="SAKTHIVEL CRACKERS Logo"
+            >
+
+            <div class="brand-text">
+                <div id="shopName" class="brand-name">
+                    SAKTHIVEL CRACKERS
+                </div>
+
+                <div id="shopLocation" class="brand-location">
+                    Kundayiruppu, Sivakasi, Tamil Nadu
+                </div>
+            </div>
+        </a>
+
+        <nav class="desktop-nav">
+            <a href="#home">HOME</a>
+            <a href="#products">PRODUCTS</a>
+            <a href="#categories">CATEGORIES</a>
+            <button onclick="openPriceList()">PRICE LIST</button>
+            <a href="#offers">OFFERS</a>
+            <button onclick="openTrackModal()">TRACK ORDER</button>
+            <button onclick="openCart()">CART</button>
+            <a href="#contact">CONTACT</a>
+
+            <a
+                id="headerWhatsApp"
+                href="https://wa.me/919344265054"
+                target="_blank"
+                rel="noopener"
+            >
+                WHATSAPP
+            </a>
+        </nav>
+
+        <div class="header-actions">
+
+            <button
+                class="icon-button mobile-menu-button"
+                aria-label="Open menu"
+                onclick="openDrawer()"
+            >
+                ☰
+            </button>
+
+            <button
+                class="icon-button"
+                aria-label="Open cart"
+                onclick="openCart()"
+            >
+                🛒
+                <span id="headerCartCount" class="cart-badge">0</span>
+            </button>
+
+        </div>
+
+    </div>
+</header>
+
+<!-- =======================================================
+     MOBILE DRAWER
+     ======================================================= -->
+
+<div id="drawerBackdrop"
+     class="drawer-backdrop hidden"
+     onclick="closeDrawer()">
+</div>
+
+<aside id="drawer" class="drawer">
+
+    <div class="drawer-header">
+
+        <div>
+            <div class="brand-name">SAKTHIVEL CRACKERS</div>
+            <div class="brand-location">
+                Kundayiruppu, Sivakasi
+            </div>
+        </div>
+
+        <button class="close-btn" onclick="closeDrawer()">✕</button>
+
+    </div>
+
+    <div class="drawer-links">
+
+        <button onclick="drawerGo('#home')">
+            🏠 HOME
+        </button>
+
+        <button onclick="drawerGo('#products')">
+            🎆 PRODUCTS
+        </button>
+
+        <button onclick="drawerGo('#categories')">
+            🗂️ CATEGORIES
+        </button>
+
+        <button onclick="openPriceList(); closeDrawer()">
+            📄 PRICE LIST
+        </button>
+
+        <button onclick="drawerGo('#offers')">
+            🏷️ OFFERS
+        </button>
+
+        <button onclick="openTrackModal(); closeDrawer()">
+            🔎 TRACK ORDER
+        </button>
+
+        <button onclick="openCart(); closeDrawer()">
+            🛒 CART
+            <span id="drawerCartCount">0</span>
+        </button>
+
+        <button onclick="drawerGo('#contact')">
+            📞 CONTACT
+        </button>
+
+        <a
+            id="drawerWhatsApp"
+            href="https://wa.me/919344265054"
+            target="_blank"
+            rel="noopener"
+            style="display:block;padding:14px;background:rgba(255,255,255,.045);border-radius:13px;font-size:13px;font-weight:800;"
+        >
+            💬 WHATSAPP
+        </a>
+
+    </div>
+
+</aside>
+
+<!-- =======================================================
+     HERO
+     ======================================================= -->
+
+<main>
+
+<section id="home" class="hero">
+
+    <div class="hero-inner">
+
+        <div class="hero-content">
+
+            <div class="hero-kicker">
+                ✨ SIVAKASI FIREWORKS
+            </div>
+
+            <h1 id="heroTitle">
+                Premium Fireworks
+                <br>
+                For Every Celebration
+            </h1>
+
+            <p id="heroSubtitle">
+                Discover fireworks from SAKTHIVEL CRACKERS,
+                Kundayiruppu, Sivakasi, Tamil Nadu.
+                Browse products, add to cart and place your order easily.
+            </p>
+
+            <div class="hero-buttons">
+
+                <button
+                    class="primary-btn"
+                    onclick="scrollToSection('products')"
+                >
+                    🎆 SHOP NOW
+                </button>
+
+                <button
+                    class="secondary-btn"
+                    onclick="openPriceList()"
+                >
+                    📄 PRICE LIST
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =======================================================
+     CATEGORIES
+     ======================================================= -->
+
+<section id="categories" class="section">
+
+    <div class="section-heading">
+
+        <div>
+            <h2 class="section-title">Categories</h2>
+
+            <p class="section-subtitle">
+                Explore our fireworks collection
+            </p>
+
+            <div class="gold-line"></div>
+        </div>
+
+    </div>
+
+    <div id="categoryGrid" class="category-grid">
+
+        <div class="loading">
+            <div>
+                <div class="spinner"></div>
+                Loading categories...
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =======================================================
+     FEATURED PRODUCTS
+     ======================================================= -->
+
+<section class="section">
+
+    <div class="section-heading">
+
+        <div>
+            <h2 class="section-title">Featured Products</h2>
+
+            <p class="section-subtitle">
+                Our selected products
+            </p>
+
+            <div class="gold-line"></div>
+        </div>
+
+    </div>
+
+    <div id="featuredGrid" class="product-grid">
+
+        <div class="loading">
+            <div>
+                <div class="spinner"></div>
+                Loading products...
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =======================================================
+     PRODUCTS
+     ======================================================= -->
+
+<section id="products" class="section">
+
+    <div class="section-heading">
+
+        <div>
+            <h2 class="section-title">All Products</h2>
+
+            <p class="section-subtitle">
+                Browse all available fireworks
+            </p>
+
+            <div class="gold-line"></div>
+        </div>
+
+    </div>
+
+    <div class="toolbar">
+
+        <div class="search-box">
+
+            <span class="search-icon">🔎</span>
+
+            <input
+                id="searchInput"
+                type="search"
+                placeholder="Search product or category..."
+                autocomplete="off"
+            >
+
+        </div>
+
+        <div class="filters">
+
+            <select id="categoryFilter">
+                <option value="">All Categories</option>
+            </select>
+
+            <select id="sortFilter">
+
+                <option value="default">
+                    Sort Products
+                </option>
+
+                <option value="price-low">
+                    Price: Low to High
+                </option>
+
+                <option value="price-high">
+                    Price: High to Low
+                </option>
+
+                <option value="featured">
+                    Featured
+                </option>
+
+                <option value="popular">
+                    Popular
+                </option>
+
+                <option value="name">
+                    Name
+                </option>
+
+            </select>
+
+        </div>
+
+    </div>
+
+    <div id="productGrid" class="product-grid">
+
+        <div class="loading">
+            <div>
+                <div class="spinner"></div>
+                Loading products...
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =======================================================
+     OFFERS
+     ======================================================= -->
+
+<section id="offers" class="section">
+
+    <div class="section-heading">
+
+        <div>
+            <h2 class="section-title">Special Offers</h2>
+
+            <p class="section-subtitle">
+                Latest offers and announcements
+            </p>
+
+            <div class="gold-line"></div>
+        </div>
+
+    </div>
+
+    <div id="offerGrid" class="offer-grid">
+
+        <div class="loading">
+            <div>
+                <div class="spinner"></div>
+                Loading offers...
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- =======================================================
+     PRICE LIST
+     ======================================================= -->
+
+<section id="priceListSection" class="section">
+
+    <div class="price-panel">
+
+        <div class="price-icon">📄</div>
+
+        <h2>Official Price List</h2>
+
+        <p>
+            View or download the latest official SAKTHIVEL CRACKERS
+            price list.
+        </p>
+
+        <button
+            class="primary-btn"
+            onclick="openPriceList()"
+        >
+            VIEW PRICE LIST
+        </button>
+
+    </div>
+
+</section>
+
+<!-- =======================================================
+     CONTACT
+     ======================================================= -->
+
+<section id="contact" class="section">
+
+    <div class="contact-card">
+
+        <h2>Contact SAKTHIVEL CRACKERS</h2>
+
+        <div class="gold-line"></div>
+
+        <div class="contact-item">
+
+            <div class="contact-icon">📍</div>
+
+            <div>
+                <div class="contact-label">LOCATION</div>
+
+                <div
+                    id="contactAddress"
+                    class="contact-value"
+                >
+                    Kundayiruppu, Sivakasi,
+                    Tamil Nadu, India
+                </div>
+            </div>
+
+        </div>
+
+        <div class="contact-item">
+
+            <div class="contact-icon">💬</div>
+
+            <div>
+                <div class="contact-label">WHATSAPP</div>
+
+                <div class="contact-value">
+                    <a
+                        id="contactWhatsApp"
+                        href="https://wa.me/919344265054"
+                        target="_blank"
+                        rel="noopener"
+                    >
+                        93442 65054
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <div style="margin-top:20px;">
+
+            <a
+                id="mainWhatsAppButton"
+                class="primary-btn"
+                href="https://wa.me/919344265054"
+                target="_blank"
+                rel="noopener"
+                style="display:inline-flex;align-items:center;justify-content:center;"
+            >
+                💬 CHAT ON WHATSAPP
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+<!-- =======================================================
+     FOOTER
+     ======================================================= -->
+
+<footer class="footer">
+
+    <div class="footer-top">
+
+        <div>
+            <div id="footerShopName" class="footer-brand">
+                SAKTHIVEL CRACKERS
+            </div>
+
+            <div style="margin-top:5px;">
+                Kundayiruppu, Sivakasi, Tamil Nadu, India
+            </div>
+        </div>
+
+        <div class="footer-links">
+
+            <button onclick="scrollToSection('products')">
+                Products
+            </button>
+
+            <button onclick="scrollToSection('categories')">
+                Categories
+            </button>
+
+            <button onclick="openPriceList()">
+                Price List
+            </button>
+
+            <button onclick="scrollToSection('offers')">
+                Offers
+            </button>
+
+            <button onclick="openTrackModal()">
+                Track Order
+            </button>
+
+            <button onclick="openCart()">
+                Cart
+            </button>
+
+        </div>
+
+    </div>
+
+    <div style="margin-top:20px;">
+        © <span id="currentYear"></span>
+        SAKTHIVEL CRACKERS. All rights reserved.
+    </div>
+
+</footer>
+
+<!-- =======================================================
+     FIXED BOTTOM NAVIGATION
+     ======================================================= -->
+
+<nav class="bottom-nav">
+
+    <div class="bottom-nav-inner">
+
+        <button
+            class="bottom-item"
+            onclick="openDrawer()"
+        >
+            <span class="nav-icon">☰</span>
+            <span>MENU</span>
+        </button>
+
+        <button
+            class="bottom-item"
+            onclick="openPriceList()"
+        >
+            <span class="nav-icon">📄</span>
+            <span>PRICE LIST</span>
+        </button>
+
+        <button
+            id="bottomCartButton"
+            class="bottom-cart"
+            onclick="openCart()"
+            aria-label="Open cart"
+        >
+
+            <span class="cart-icon">🛒</span>
+
+            <small>CART</small>
+
+            <span
+                id="bottomCartCount"
+                class="bottom-badge"
+            >
+                0
+            </span>
+
+        </button>
+
+        <button
+            class="bottom-item"
+            onclick="scrollToSection('offers')"
+        >
+            <span class="nav-icon">🏷️</span>
+            <span>OFFERS</span>
+        </button>
+
+        <button
+            class="bottom-item"
+            onclick="openTrackModal()"
+        >
+            <span class="nav-icon">🔎</span>
+            <span>TRACK</span>
+        </button>
+
+    </div>
+
+</nav>
+
+<!-- =======================================================
+     MODAL ROOT
+     ======================================================= -->
+
+<div id="modalRoot"></div>
+
+<!-- =======================================================
+     TOAST
+     ======================================================= -->
+
+<div id="toast" class="toast">
+    ✓ Product added to cart
+</div>
+
+<!-- =======================================================
+     JAVASCRIPT
+     ======================================================= -->
+
+<script>
+"use strict";
+
+/* =========================================================
+   SUPABASE CONFIGURATION
+   =========================================================
+
+   IMPORTANT:
+   Replace ONLY these two values with your Supabase
+   Project URL and public ANON key.
+
+   NEVER put the SERVICE ROLE KEY here.
+   ========================================================= */
+
+const SUPABASE_URL = "YOUR_SUPABASE_URL";
+const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+
+let supabaseClient = null;
+
+if (
+    SUPABASE_URL !== "YOUR_SUPABASE_URL" &&
+    SUPABASE_ANON_KEY !== "YOUR_SUPABASE_ANON_KEY"
+) {
+    supabaseClient = window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_ANON_KEY
+    );
+}
+
+/* =========================================================
+   BUSINESS DEFAULTS
+   ========================================================= */
+
+const DEFAULT_SETTINGS = {
+    shop_name: "SAKTHIVEL CRACKERS",
+
+    address:
+        "Kundayiruppu, Sivakasi, Tamil Nadu, India",
+
+    whatsapp:
+        "93442 65054",
+
+    whatsapp_cc:
+        "919344265054"
+};
+
+/* =========================================================
+   STATE
+   ========================================================= */
+
+let products = [];
+let categories = [];
+let offers = [];
+let banners = [];
+
+let cart = loadCart();
+
+let activeCategory = "";
+let searchText = "";
+let sortValue = "default";
+
+let currentSettings = {
+    ...DEFAULT_SETTINGS
+};
+
+let currentOrder = null;
+
+/* =========================================================
+   LOCAL STORAGE
+   ========================================================= */
+
+function loadCart() {
+
+    try {
+
+        const raw =
+            localStorage.getItem("sakthivel_cart");
+
+        if (!raw) return [];
+
+        const parsed = JSON.parse(raw);
+
+        if (!Array.isArray(parsed)) return [];
+
+        return parsed;
+
+    } catch (error) {
+
+        console.error(error);
+
+        return [];
+
+    }
+}
+
+function saveCart() {
+
+    localStorage.setItem(
+        "sakthivel_cart",
+        JSON.stringify(cart)
+    );
+
+    updateCartUI();
+}
+
+function clearCart() {
+
+    cart = [];
+
+    localStorage.removeItem(
+        "sakthivel_cart"
+    );
+
+    updateCartUI();
+}
+
+/* =========================================================
+   UTILITIES
+   ========================================================= */
+
+function escapeHTML(value) {
+
+    return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+function formatMoney(value) {
+
+    return "₹" +
+        Number(value || 0).toLocaleString(
+            "en-IN",
+            {
+                maximumFractionDigits: 2
+            }
+        );
+}
+
+function slugify(value) {
+
+    return String(value)
+        .toLowerCase()
+        .trim()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/^-|-$/g, "");
+}
+
+function showToast(message) {
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.textContent = message;
+
+    toast.classList.add("show");
+
+    clearTimeout(
+        window.__toastTimer
+    );
+
+    window.__toastTimer =
+        setTimeout(() => {
+
+            toast.classList.remove("show");
+
+        }, 2200);
+}
+
+function scrollToSection(id) {
+
+    const element =
+        document.querySelector(id);
+
+    if (element) {
+
+        element.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+    }
+}
+
+/* =========================================================
+   IMAGE PLACEHOLDER
+   ========================================================= */
+
+function placeholderImage(name = "Fireworks") {
+
+    const svg = `
+        <svg xmlns="http://www.w3.org/2000/svg"
+             width="700"
+             height="700"
+             viewBox="0 0 700 700">
+
+            <defs>
+
+                <radialGradient id="bg">
+                    <stop offset="0"
+                          stop-color="#173d75"/>
+
+                    <stop offset="1"
+                          stop-color="#030b18"/>
+                </radialGradient>
+
+                <radialGradient id="fire">
+                    <stop offset="0"
+                          stop-color="#fff5a6"/>
+
+                    <stop offset=".25"
+                          stop-color="#ffd34d"/>
+
+                    <stop offset=".7"
+                          stop-color="#e21c3d"/>
+
+                    <stop offset="1"
+                          stop-color="transparent"/>
+                </radialGradient>
+
+            </defs>
+
+            <rect width="700"
+                  height="700"
+                  fill="url(#bg)"/>
+
+            <circle
+                cx="350"
+                cy="270"
+                r="190"
+                fill="url(#fire)"
+                opacity=".85"/>
+
+            <g stroke="#ffd34d"
+               stroke-width="5"
+               stroke-linecap="round">
+
+                <line x1="350" y1="65"
+                      x2="350" y2="155"/>
+
+                <line x1="350" y1="385"
+                      x2="350" y2="475"/>
+
+                <line x1="145" y1="270"
+                      x2="235" y2="270"/>
+
+                <line x1="465" y1="270"
+                      x2="555" y2="270"/>
+
+                <line x1="205" y1="125"
+                      x2="270" y2="190"/>
+
+                <line x1="430" y1="350"
+                      x2="495" y2="415"/>
+
+                <line x1="495" y1="125"
+                      x2="430" y2="190"/>
+
+                <line x1="270" y1="350"
+                      x2="205" y2="415"/>
+
+            </g>
+
+            <text
+                x="350"
+                y="555"
+                text-anchor="middle"
+                fill="#ffd34d"
+                font-size="34"
+                font-family="Arial"
+                font-weight="bold">
+
+                ${escapeHTML(name).slice(0, 24)}
+
+            </text>
+
+            <text
+                x="350"
+                y="595"
+                text-anchor="middle"
+                fill="#ffffff"
+                opacity=".75"
+                font-size="20"
+                font-family="Arial">
+
+                SAKTHIVEL CRACKERS
+
+            </text>
+
+        </svg>
+    `;
+
+    return "data:image/svg+xml;charset=UTF-8," +
+        encodeURIComponent(svg);
+}
+
+/* =========================================================
+   INITIALIZE
+   ========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    init
+);
+
+async function init() {
+
+    document.getElementById(
+        "currentYear"
+    ).textContent =
+        new Date().getFullYear();
+
+    document.getElementById(
+        "siteLogo"
+    ).src =
+        placeholderImage(
+            "SAKTHIVEL"
+        );
+
+    setupEvents();
+
+    updateCartUI();
+
+    if (!supabaseClient) {
+
+        showToast(
+            "Supabase connection is not configured yet"
+        );
+
+        renderLocalLoadingState();
+
+        return;
+
+    }
+
+    await loadWebsiteData();
+}
+
+/* =========================================================
+   EVENTS
+   ========================================================= */
+
+function setupEvents() {
+
+    const search =
+        document.getElementById(
+            "searchInput"
+        );
+
+    search.addEventListener(
+        "input",
+        () => {
+
+            searchText =
+                search.value
+                    .trim()
+                    .toLowerCase();
+
+            renderProducts();
+
+        }
+    );
+
+    document.getElementById(
+        "categoryFilter"
+    ).addEventListener(
+        "change",
+        event => {
+
+            activeCategory =
+                event.target.value;
+
+            renderProducts();
+
+        }
+    );
+
+    document.getElementById(
+        "sortFilter"
+    ).addEventListener(
+        "change",
+        event => {
+
+            sortValue =
+                event.target.value;
+
+            renderProducts();
+
+        }
+    );
+
+    window.addEventListener(
+        "keydown",
+        event => {
+
+            if (event.key === "Escape") {
+
+                closeModal();
+                closeDrawer();
+
+            }
+
+        }
+    );
+
+}
+
+/* =========================================================
+   SUPABASE LOAD
+   ========================================================= */
+
+async function loadWebsiteData() {
+
+    try {
+
+        const [
+            categoriesResult,
+            productsResult,
+            offersResult,
+            bannersResult,
+            settingsResult
+        ] = await Promise.all([
+
+            supabaseClient
+                .from("categories")
+                .select("*")
+                .eq("active", true)
+                .order(
+                    "display_order",
+                    { ascending: true }
+                ),
+
+            supabaseClient
+                .from("products")
+                .select(`
+                    *,
+                    categories (
+                        id,
+                        name
+                    )
+                `)
+                .eq("active", true)
+                .order(
+                    "display_order",
+                    { ascending: true }
+                ),
+
+            supabaseClient
+                .from("offers")
+                .select("*")
+                .eq("active", true)
+                .order(
+                    "display_order",
+                    { ascending: true }
+                ),
+
+            supabaseClient
+                .from("banners")
+                .select("*")
+                .eq("active", true)
+                .order(
+                    "display_order",
+                    { ascending: true }
+                ),
+
+            supabaseClient
+                .from("settings")
+                .select("*")
+                .limit(1)
+                .maybeSingle()
+
+        ]);
+
+        if (categoriesResult.error)
+            throw categoriesResult.error;
+
+        if (productsResult.error)
+            throw productsResult.error;
+
+        categories =
+            categoriesResult.data || [];
+
+        products =
+            productsResult.data || [];
+
+        offers =
+            offersResult.data || [];
+
+        banners =
+            bannersResult.data || [];
+
+        if (
+            settingsResult.data
+        ) {
+
+            currentSettings = {
+                ...DEFAULT_SETTINGS,
+                ...settingsResult.data
+            };
+
+        }
+
+        applySettings();
+
+        renderCategories();
+
+        renderCategoryFilter();
+
+        renderProducts();
+
+        renderFeatured();
+
+        renderOffers();
+
+        renderHero();
+
+    } catch (error) {
+
+        console.error(
+            "Supabase loading error:",
+            error
+        );
+
+        showToast(
+            "Website data could not be loaded"
+        );
+
+        renderErrorStates();
+
+    }
+
+}
+
+/* =========================================================
+   SETTINGS
+   ========================================================= */
+
+function applySettings() {
+
+    const settings =
+        currentSettings;
+
+    document.getElementById(
+        "shopName"
+    ).textContent =
+        settings.shop_name;
+
+    document.getElementById(
+        "footerShopName"
+    ).textContent =
+        settings.shop_name;
+
+    document.getElementById(
+        "shopLocation"
+    ).textContent =
+        "Kundayiruppu, Sivakasi, Tamil Nadu";
+
+    document.getElementById(
+        "contactAddress"
+    ).textContent =
+        settings.address ||
+        DEFAULT_SETTINGS.address;
+
+    const whatsapp =
+        settings.whatsapp_cc ||
+        DEFAULT_SETTINGS.whatsapp_cc;
+
+    const whatsappUrl =
+        "https://wa.me/" +
+        String(whatsapp)
+            .replace(/\D/g, "");
+
+    document.getElementById(
+        "headerWhatsApp"
+    ).href =
+        whatsappUrl;
+
+    document.getElementById(
+        "drawerWhatsApp"
+    ).href =
+        whatsappUrl;
+
+    document.getElementById(
+        "mainWhatsAppButton"
+    ).href =
+        whatsappUrl;
+
+    document.getElementById(
+        "contactWhatsApp"
+    ).href =
+        whatsappUrl;
+
+    document.getElementById(
+        "contactWhatsApp"
+    ).textContent =
+        settings.whatsapp ||
+        DEFAULT_SETTINGS.whatsapp;
+
+    if (settings.logo_url) {
+
+        document.getElementById(
+            "siteLogo"
+        ).src =
+            settings.logo_url;
+
+    }
+
+    if (settings.seo_title) {
+
+        document.title =
+            settings.seo_title;
+
+    }
+
+}
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+function renderHero() {
+
+    if (!banners.length) return;
+
+    const banner =
+        banners[0];
+
+    if (banner.title) {
+
+        document.getElementById(
+            "heroTitle"
+        ).innerHTML =
+            escapeHTML(
+                banner.title
+            ).replace(
+                /\n/g,
+                "<br>"
+            );
+
+    }
+
+    if (banner.subtitle) {
+
+        document.getElementById(
+            "heroSubtitle"
+        ).textContent =
+            banner.subtitle;
+
+    }
+
+}
+
+/* =========================================================
+   CATEGORIES
+   ========================================================= */
+
+function renderCategories() {
+
+    const container =
+        document.getElementById(
+            "categoryGrid"
+        );
+
+    if (!categories.length) {
+
+        container.innerHTML =
+            emptyHTML(
+                "🗂️",
+                "No categories available",
+                "Please check again later."
+            );
+
+        return;
+
+    }
+
+    container.innerHTML =
+        categories.map(
+            category => {
+
+                const count =
+                    products.filter(
+                        product =>
+                            Number(
+                                product.category_id
+                            ) ===
+                            Number(category.id)
+                    ).length;
+
+                return `
+                    <button
+                        class="category-card"
+                        onclick="selectCategory('${escapeHTML(category.id)}')"
+                    >
+
+                        <div class="category-icon">
+                            ${category.icon || "🎆"}
+                        </div>
+
+                        <h3>
+                            ${escapeHTML(category.name)}
+                        </h3>
+
+                        <div class="category-count">
+                            ${count} product${count === 1 ? "" : "s"}
+                        </div>
+
+                    </button>
+                `;
+
+            }
+        ).join("");
+
+}
+
+/* =========================================================
+   CATEGORY FILTER
+   ========================================================= */
+
+function renderCategoryFilter() {
+
+    const select =
+        document.getElementById(
+            "categoryFilter"
+        );
+
+    select.innerHTML =
+        `<option value="">All Categories</option>`;
+
+    categories.forEach(
+        category => {
+
+            select.insertAdjacentHTML(
+                "beforeend",
+                `
+                <option value="${category.id}">
+                    ${escapeHTML(category.name)}
+                </option>
+                `
+            );
+
+        }
+    );
+
+}
+
+/* =========================================================
+   CATEGORY SELECT
+   ========================================================= */
+
+function selectCategory(id) {
+
+    activeCategory =
+        String(id);
+
+    document.getElementById(
+        "categoryFilter"
+    ).value =
+        activeCategory;
+
+    scrollToSection(
+        "#products"
+    );
+
+    renderProducts();
+
+}
+
+/* =========================================================
+   PRODUCT PRICE
+   ========================================================= */
+
+function getProductPrice(product) {
+
+    if (
+        product.offer_price !== null &&
+        product.offer_price !== undefined &&
+        Number(product.offer_price) > 0
+    ) {
+
+        return Number(
+            product.offer_price
+        );
+
+    }
+
+    return Number(
+        product.mrp || 0
+    );
+
+}
+
+/* =========================================================
+   DISCOUNT
+   ========================================================= */
+
+function getDiscount(product) {
+
+    if (
+        product.offer_price &&
+        Number(product.offer_price) <
+        Number(product.mrp)
+    ) {
+
+        return Math.round(
+            (
+                (
+                    Number(product.mrp) -
+                    Number(product.offer_price)
+                ) /
+                Number(product.mrp)
+            ) * 100
+        );
+
+    }
+
+    return Number(
+        product.discount || 0
+    );
+
+}
+
+/* =========================================================
+   PRODUCT FILTER
+   ========================================================= */
+
+function filteredProducts() {
+
+    let result =
+        [...products];
+
+    if (activeCategory) {
+
+        result =
+            result.filter(
+                product =>
+                    String(
+                        product.category_id
+                    ) ===
+                    String(activeCategory)
+            );
+
+    }
+
+    if (searchText) {
+
+        result =
+            result.filter(
+                product => {
+
+                    const productName =
+                        String(
+                            product.name || ""
+                        ).toLowerCase();
+
+                    const categoryName =
+                        String(
+                            product.categories?.name ||
+                            ""
+                        ).toLowerCase();
+
+                    return (
+                        productName.includes(
+                            searchText
+                        ) ||
+                        categoryName.includes(
+                            searchText
+                        )
+                    );
+
+                }
+            );
+
+    }
+
+    if (sortValue === "price-low") {
+
+        result.sort(
+            (a,b) =>
+                getProductPrice(a) -
+                getProductPrice(b)
+        );
+
+    }
+
+    if (sortValue === "price-high") {
+
+        result.sort(
+            (a,b) =>
+                getProductPrice(b) -
+                getProductPrice(a)
+        );
+
+    }
+
+    if (sortValue === "featured") {
+
+        result.sort(
+            (a,b) =>
+                Number(b.featured) -
+                Number(a.featured)
+        );
+
+    }
+
+    if (sortValue === "popular") {
+
+        result.sort(
+            (a,b) =>
+                Number(b.popular) -
+                Number(a.popular)
+        );
+
+    }
+
+    if (sortValue === "name") {
+
+        result.sort(
+            (a,b) =>
+                String(a.name)
+                    .localeCompare(
+                        String(b.name)
+                    )
+        );
+
+    }
+
+    return result;
+
+}
+
+/* =========================================================
+   PRODUCT CARD
+   ========================================================= */
+
+function productCard(product) {
+
+    const price =
+        getProductPrice(product);
+
+    const discount =
+        getDiscount(product);
+
+    const cartItem =
+        cart.find(
+            item =>
+                String(item.product_id) ===
+                String(product.id)
+        );
+
+    const quantity =
+        cartItem?.quantity || 0;
+
+    const image =
+        product.image_url ||
+        placeholderImage(
+            product.name
+        );
+
+    const available =
+        product.availability ===
+        "AVAILABLE";
+
+    return `
+        <article
+            class="product-card"
+            data-product-id="${product.id}"
+        >
+
+            <div
+                class="product-image-wrap"
+                onclick="openProductDetails(${product.id})"
+                style="cursor:pointer"
+            >
+
+                <img
+                    class="product-image"
+                    src="${escapeHTML(image)}"
+                    alt="${escapeHTML(product.name)}"
+                    loading="lazy"
+                    onerror="this.onerror=null;this.src=placeholderImage('${escapeHTML(product.name)}')"
+                >
+
+                <span
+                    class="availability ${
+                        available
+                            ? "available"
+                            : "unavailable"
+                    }"
+                >
+                    ${
+                        available
+                            ? "AVAILABLE"
+                            : "UNAVAILABLE"
+                    }
+                </span>
+
+            </div>
+
+            <div class="product-body">
+
+                <div class="product-category">
+                    ${escapeHTML(
+                        product.categories?.name ||
+                        "Fireworks"
+                    )}
+                </div>
+
+                <div class="product-name">
+                    ${escapeHTML(product.name)}
+                </div>
+
+                <div class="price-row">
+
+                    <span class="current-price">
+                        ${formatMoney(price)}
+                    </span>
+
+                    ${
+                        product.offer_price &&
+                        Number(product.offer_price) <
+                        Number(product.mrp)
+                            ? `
+                                <span class="mrp-price">
+                                    ${formatMoney(product.mrp)}
+                                </span>
+
+                                <span class="discount">
+                                    ${discount}% OFF
+                                </span>
+                              `
+                            : ""
+                    }
+
+                </div>
+
+                <div class="unit">
+                    ${escapeHTML(product.unit || "")}
+                </div>
+
+                <div class="product-actions">
+
+                    ${
+                        quantity > 0
+                            ? `
+                                <div class="qty-control">
+
+                                    <button
+                                        onclick="event.stopPropagation();changeCartQuantity(${product.id}, -1)"
+                                    >
+                                        −
+                                    </button>
+
+                                    <span>
+                                        ${quantity}
+                                    </span>
+
+                                    <button
+                                        onclick="event.stopPropagation();changeCartQuantity(${product.id}, 1)"
+                                    >
+                                        +
+                                    </button>
+
+                                </div>
+                              `
+                            : `
+                                <button
+                                    class="add-btn"
+                                    ${
+                                        !available
+                                            ? "disabled"
+                                            : ""
+                                    }
+                                    onclick="event.stopPropagation();addToCart(${product.id}, this)"
+                                >
+                                    ${
+                                        available
+                                            ? "ADD TO CART"
+                                            : "UNAVAILABLE"
+                                    }
+                                </button>
+                              `
+                    }
+
+                    <button
+                        class="detail-btn"
+                        aria-label="View product details"
+                        onclick="event.stopPropagation();openProductDetails(${product.id})"
+                    >
+                        👁
+                    </button>
+
+                </div>
+
+            </div>
+
+        </article>
+    `;
+}
+
+/* =========================================================
+   RENDER PRODUCTS
+   ========================================================= */
+
+function renderProducts() {
+
+    const container =
+        document.getElementById(
+            "productGrid"
+        );
+
+    const result =
+        filteredProducts();
+
+    if (!result.length) {
+
+        container.innerHTML =
+            emptyHTML(
+                "🔎",
+                "No products found",
+                "Try another product name or category."
+            );
+
+        return;
+
+    }
+
+    container.innerHTML =
+        result.map(
+            productCard
+        ).join("");
+
+}
+
+/* =========================================================
+   FEATURED
+   ========================================================= */
+
+function renderFeatured() {
+
+    const container =
+        document.getElementById(
+            "featuredGrid"
+        );
+
+    const featured =
+        products
+            .filter(
+                product =>
+                    product.featured
+            )
+            .slice(0, 8);
+
+    if (!featured.length) {
+
+        container.innerHTML =
+            emptyHTML(
+                "✨",
+                "Featured products coming soon",
+                "Browse all products below."
+            );
+
+        return;
+
+    }
+
+    container.innerHTML =
+        featured.map(
+            productCard
+        ).join("");
+
+}
+
+/* =========================================================
+   OFFERS
+   ========================================================= */
+
+function renderOffers() {
+
+    const container =
+        document.getElementById(
+            "offerGrid"
+        );
+
+    if (!offers.length) {
+
+        container.innerHTML =
+            emptyHTML(
+                "🏷️",
+                "No active offers",
+                "Please check again later."
+            );
+
+        return;
+
+    }
+
+    container.innerHTML =
+        offers.map(
+            offer => {
+
+                const image =
+                    offer.image_url ||
+                    placeholderImage(
+                        "SPECIAL OFFER"
+                    );
+
+                return `
+                    <article class="offer-card">
+
+                        <img
+                            class="offer-image"
+                            src="${escapeHTML(image)}"
+                            alt="${escapeHTML(offer.title)}"
+                            loading="lazy"
+                        >
+
+                        <div class="offer-body">
+
+                            <h3>
+                                ${escapeHTML(offer.title)}
+                            </h3>
+
+                            <p>
+                                ${escapeHTML(
+                                    offer.description || ""
+                                )}
+                            </p>
+
+                            ${
+                                offer.cta_link
+                                    ? `
+                                        <a
+                                            href="${escapeHTML(offer.cta_link)}"
+                                            class="primary-btn"
+                                            style="display:inline-flex;align-items:center;margin-top:13px;"
+                                        >
+                                            ${escapeHTML(
+                                                offer.cta_text ||
+                                                "View Offer"
+                                            )}
+                                        </a>
+                                      `
+                                    : ""
+                            }
+
+                        </div>
+
+                    </article>
+                `;
+
+            }
+        ).join("");
+
+}
+
+/* =========================================================
+   EMPTY
+   ========================================================= */
+
+function emptyHTML(
+    icon,
+    title,
+    text
+) {
+
+    return `
+        <div class="empty-state"
+             style="grid-column:1/-1">
+
+            <div class="empty-icon">
+                ${icon}
+            </div>
+
+            <strong>
+                ${escapeHTML(title)}
+            </strong>
+
+            <span>
+                ${escapeHTML(text)}
+            </span>
+
+        </div>
+    `;
+
+}
+
+/* =========================================================
+   LOADING / ERROR
+   ========================================================= */
+
+function renderLocalLoadingState() {
+
+    document.getElementById(
+        "categoryGrid"
+    ).innerHTML =
+        emptyHTML(
+            "⚙️",
+            "Supabase not configured",
+            "Add your Supabase URL and public anon key."
+        );
+
+    document.getElementById(
+        "productGrid"
+    ).innerHTML =
+        emptyHTML(
+            "⚙️",
+            "Supabase connection required",
+            "The website is ready for Supabase."
+        );
+
+}
+
+function renderErrorStates() {
+
+    document.getElementById(
+        "categoryGrid"
+    ).innerHTML =
+        emptyHTML(
+            "⚠️",
+            "Categories unavailable",
+            "Please try again later."
+        );
+
+    document.getElementById(
+        "productGrid"
+    ).innerHTML =
+        emptyHTML(
+            "⚠️",
+            "Products unavailable",
+            "Please refresh the website."
+        );
+
+    document.getElementById(
+        "featuredGrid"
+    ).innerHTML =
+        emptyHTML(
+            "⚠️",
+            "Products unavailable",
+            "Please refresh the website."
+        );
+
+    document.getElementById(
+        "offerGrid"
+    ).innerHTML =
+        emptyHTML(
+            "🏷️",
+            "Offers unavailable",
+            "Please try again later."
+        );
+
+}
+
+/* =========================================================
+   CART COUNT
+   ========================================================= */
+
+function getCartCount() {
+
+    return cart.reduce(
+        (total, item) =>
+            total +
+            Number(item.quantity || 0),
+        0
+    );
+
+}
+
+/* =========================================================
+   CART TOTAL
+   ========================================================= */
+
+function getCartTotal() {
+
+    return cart.reduce(
+        (total, item) =>
+            total +
+            (
+                Number(item.price || 0) *
+                Number(item.quantity || 0)
+            ),
+        0
+    );
+
+}
+
+/* =========================================================
+   CART UI
+   ========================================================= */
+
+function updateCartUI() {
+
+    const count =
+        getCartCount();
+
+    document.getElementById(
+        "headerCartCount"
+    ).textContent =
+        count;
+
+    document.getElementById(
+        "bottomCartCount"
+    ).textContent =
+        count;
+
+    document.getElementById(
+        "drawerCartCount"
+    ).textContent =
+        count;
+
+}
+
+/* =========================================================
+   ADD TO CART
+   ========================================================= */
+
+function addToCart(
+    productId,
+    button
+) {
+
+    const product =
+        products.find(
+            item =>
+                Number(item.id) ===
+                Number(productId)
+        );
+
+    if (!product) {
+
+        showToast(
+            "Product not found"
+        );
+
+        return;
+
+    }
+
+    if (
+        product.availability !==
+        "AVAILABLE"
+    ) {
+
+        showToast(
+            "Product is unavailable"
+        );
+
+        return;
+
+    }
+
+    const existing =
+        cart.find(
+            item =>
+                String(item.product_id) ===
+                String(product.id)
+        );
+
+    if (existing) {
+
+        existing.quantity += 1;
+
+    } else {
+
+        cart.push({
+
+            product_id:
+                product.id,
+
+            product_name:
+                product.name,
+
+            image:
+                product.image_url ||
+                placeholderImage(
+                    product.name
+                ),
+
+            price:
+                getProductPrice(product),
+
+            unit:
+                product.unit,
+
+            quantity: 1
+
+        });
+
+    }
+
+    saveCart();
+
+    showToast(
+        "✓ Product added to cart"
+    );
+
+    animateToCart(
+        button,
+        product
+    );
+
+    renderProducts();
+
+    renderFeatured();
+
+}
+
+/* =========================================================
+   CHANGE CART QUANTITY
+   ========================================================= */
+
+function changeCartQuantity(
+    productId,
+    delta
+) {
+
+    const item =
+        cart.find(
+            cartItem =>
+                String(
+                    cartItem.product_id
+                ) ===
+                String(productId)
+        );
+
+    if (!item) return;
+
+    item.quantity +=
+        Number(delta);
+
+    if (item.quantity <= 0) {
+
+        cart =
+            cart.filter(
+                cartItem =>
+                    String(
+                        cartItem.product_id
+                    ) !==
+                    String(productId)
+            );
+
+    }
+
+    saveCart();
+
+    renderProducts();
+
+    renderFeatured();
+
+    if (
+        document.getElementById(
+            "cartModal"
+        )
+    ) {
+
+        renderCartModal();
+
+    }
+
+}
+
+/* =========================================================
+   REMOVE CART ITEM
+   ========================================================= */
+
+function removeCartItem(
+    productId
+) {
+
+    cart =
+        cart.filter(
+            item =>
+                String(item.product_id) !==
+                String(productId)
+        );
+
+    saveCart();
+
+    renderCartModal();
+
+    renderProducts();
+
+    renderFeatured();
+
+    showToast(
+        "Product removed"
+    );
+
+}
+
+/* =========================================================
+   CART ANIMATION
+   ========================================================= */
+
+function animateToCart(
+    source,
+    product
+) {
+
+    if (!source) return;
+
+    const image =
+        document.createElement(
+            "img"
+        );
+
+    image.className =
+        "fly-image";
+
+    image.src =
+        product.image_url ||
+        placeholderImage(
+            product.name
+        );
+
+    const rect =
+        source.getBoundingClientRect();
+
+    const cartButton =
+        document.getElementById(
+            "bottomCartButton"
+        );
+
+    const cartRect =
+        cartButton.getBoundingClientRect();
+
+    image.style.left =
+        rect.left +
+        rect.width / 2 -
+        27 +
+        "px";
+
+    image.style.top =
+        rect.top +
+        rect.height / 2 -
+        27 +
+        "px";
+
+    document.body.appendChild(
+        image
+    );
+
+    requestAnimationFrame(
+        () => {
+
+            image.style.left =
+                cartRect.left +
+                cartRect.width / 2 -
+                27 +
+                "px";
+
+            image.style.top =
+                cartRect.top +
+                cartRect.height / 2 -
+                27 +
+                "px";
+
+            image.style.transform =
+                "scale(.25)";
+
+            image.style.opacity =
+                "0";
+
+        }
+    );
+
+    setTimeout(
+        () => {
+
+            image.remove();
+
+            cartButton.classList.remove(
+                "pulse"
+            );
+
+            void cartButton.offsetWidth;
+
+            cartButton.classList.add(
+                "pulse"
+            );
+
+        },
+        600
+    );
+
+}
+
+/* =========================================================
+   OPEN CART
+   ========================================================= */
+
+function openCart() {
+
+    renderCartModal();
+
+}
+
+/* =========================================================
+   CART MODAL
+   ========================================================= */
+
+function renderCartModal() {
+
+    const items =
+        cart;
+
+    let itemsHTML = "";
+
+    if (!items.length) {
+
+        itemsHTML =
+            emptyHTML(
+                "🛒",
+                "Your cart is empty",
+                "Add products to your cart and continue shopping."
+            );
+
+    } else {
+
+        itemsHTML =
+            `
+            <div class="cart-items">
+
+                ${
+                    items.map(
+                        item => {
+
+                            return `
+                                <div class="cart-item">
+
+                                    <img
+                                        class="cart-item-image"
+                                        src="${escapeHTML(item.image)}"
+                                        alt="${escapeHTML(item.product_name)}"
+                                    >
+
+                                    <div>
+
+                                        <div class="cart-item-name">
+                                            ${escapeHTML(
+                                                item.product_name
+                                            )}
+                                        </div>
+
+                                        <div class="cart-item-price">
+                                            ${formatMoney(item.price)}
+                                            / ${escapeHTML(item.unit || "")}
+                                        </div>
+
+                                        <div class="cart-qty">
+
+                                            <button
+                                                onclick="changeCartQuantity(${item.product_id}, -1)"
+                                            >
+                                                −
+                                            </button>
+
+                                            <span>
+                                                ${item.quantity}
+                                            </span>
+
+                                            <button
+                                                onclick="changeCartQuantity(${item.product_id}, 1)"
+                                            >
+                                                +
+                                            </button>
+
+                                        </div>
+
+                                        <button
+                                            class="remove-cart"
+                                            onclick="removeCartItem(${item.product_id})"
+                                        >
+                                            Remove
+                                        </button>
+
+                                    </div>
+
+                                    <div class="cart-subtotal">
+                                        ${formatMoney(
+                                            Number(item.price) *
+                                            Number(item.quantity)
+                                        )}
+                                    </div>
+
+                                </div>
+                            `;
+
+                        }
+                    ).join("")
+                }
+
+            </div>
+            `;
+
+    }
+
+    const total =
+        getCartTotal();
+
+    openModal(
+        `
+            <div id="cartModal">
+
+                <div class="modal-header">
+
+                    <h2>🛒 Your Cart</h2>
+
+                    <button
+                        class="close-btn"
+                        onclick="closeModal()"
+                    >
+                        ✕
+                    </button>
+
+                </div>
+
+                ${itemsHTML}
+
+                ${
+                    items.length
+                        ? `
+                            <div class="cart-total-box">
+
+                                <div class="total-row">
+
+                                    <span>
+                                        Grand Total
+                                    </span>
+
+                                    <strong>
+                                        ${formatMoney(total)}
+                                    </strong>
+
+                                </div>
+
+                                <button
+                                    class="primary-btn"
+                                    style="width:100%;margin-top:14px;"
+                                    onclick="openCheckout()"
+                                >
+                                    PROCEED TO CHECKOUT
+                                </button>
+
+                                <button
+                                    class="secondary-btn"
+                                    style="width:100%;margin-top:8px;"
+                                    onclick="closeModal()"
+                                >
+                                    CONTINUE SHOPPING
+                                </button>
+
+                            </div>
+                          `
+                        : ""
+                }
+
+            </div>
+        `
+    );
+
+}
+
+/* =========================================================
+   PRODUCT DETAILS
+   ========================================================= */
+
+function openProductDetails(
+    productId
+) {
+
+    const product =
+        products.find(
+            item =>
+                Number(item.id) ===
+                Number(productId)
+        );
+
+    if (!product) return;
+
+    const price =
+        getProductPrice(product);
+
+    const discount =
+        getDiscount(product);
+
+    const image =
+        product.image_url ||
+        placeholderImage(
+            product.name
+        );
+
+    const available =
+        product.availability ===
+        "AVAILABLE";
+
+    openModal(
+        `
+        <div>
+
+            <div class="modal-header">
+
+                <h2>Product Details</h2>
+
+                <button
+                    class="close-btn"
+                    onclick="closeModal()"
+                >
+                    ✕
+                </button>
+
+            </div>
+
+            <img
+                class="detail-image"
+                src="${escapeHTML(image)}"
+                alt="${escapeHTML(product.name)}"
+            >
+
+            <h1 class="detail-title">
+                ${escapeHTML(product.name)}
+            </h1>
+
+            <div class="price-row">
+
+                <span class="current-price">
+                    ${formatMoney(price)}
+                </span>
+
+                ${
+                    product.offer_price &&
+                    Number(product.offer_price) <
+                    Number(product.mrp)
+                        ? `
+                            <span class="mrp-price">
+                                ${formatMoney(product.mrp)}
+                            </span>
+
+                            <span class="discount">
+                                ${discount}% OFF
+                            </span>
+                          `
+                        : ""
+                }
+
+            </div>
+
+            <div class="detail-meta">
+
+                <span class="meta-pill">
+                    📦 ${escapeHTML(product.unit || "")}
+                </span>
+
+                <span class="meta-pill">
+                    🗂️ ${escapeHTML(
+                        product.categories?.name ||
+                        ""
+                    )}
+                </span>
+
+                <span class="meta-pill">
+                    ${
+                        available
+                            ? "🟢 AVAILABLE"
+                            : "🔴 UNAVAILABLE"
+                    }
+                </span>
+
+            </div>
+
+            <p class="detail-description">
+                ${escapeHTML(
+                    product.description ||
+                    "Premium fireworks product from SAKTHIVEL CRACKERS."
+                )}
+            </p>
+
+            <button
+                class="primary-btn"
+                style="width:100%;margin-top:18px;"
+                ${
+                    !available
+                        ? "disabled"
+                        : ""
+                }
+                onclick="addToCart(${product.id}); closeModal();"
+            >
+                ${
+                    available
+                        ? "🛒 ADD TO CART"
+                        : "UNAVAILABLE"
+                }
+            </button>
+
+        </div>
+        `
+    );
+
+}
+
+/* =========================================================
+   CHECKOUT
+   ========================================================= */
+
+function openCheckout() {
+
+    if (!cart.length) {
+
+        showToast(
+            "Your cart is empty"
+        );
+
+        return;
+
+    }
+
+    openModal(
+        `
+        <div>
+
+            <div class="modal-header">
+
+                <h2>📦 Checkout</h2>
+
+                <button
+                    class="close-btn"
+                    onclick="closeModal()"
+                >
+                    ✕
+                </button>
+
+            </div>
+
+            <div class="cart-total-box"
+                 style="margin-bottom:15px;">
+
+                <div class="total-row">
+
+                    <span>
+                        Order Total
+                    </span>
+
+                    <strong>
+                        ${formatMoney(
+                            getCartTotal()
+                        )}
+                    </strong>
+
+                </div>
+
+            </div>
+
+            <form
+                id="checkoutForm"
+                class="form-grid"
+            >
+
+                <div class="form-group">
+
+                    <label>
+                        CUSTOMER NAME *
+                    </label>
+
+                    <input
+                        id="customerName"
+                        required
+                        maxlength="100"
+                        placeholder="Enter your name"
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>
+                        MOBILE NUMBER *
+                    </label>
+
+                    <input
+                        id="customerMobile"
+                        required
+                        inputmode="numeric"
+                        maxlength="10"
+                        placeholder="10-digit mobile number"
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>
+                        FULL ADDRESS *
+                    </label>
+
+                    <textarea
+                        id="customerAddress"
+                        required
+                        maxlength="500"
+                        placeholder="House / Street / Area"
+                    ></textarea>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>
+                        CITY / DISTRICT *
+                    </label>
+
+                    <input
+                        id="customerDistrict"
+                        required
+                        maxlength="80"
+                        placeholder="City / District"
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>
+                        PINCODE *
+                    </label>
+
+                    <input
+                        id="customerPincode"
+                        required
+                        inputmode="numeric"
+                        maxlength="6"
+                        placeholder="6-digit pincode"
+                    >
+
+                </div>
+
+                <div class="form-group">
+
+                    <label>
+                        NOTES (OPTIONAL)
+                    </label>
+
+                    <textarea
+                        id="customerNotes"
+                        maxlength="500"
+                        placeholder="Any additional note"
+                    ></textarea>
+
+                </div>
+
+                <div
+                    id="checkoutError"
+                    class="error-text"
+                ></div>
+
+                <button
+                    type="submit"
+                    id="placeOrderButton"
+                    class="primary-btn"
+                >
+                    PLACE ORDER
+                </button>
+
+            </form>
+
+        </div>
+        `
+    );
+
+    document.getElementById(
+        "checkoutForm"
+    ).addEventListener(
+        "submit",
+        handleCheckout
+    );
+
+}
+
+/* =========================================================
+   VALIDATION
+   ========================================================= */
+
+function validateMobile(
+    value
+) {
+
+    return /^[6-9]\d{9}$/.test(
+        String(value).trim()
+    );
+
+}
+
+function validatePincode(
+    value
+) {
+
+    return /^\d{6}$/.test(
+        String(value).trim()
+    );
+
+}
+
+/* =========================================================
+   PLACE ORDER
+   ========================================================= */
+
+async function handleCheckout(
+    event
+) {
+
+    event.preventDefault();
+
+    const errorBox =
+        document.getElementById(
+            "checkoutError"
+        );
+
+    errorBox.textContent = "";
+
+    if (!supabaseClient) {
+
+        errorBox.textContent =
+            "Supabase is not configured.";
+
+        return;
+
+    }
+
+    const name =
+        document.getElementById(
+            "customerName"
+        ).value.trim();
+
+    const mobile =
+        document.getElementById(
+            "customerMobile"
+        ).value.trim();
+
+    const address =
+        document.getElementById(
+            "customerAddress"
+        ).value.trim();
+
+    const district =
+        document.getElementById(
+            "customerDistrict"
+        ).value.trim();
+
+    const pincode =
+        document.getElementById(
+            "customerPincode"
+        ).value.trim();
+
+    const notes =
+        document.getElementById(
+            "customerNotes"
+        ).value.trim();
+
+    if (!name) {
+
+        errorBox.textContent =
+            "Customer name is required.";
+
+        return;
+
+    }
+
+    if (!validateMobile(mobile)) {
+
+        errorBox.textContent =
+            "Enter a valid Indian 10-digit mobile number.";
+
+        return;
+
+    }
+
+    if (!address) {
+
+        errorBox.textContent =
+            "Full address is required.";
+
+        return;
+
+    }
+
+    if (!district) {
+
+        errorBox.textContent =
+            "City / District is required.";
+
+        return;
+
+    }
+
+    if (!validatePincode(pincode)) {
+
+        errorBox.textContent =
+            "Enter a valid 6-digit Indian pincode.";
+
+        return;
+
+    }
+
+    if (!cart.length) {
+
+        errorBox.textContent =
+            "Your cart is empty.";
+
+        return;
+
+    }
+
+    const button =
+        document.getElementById(
+            "placeOrderButton"
+        );
+
+    button.disabled = true;
+
+    button.textContent =
+        "PLACING ORDER...";
+
+    try {
+
+        /*
+         * Client-generated order number.
+         *
+         * Final secure database version will use
+         * a Supabase database function/RPC.
+         */
+
+        const orderNumber =
+            createOrderNumber();
+
+        const total =
+            getCartTotal();
+
+        const orderPayload = {
+
+            order_number:
+                orderNumber,
+
+            customer_name:
+                name,
+
+            mobile:
+                mobile,
+
+            address:
+                address,
+
+            district:
+                district,
+
+            pincode:
+                pincode,
+
+            notes:
+                notes || null,
+
+            total_amount:
+                total,
+
+            status:
+                "PENDING"
+
+        };
+
+        const {
+            data: order,
+            error: orderError
+        } =
+            await supabaseClient
+                .from("orders")
+                .insert(
+                    orderPayload
+                )
+                .select()
+                .single();
+
+        if (orderError)
+            throw orderError;
+
+        const orderItems =
+            cart.map(
+                item => ({
+
+                    order_id:
+                        order.id,
+
+                    product_id:
+                        item.product_id,
+
+                    product_name:
+                        item.product_name,
+
+                    quantity:
+                        item.quantity,
+
+                    unit:
+                        item.unit,
+
+                    price:
+                        item.price,
+
+                    subtotal:
+                        Number(item.price) *
+                        Number(item.quantity)
+
+                })
+            );
+
+        const {
+            error: itemsError
+        } =
+            await supabaseClient
+                .from("order_items")
+                .insert(
+                    orderItems
+                );
+
+        if (itemsError)
+            throw itemsError;
+
+        currentOrder = {
+
+            ...order,
+
+            items:
+                orderItems
+
+        };
+
+        /*
+         * Clear local cart ONLY after
+         * successful order + items insert.
+         */
+
+        clearCart();
+
+        showOrderSuccess();
+
+    } catch (error) {
+
+        console.error(
+            "Order creation failed:",
+            error
+        );
+
+        errorBox.textContent =
+            "Order could not be placed. Please try again.";
+
+        button.disabled = false;
+
+        button.textContent =
+            "PLACE ORDER";
+
+    }
+
+}
+
+/* =========================================================
+   ORDER NUMBER
+   ========================================================= */
+
+function createOrderNumber() {
+
+    const year =
+        new Date()
+            .getFullYear();
+
+    const random =
+        Math.floor(
+            100000 +
+            Math.random() *
+            900000
+        );
+
+    return `SV-${year}-${random}`;
+
+}
+
+/* =========================================================
+   ORDER SUCCESS
+   ========================================================= */
+
+function showOrderSuccess() {
+
+    const order =
+        currentOrder;
+
+    if (!order) return;
+
+    const items =
+        order.items || [];
+
+    openModal(
+        `
+        <div class="success-box">
+
+            <div class="success-icon">
+                🎉
+            </div>
+
+            <h2>
+                ORDER RECEIVED!
+            </h2>
+
+            <div class="order-number">
+                ${escapeHTML(
+                    order.order_number
+                )}
+            </div>
+
+            <div class="status-badge">
+                🟡 PENDING
+            </div>
+
+            <div
+                style="
+                    text-align:left;
+                    margin-top:22px;
+                "
+            >
+
+                <div class="cart-total-box">
+
+                    <div class="contact-label">
+                        CUSTOMER
+                    </div>
+
+                    <div
+                        style="
+                            margin-top:4px;
+                            font-weight:850;
+                        "
+                    >
+                        ${escapeHTML(
+                            order.customer_name
+                        )}
+                    </div>
+
+                    <div
+                        style="
+                            margin-top:10px;
+                            color:#aebbd0;
+                            font-size:12px;
+                        "
+                    >
+                        📱 ${escapeHTML(
+                            order.mobile
+                        )}
+                    </div>
+
+                    <div
+                        style="
+                            margin-top:7px;
+                            color:#aebbd0;
+                            font-size:12px;
+                            line-height:1.6;
+                        "
+                    >
+                        📍 ${escapeHTML(
+                            order.address
+                        )}
+                        <br>
+                        ${escapeHTML(
+                            order.district
+                        )}
+                        -
+                        ${escapeHTML(
+                            order.pincode
+                        )}
+                    </div>
+
+                </div>
+
+                <div
+                    class="cart-items"
+                    style="margin-top:10px;"
+                >
+
+                    ${
+                        items.map(
+                            item => `
+                                <div class="cart-item">
+
+                                    <div
+                                        style="
+                                            grid-column:1/-1;
+                                        "
+                                    >
+
+                                        <div class="cart-item-name">
+                                            ${escapeHTML(
+                                                item.product_name
+                                            )}
+                                        </div>
+
+                                        <div
+                                            style="
+                                                margin-top:5px;
+                                                color:#aebbd0;
+                                                font-size:10px;
+                                            "
+                                        >
+                                            ${
+                                                item.quantity
+                                            }
+                                            ×
+                                            ${formatMoney(
+                                                item.price
+                                            )}
+                                            =
+                                            ${formatMoney(
+                                                item.subtotal
+                                            )}
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            `
+                        ).join("")
+                    }
+
+                </div>
+
+                <div
+                    class="cart-total-box"
+                    style="margin-top:10px;"
+                >
+
+                    <div class="total-row">
+
+                        <span>
+                            GRAND TOTAL
+                        </span>
+
+                        <strong>
+                            ${formatMoney(
+                                order.total_amount
+                            )}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div
+                style="
+                    display:grid;
+                    gap:9px;
+                    margin-top:18px;
+                "
+            >
+
+                <button
+                    class="primary-btn"
+                    onclick="downloadOrderBill()"
+                >
+                    📄 DOWNLOAD ORDER BILL
+                </button>
+
+                <button
+                    class="secondary-btn"
+                    onclick="sendOrderToWhatsApp()"
+                >
+                    💬 SEND ORDER TO WHATSAPP
+                </button>
+
+                <button
+                    class="secondary-btn"
+                    onclick="openTrackModal()"
+                >
+                    🔎 TRACK ORDER
+                </button>
+
+                <button
+                    class="secondary-btn"
+                    onclick="closeModal();scrollToSection('#products')"
+                >
+                    🛍️ CONTINUE SHOPPING
+                </button>
+
+            </div>
+
+        </div>
+        `
+    );
+
+}
+
+/* =========================================================
+   WHATSAPP ORDER
+   ========================================================= */
+
+function sendOrderToWhatsApp() {
+
+    if (!currentOrder) {
+
+        showToast(
+            "Order information unavailable"
+        );
+
+        return;
+
+    }
+
+    const order =
+        currentOrder;
+
+    const items =
+        order.items || [];
+
+    let message =
+        "SAKTHIVEL CRACKERS\n" +
+        "NEW ORDER\n\n";
+
+    message +=
+        "Order ID: " +
+        order.order_number +
+        "\n";
+
+    message +=
+        "Customer Name: " +
+        order.customer_name +
+        "\n";
+
+    message +=
+        "Mobile: " +
+        order.mobile +
+        "\n";
+
+    message +=
+        "Address: " +
+        order.address +
+        "\n";
+
+    message +=
+        "District: " +
+        order.district +
+        "\n";
+
+    message +=
+        "Pincode: " +
+        order.pincode +
+        "\n\n";
+
+    message +=
+        "ORDER ITEMS:\n";
+
+    items.forEach(
+        item => {
+
+            message +=
+                item.product_name +
+                " × " +
+                item.quantity +
+                " = " +
+                formatMoney(
+                    item.subtotal
+                ) +
+                "\n";
+
+        }
+    );
+
+    message +=
+        "\nTOTAL: " +
+        formatMoney(
+            order.total_amount
+        ) +
+        "\n";
+
+    message +=
+        "ORDER STATUS: PENDING";
+
+    const url =
+        "https://wa.me/" +
+        (
+            currentSettings.whatsapp_cc ||
+            DEFAULT_SETTINGS.whatsapp_cc
+        ).replace(/\D/g, "") +
+        "?text=" +
+        encodeURIComponent(
+            message
+        );
+
+    window.open(
+        url,
+        "_blank",
+        "noopener"
+    );
+
+}
+
+/* =========================================================
+   PDF / PRINT BILL
+   =========================================================
+
+   Browser-compatible bill.
+
+   The user can select:
+   "Save as PDF"
+   in the browser print dialog.
+
+   This avoids adding another PDF library.
+   ========================================================= */
+
+function downloadOrderBill() {
+
+    if (!currentOrder) {
+
+        showToast(
+            "Order information unavailable"
+        );
+
+        return;
+
+    }
+
+    const order =
+        currentOrder;
+
+    const items =
+        order.items || [];
+
+    const printWindow =
+        window.open(
+            "",
+            "_blank"
+        );
+
+    if (!printWindow) {
+
+        showToast(
+            "Please allow pop-ups to print the bill"
+        );
+
+        return;
+
+    }
+
+    const itemRows =
+        items.map(
+            item => `
+                <tr>
+
+                    <td>
+                        ${escapeHTML(
+                            item.product_name
+                        )}
+                    </td>
+
+                    <td>
+                        ${item.quantity}
+                    </td>
+
+                    <td>
+                        ${escapeHTML(
+                            item.unit || ""
+                        )}
+                    </td>
+
+                    <td>
+                        ${formatMoney(
+                            item.price
+                        )}
+                    </td>
+
+                    <td>
+                        ${formatMoney(
+                            item.subtotal
+                        )}
+                    </td>
+
+                </tr>
+            `
+        ).join("");
+
+    printWindow.document.write(
+        `
+        <!DOCTYPE html>
+
+        <html>
+
+        <head>
+
+            <title>
+                ${escapeHTML(
+                    order.order_number
+                )} - SAKTHIVEL CRACKERS
+            </title>
+
+            <meta
+                name="viewport"
+                content="width=device-width,initial-scale=1"
+            >
+
+            <style>
+
+                * {
+                    box-sizing:border-box;
+                }
+
+                body {
+                    margin:0;
+                    padding:30px;
+
+                    font-family:
+                        Arial,
+                        sans-serif;
+
+                    color:#111;
+                    background:#fff;
+                }
+
+                .bill {
+                    max-width:850px;
+                    margin:auto;
+                    border:2px solid #0b2040;
+                }
+
+                .head {
+                    padding:25px;
+                    background:#071a35;
+                    color:white;
+                    border-bottom:5px solid #ffd34d;
+                }
+
+                .shop {
+                    font-size:28px;
+                    font-weight:900;
+                }
+
+                .address {
+                    margin-top:7px;
+                    font-size:12px;
+                    line-height:1.5;
+                }
+
+                .content {
+                    padding:25px;
+                }
+
+                .order-box {
+                    display:grid;
+                    grid-template-columns:1fr 1fr;
+                    gap:8px;
+                    padding:15px;
+                    background:#f4f6fa;
+                    border-left:4px solid #b5122b;
+                }
+
+                .label {
+                    color:#666;
+                    font-size:10px;
+                }
+
+                .value {
+                    font-weight:700;
+                    margin-top:3px;
+                }
+
+                table {
+                    width:100%;
+                    border-collapse:collapse;
+                    margin-top:25px;
+                }
+
+                th {
+                    background:#0b2040;
+                    color:white;
+                }
+
+                th,
+                td {
+                    padding:10px;
+                    border:1px solid #ddd;
+                    text-align:left;
+                    font-size:11px;
+                }
+
+                .total {
+                    margin-top:20px;
+                    display:flex;
+                    justify-content:flex-end;
+                    font-size:20px;
+                    font-weight:900;
+                }
+
+                .status {
+                    color:#b88600;
+                    font-weight:900;
+                }
+
+                .footer {
+                    margin-top:30px;
+                    padding-top:15px;
+                    border-top:1px solid #ddd;
+                    font-size:10px;
+                    color:#666;
+                    text-align:center;
+                }
+
+                @media print {
+
+                    body {
+                        padding:0;
+                    }
+
+                    .bill {
+                        border:0;
+                    }
+
+                }
+
+            </style>
+
+        </head>
+
+        <body>
+
+            <div class="bill">
+
+                <div class="head">
+
+                    <div class="shop">
+                        SAKTHIVEL CRACKERS
+                    </div>
+
+                    <div class="address">
+                        Kundayiruppu,
+                        Sivakasi,
+                        Tamil Nadu, India
+                        <br>
+                        WhatsApp:
+                        93442 65054
+                    </div>
+
+                </div>
+
+                <div class="content">
+
+                    <div class="order-box">
+
+                        <div>
+                            <div class="label">
+                                ORDER ID
+                            </div>
+
+                            <div class="value">
+                                ${escapeHTML(
+                                    order.order_number
+                                )}
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="label">
+                                DATE
+                            </div>
+
+                            <div class="value">
+                                ${new Date(
+                                    order.created_at ||
+                                    Date.now()
+                                ).toLocaleString(
+                                    "en-IN"
+                                )}
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="label">
+                                CUSTOMER
+                            </div>
+
+                            <div class="value">
+                                ${escapeHTML(
+                                    order.customer_name
+                                )}
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="label">
+                                MOBILE
+                            </div>
+
+                            <div class="value">
+                                ${escapeHTML(
+                                    order.mobile
+                                )}
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="label">
+                                ADDRESS
+                            </div>
+
+                            <div class="value">
+                                ${escapeHTML(
+                                    order.address
+                                )}
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="label">
+                                STATUS
+                            </div>
+
+                            <div class="value status">
+                                ${escapeHTML(
+                                    order.status ||
+                                    "PENDING"
+                                )}
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Product
+                                </th>
+
+                                <th>
+                                    Qty
+                                </th>
+
+                                <th>
+                                    Unit
+                                </th>
+
+                                <th>
+                                    Unit Price
+                                </th>
+
+                                <th>
+                                    Subtotal
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            ${itemRows}
+
+                        </tbody>
+
+                    </table>
+
+                    <div class="total">
+                        GRAND TOTAL:
+                        &nbsp;
+                        ${formatMoney(
+                            order.total_amount
+                        )}
+                    </div>
+
+                    <div class="footer">
+                        Thank you for ordering
+                        from SAKTHIVEL CRACKERS.
+                        <br>
+                        Kundayiruppu,
+                        Sivakasi,
+                        Tamil Nadu, India
+                    </div>
+
+                </div>
+
+            </div>
+
+            <script>
+
+                window.onload =
+                    function() {
+
+                        setTimeout(
+                            function() {
+                                window.print();
+                            },
+                            400
+                        );
+
+                    };
+
+            <\/script>
+
+        </body>
+
+        </html>
+        `
+    );
+
+    printWindow.document.close();
+
+}
+
+/* =========================================================
+   TRACK ORDER MODAL
+   ========================================================= */
+
+function openTrackModal() {
+
+    openModal(
+        `
+        <div>
+
+            <div class="modal-header">
+
+                <h2>
+                    🔎 Track Your Order
+                </h2>
+
+                <button
+                    class="close-btn"
+                    onclick="closeModal()"
+                >
+                    ✕
+                </button>
+
+            </div>
+
+            <p
+                style="
+                    color:#aebbd0;
+                    font-size:12px;
+                    line-height:1.6;
+                "
+            >
+                Enter the 10-digit mobile number
+                used while placing your order.
+            </p>
+
+            <div
+                class="form-group"
+                style="margin-top:16px;"
+            >
+
+                <label>
+                    REGISTERED MOBILE NUMBER
+                </label>
+
+                <input
+                    id="trackMobile"
+                    inputmode="numeric"
+                    maxlength="10"
+                    placeholder="10-digit mobile number"
+                >
+
+            </div>
+
+            <div
+                id="trackError"
+                class="error-text"
+                style="margin-top:7px;"
+            ></div>
+
+            <button
+                class="primary-btn"
+                style="width:100%;margin-top:13px;"
+                onclick="trackOrders()"
+            >
+                CHECK ORDER
+            </button>
+
+            <div
+                id="trackResults"
+                style="margin-top:18px;"
+            ></div>
+
+        </div>
+        `
+    );
+
+}
+
+/* =========================================================
+   TRACK ORDERS
+   ========================================================= */
+
+async function trackOrders() {
+
+    const mobile =
+        document.getElementById(
+            "trackMobile"
+        ).value.trim();
+
+    const error =
+        document.getElementById(
+            "trackError"
+        );
+
+    const results =
+        document.getElementById(
+            "trackResults"
+        );
+
+    error.textContent = "";
+
+    results.innerHTML = "";
+
+    if (!validateMobile(mobile)) {
+
+        error.textContent =
+            "Enter a valid Indian 10-digit mobile number.";
+
+        return;
+
+    }
+
+    if (!supabaseClient) {
+
+        error.textContent =
+            "Supabase is not configured.";
+
+        return;
+
+    }
+
+    results.innerHTML =
+        `
+            <div class="loading">
+                <div>
+                    <div class="spinner"></div>
+                    Checking orders...
+                </div>
+            </div>
+        `;
+
+    try {
+
+        /*
+         * This select requires the final secure
+         * customer tracking RLS/RPC setup.
+         */
+
+        const {
+            data,
+            error: queryError
+        } =
+            await supabaseClient
+                .from("orders")
+                .select(
+                    "id,order_number,customer_name,total_amount,status,created_at"
+                )
+                .eq(
+                    "mobile",
+                    mobile
+                )
+                .order(
+                    "created_at",
+                    {
+                        ascending:false
+                    }
+                );
+
+        if (queryError)
+            throw queryError;
+
+        if (!data || !data.length) {
+
+            results.innerHTML =
+                emptyHTML(
+                    "📭",
+                    "No orders found",
+                    "Check the mobile number and try again."
+                );
+
+            return;
+
+        }
+
+        results.innerHTML =
+            data.map(
+                order => {
+
+                    const status =
+                        order.status ||
+                        "PENDING";
+
+                    let statusIcon =
+                        "🟡";
+
+                    if (
+                        status ===
+                        "CONFIRMED"
+                    ) {
+                        statusIcon =
+                            "🟢";
+                    }
+
+                    if (
+                        status ===
+                        "CANCELLED"
+                    ) {
+                        statusIcon =
+                            "🔴";
+                    }
+
+                    return `
+                        <div
+                            class="cart-total-box"
+                            style="
+                                margin-bottom:10px;
+                                cursor:pointer;
+                            "
+                            onclick="viewTrackedOrder('${escapeHTML(order.order_number)}')"
+                        >
+
+                            <div
+                                style="
+                                    display:flex;
+                                    justify-content:space-between;
+                                    gap:10px;
+                                "
+                            >
+
+                                <div>
+
+                                    <div
+                                        style="
+                                            color:#ffd34d;
+                                            font-weight:900;
+                                            font-size:13px;
+                                        "
+                                    >
+                                        ${escapeHTML(
+                                            order.order_number
+                                        )}
+                                    </div>
+
+                                    <div
+                                        style="
+                                            color:#aebbd0;
+                                            font-size:10px;
+                                            margin-top:5px;
+                                        "
+                                    >
+                                        ${new Date(
+                                            order.created_at
+                                        ).toLocaleDateString(
+                                            "en-IN"
+                                        )}
+                                    </div>
+
+                                </div>
+
+                                <div
+                                    style="
+                                        color:#ffd34d;
+                                        font-weight:900;
+                                    "
+                                >
+                                    ${formatMoney(
+                                        order.total_amount
+                                    )}
+                                </div>
+
+                            </div>
+
+                            <div
+                                style="
+                                    margin-top:9px;
+                                    font-size:10px;
+                                    font-weight:900;
+                                "
+                            >
+                                ${statusIcon}
+                                ${escapeHTML(status)}
+                            </div>
+
+                            <button
+                                class="secondary-btn"
+                                style="
+                                    width:100%;
+                                    margin-top:10px;
+                                    min-height:35px;
+                                "
+                                onclick="event.stopPropagation();viewTrackedOrder('${escapeHTML(order.order_number)}')"
+                            >
+                                VIEW ORDER DETAILS
+                            </button>
+
+                        </div>
+                    `;
+
+                }
+            ).join("");
+
+    } catch (errorObject) {
+
+        console.error(
+            "Tracking error:",
+            errorObject
+        );
+
+        results.innerHTML =
+            emptyHTML(
+                "⚠️",
+                "Unable to check orders",
+                "The secure order tracking database setup will be enabled in the final SQL."
+            );
+
+    }
+
+}
+
+/* =========================================================
+   TRACKED ORDER DETAILS
+   ========================================================= */
+
+async function viewTrackedOrder(
+    orderNumber
+) {
+
+    if (!supabaseClient) return;
+
+    try {
+
+        const {
+            data: order,
+            error
+        } =
+            await supabaseClient
+                .from("orders")
+                .select("*")
+                .eq(
+                    "order_number",
+                    orderNumber
+                )
+                .single();
+
+        if (error)
+            throw error;
+
+        const {
+            data: items,
+            error: itemsError
+        } =
+            await supabaseClient
+                .from("order_items")
+                .select("*")
+                .eq(
+                    "order_id",
+                    order.id
+                )
+                .order(
+                    "id",
+                    {
+                        ascending:true
+                    }
+                );
+
+        if (itemsError)
+            throw itemsError;
+
+        currentOrder = {
+            ...order,
+            items:
+                items || []
+        };
+
+        showOrderSuccess();
+
+    } catch (error) {
+
+        console.error(
+            error
+        );
+
+        showToast(
+            "Unable to open order details"
+        );
+
+    }
+
+}
+
+/* =========================================================
+   PRICE LIST
+   ========================================================= */
+
+async function openPriceList() {
+
+    if (!supabaseClient) {
+
+        showToast(
+            "Supabase is not configured"
+        );
+
+        return;
+
+    }
+
+    openModal(
+        `
+            <div>
+
+                <div class="modal-header">
+
+                    <h2>
+                        📄 Price List
+                    </h2>
+
+                    <button
+                        class="close-btn"
+                        onclick="closeModal()"
+                    >
+                        ✕
+                    </button>
+
+                </div>
+
+                <div
+                    id="priceListContent"
+                    class="loading"
+                >
+                    <div>
+                        <div class="spinner"></div>
+                        Loading price list...
+                    </div>
+                </div>
+
+            </div>
+        `
+    );
+
+    try {
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient
+                .from("price_lists")
+                .select("*")
+                .eq(
+                    "active",
+                    true
+                )
+                .order(
+                    "created_at",
+                    {
+                        ascending:false
+                    }
+                )
+                .limit(1)
+                .maybeSingle();
+
+        if (error)
+            throw error;
+
+        const container =
+            document.getElementById(
+                "priceListContent"
+            );
+
+        if (!data || !data.file_url) {
+
+            container.innerHTML =
+                emptyHTML(
+                    "📄",
+                    "Price list not available",
+                    "The official price list will appear here when uploaded by Admin."
+                );
+
+            return;
+
+        }
+
+        container.className = "";
+
+        container.innerHTML =
+            `
+                <div
+                    class="price-panel"
+                    style="margin-top:10px;"
+                >
+
+                    <div class="price-icon">
+                        📄
+                    </div>
+
+                    <h2>
+                        ${escapeHTML(
+                            data.title ||
+                            "Official Price List"
+                        )}
+                    </h2>
+
+                    <div
+                        style="
+                            display:grid;
+                            gap:9px;
+                            margin-top:18px;
+                        "
+                    >
+
+                        <a
+                            href="${escapeHTML(data.file_url)}"
+                            target="_blank"
+                            rel="noopener"
+                            class="primary-btn"
+                            style="
+                                display:flex;
+                                align-items:center;
+                                justify-content:center;
+                            "
+                        >
+                            VIEW PRICE LIST
+                        </a>
+
+                        <a
+                            href="${escapeHTML(data.file_url)}"
+                            target="_blank"
+                            rel="noopener"
+                            download
+                            class="secondary-btn"
+                            style="
+                                display:flex;
+                                align-items:center;
+                                justify-content:center;
+                            "
+                        >
+                            DOWNLOAD PRICE LIST PDF
+                        </a>
+
+                    </div>
+
+                </div>
+            `;
+
+    } catch (error) {
+
+        console.error(
+            error
+        );
+
+        document.getElementById(
+            "priceListContent"
+        ).innerHTML =
+            emptyHTML(
+                "⚠️",
+                "Unable to load price list",
+                "Please try again later."
+            );
+
+    }
+
+}
+
+/* =========================================================
+   MODAL SYSTEM
+   ========================================================= */
+
+function openModal(
+    html
+) {
+
+    closeModal();
+
+    const root =
+        document.getElementById(
+            "modalRoot"
+        );
+
+    root.innerHTML =
+        `
+            <div
+                class="modal-layer"
+                onclick="modalBackdropClick(event)"
+            >
+
+                <div class="modal">
+
+                    ${html}
+
+                </div>
+
+            </div>
+        `;
+
+    document.body.classList.add(
+        "modal-open"
+    );
+
+}
+
+function modalBackdropClick(
+    event
+) {
+
+    if (
+        event.target.classList.contains(
+            "modal-layer"
+        )
+    ) {
+
+        closeModal();
+
+    }
+
+}
+
+function closeModal() {
+
+    const root =
+        document.getElementById(
+            "modalRoot"
+        );
+
+    root.innerHTML = "";
+
+    document.body.classList.remove(
+        "modal-open"
+    );
+
+}
+
+/* =========================================================
+   DRAWER
+   ========================================================= */
+
+function openDrawer() {
+
+    document.getElementById(
+        "drawerBackdrop"
+    ).classList.remove(
+        "hidden"
+    );
+
+    requestAnimationFrame(
+        () => {
+
+            document.getElementById(
+                "drawer"
+            ).classList.add(
+                "open"
+            );
+
+        }
+    );
+
+}
+
+function closeDrawer() {
+
+    document.getElementById(
+        "drawer"
+    ).classList.remove(
+        "open"
+    );
+
+    setTimeout(
+        () => {
+
+            document.getElementById(
+                "drawerBackdrop"
+            ).classList.add(
+                "hidden"
+            );
+
+        },
+        280
+    );
+
+}
+
+function drawerGo(
+    target
+) {
+
+    closeDrawer();
+
+    setTimeout(
+        () => {
+
+            scrollToSection(
+                target
+            );
+
+        },
+        300
+    );
+
+}
+
+/* =========================================================
+   SERVICE WORKER SAFE CHECK
+   ========================================================= */
+
+window.addEventListener(
+    "error",
+    event => {
+
+        console.error(
+            "Website error:",
+            event.error
+        );
+
+    }
+);
+
+</script>
+
+</body>
+</html>
