@@ -1415,7 +1415,7 @@ tr:hover td{
 
       <button
         class="action-btn green"
-        onclick="openProductModal()"
+        onclick="window.openProductModal()"
       >
         ＋ Add Product
       </button>
@@ -3026,7 +3026,7 @@ async function openOrderDetails(orderId){
 
       <button
         class="close-btn"
-        onclick="closeModal()"
+        onclick="window.closeModal()"
       >
         ✕
       </button>
@@ -3501,7 +3501,7 @@ function openCategoryModal(id=null){
 
       <button
         class="close-btn"
-        onclick="closeModal()"
+        onclick="window.closeModal()"
       >
         ✕
       </button>
@@ -4059,14 +4059,14 @@ function renderProducts(){
 
                 <button
                   class="action-btn small"
-                  onclick="openProductModal(${product.id})"
+                  onclick="window.openProductModal(${product.id})"
                 >
                   EDIT
                 </button>
 
                 <button
                   class="action-btn small red"
-                  onclick="deleteProduct(${product.id})"
+                  onclick="window.deleteProduct(${product.id})"
                 >
                   DELETE
                 </button>
@@ -4147,7 +4147,7 @@ function openProductModal(id=null){
 
       <button
         class="close-btn"
-        onclick="closeModal()"
+        onclick="window.closeModal()"
       >
         ✕
       </button>
@@ -4890,7 +4890,7 @@ function openBannerModal(id=null){
 
       <button
         class="close-btn"
-        onclick="closeModal()"
+        onclick="window.closeModal()"
       >
         ✕
       </button>
@@ -5447,7 +5447,7 @@ function openOfferModal(id=null){
 
       <button
         class="close-btn"
-        onclick="closeModal()"
+        onclick="window.closeModal()"
       >
         ✕
       </button>
@@ -6041,7 +6041,7 @@ function openPriceListModal(id=null){
 
       <button
         class="close-btn"
-        onclick="closeModal()"
+        onclick="window.closeModal()"
       >
         ✕
       </button>
@@ -6875,6 +6875,17 @@ async function init(){
 ========================================================= */
 
 init();
+
+
+/* =========================================================
+   EXPLICIT GLOBAL HANDLERS
+   Required for inline HTML onclick handlers.
+========================================================= */
+window.openProductModal = openProductModal;
+window.deleteProduct = deleteProduct;
+window.closeModal = closeModal;
+window.saveProduct = saveProduct;
+window.loadProducts = loadProducts;
 
 </script>
 
