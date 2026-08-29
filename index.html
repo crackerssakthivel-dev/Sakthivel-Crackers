@@ -3196,14 +3196,11 @@ async function loadSettings(){
         const response =
             await supabaseClient
                 .from("settings")
-                .select("*");
+                .select("*")
+                .limit(1)
+                .single();
 
         if(response.error){
-
-            console.warn(
-                "Settings load error:",
-                response.error
-            );
 
             settings = {};
 
@@ -3211,36 +3208,9 @@ async function loadSettings(){
 
         }
 
-        settings = {};
-
-        (response.data || []).forEach(
-            function(row){
-
-                let key =
-                    row.key ||
-                    row.setting_key ||
-                    row.name;
-
-                let value =
-                    row.value ??
-                    row.setting_value ??
-                    "";
-
-                if(key){
-
-                    settings[key] = value;
-
-                }
-
-            }
-        );
+        settings = response.data || {};
 
     }catch(error){
-
-        console.warn(
-            "Settings exception:",
-            error
-        );
 
         settings = {};
 
@@ -3256,60 +3226,36 @@ async function loadSettings(){
 function applySettings(){
 
     const businessName =
-        getSetting(
-            [
-                "shop_name",
-                "business_name",
-                "site_name"
-            ],
-            DEFAULT_BUSINESS.name
-        );
+        settings.shop_name ||
+        settings.business_name ||
+        settings.site_name ||
+        DEFAULT_BUSINESS.name;
 
     const address =
-        getSetting(
-            [
-                "address",
-                "shop_address",
-                "business_address"
-            ],
-            DEFAULT_BUSINESS.address
-        );
+        settings.address ||
+        settings.shop_address ||
+        settings.business_address ||
+        DEFAULT_BUSINESS.address;
 
     const whatsapp =
-        getSetting(
-            [
-                "whatsapp",
-                "whatsapp_number",
-                "contact_whatsapp"
-            ],
-            DEFAULT_BUSINESS.whatsapp
-        );
+        settings.whatsapp ||
+        settings.whatsapp_number ||
+        settings.contact_whatsapp ||
+        DEFAULT_BUSINESS.whatsapp;
 
     const footerText =
-        getSetting(
-            [
-                "footer_text"
-            ],
-            address
-        );
+        settings.footer_text ||
+        address;
 
     const title =
-        getSetting(
-            [
-                "site_title",
-                "seo_title"
-            ],
-            "SAKTHIVEL CRACKERS — Kundayiruppu, Sivakasi"
-        );
+        settings.site_title ||
+        settings.seo_title ||
+        "SAKTHIVEL CRACKERS — Kundayiruppu, Sivakasi";
 
     const description =
-        getSetting(
-            [
-                "meta_description",
-                "seo_description"
-            ],
-            "SAKTHIVEL CRACKERS — Premium fireworks ordering website."
-        );
+        settings.meta_description ||
+        settings.seo_description ||
+        "SAKTHIVEL CRACKERS — Premium fireworks ordering website.";
 
     setText(
         "headerShopName",
@@ -3358,14 +3304,10 @@ function applySettings(){
     }
 
     const logo =
-        getSetting(
-            [
-                "logo_url",
-                "logo",
-                "site_logo"
-            ],
-            PLACEHOLDERS.logo
-        );
+        settings.logo_url ||
+        settings.logo ||
+        settings.site_logo ||
+        PLACEHOLDERS.logo;
 
     setImage(
         "siteLogo",
@@ -3382,7 +3324,6 @@ function applySettings(){
     );
 
 }
-
 
 /* =========================================================
    10. SETTINGS HELPER
