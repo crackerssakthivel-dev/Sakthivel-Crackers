@@ -6578,6 +6578,8 @@ async function saveSettings(event){
 
     const payload = {
 
+      id: 1,
+
       shop_name:
         document
           .getElementById("setShopName")
@@ -6664,36 +6666,15 @@ async function saveSettings(event){
 
     }
 
-    if(currentSettings?.id){
+    const {
+      error
+    } =
+    await supabaseClient
+      .from("settings")
+      .upsert(payload);
 
-      const {
-        error
-      } =
-      await supabaseClient
-        .from("settings")
-        .update(payload)
-        .eq(
-          "id",
-          currentSettings.id
-        );
-
-      if(error){
-        throw error;
-      }
-
-    }else{
-
-      const {
-        error
-      } =
-      await supabaseClient
-        .from("settings")
-        .insert(payload);
-
-      if(error){
-        throw error;
-      }
-
+    if(error){
+      throw error;
     }
 
     showToast(
