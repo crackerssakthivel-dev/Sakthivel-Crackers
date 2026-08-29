@@ -1,0 +1,103 @@
+# ============================================================
+# SAKTHIVEL CRACKERS
+# Git Ignore File
+# ============================================================
+
+# Operating system files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor / IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+*.bak
+*.backup
+
+# Local environment files
+.env
+.env.local
+.env.development
+.env.development.local
+.env.test
+.env.test.local
+.env.production
+.env.production.local
+
+# Secret configuration files
+secrets/
+secret/
+*.secret
+*.key
+*.pem
+
+# Node / package files
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build / cache directories
+.cache/
+dist/
+build/
+.vercel/
+
+# Local development data
+*.local
+*.sqlite
+*.sqlite3
+*.db
+
+# Python cache (if accidentally created locally)
+__pycache__/
+*.pyc
+
+# OS generated folders
+$RECYCLE.BIN/
+.Trashes/
+
+# Personal backup files
+*.old
+*.orig
+*.save
+
+# Supabase local development files
+.supabase/
+
+# Local credentials
+credentials.json
+service-account.json
+service-role-key.txt
+
+# Private keys
+private.key
+private.pem
+service-role.key
+
+# Temporary exports
+exports/
+backups/
+
+# ============================================================
+# IMPORTANT
+#
+# NEVER commit:
+#
+# SUPABASE_SERVICE_ROLE_KEY
+# Database passwords
+# Private API keys
+# Admin passwords
+# Personal credentials
+#
+# The browser should use only the public Supabase URL
+# and public/anon key.
+# ============================================================
