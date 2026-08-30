@@ -1870,7 +1870,7 @@ a{
 
                 <button
                     class="view-all"
-                onclick="filterProducts('all'); navigateTo('products');"
+               onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'}); filterProducts('all');"
                 >
                     VIEW ALL
                 </button>
