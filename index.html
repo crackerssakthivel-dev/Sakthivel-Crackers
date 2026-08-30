@@ -1870,7 +1870,7 @@ a{
 
                 <button
                     class="view-all"
-              onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'}); location.reload();"
+            onclick="document.getElementById('products').scrollIntoView({behavior: 'smooth'}); if(typeof renderProducts === 'function' && typeof allProducts !== 'undefined') { renderProducts(allProducts); }"
                 >
                     VIEW ALL
                 </button>
