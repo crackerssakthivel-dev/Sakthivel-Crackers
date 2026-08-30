@@ -4254,23 +4254,11 @@ function renderProductCard(product){
                         ? `
                             <div class="quantity-control">
 
-                                <button
-                                    aria-label="Decrease quantity"
-                                    onclick="changeProductQuantity('${escapeAttr(product.id)}',-1,event)"
-                                >
-                                    −
-                                </button>
-
-                                <span>
-                                    ${quantity}
-                                </span>
-
-                                <button
-                                    aria-label="Increase quantity"
-                                    onclick="changeProductQuantity('${escapeAttr(product.id)}',1,event)"
-                                >
-                                    +
-                                </button>
+                               <div class="quantity-control">
+    <button aria-label="Decrease quantity" onclick="updateLocalQty('${escapeAttr(product.id)}', -1)">-</button>
+    <span>${quantity}</span>
+    <button aria-label="Increase quantity" onclick="updateLocalQty('${escapeAttr(product.id)}', 1)">+</button>
+</div>
 
                             </div>
 
