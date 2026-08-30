@@ -8470,7 +8470,7 @@ updateCartUI();
 
 /* =========================================================
    END OF INDEX.HTML
-function updateLocalQty(productId, change) {
+function changeProductQuantity(productId, change) {
     const card = document.querySelector(`[data-product-id="${productId}"]`);
     if (!card) return;
     
@@ -8490,7 +8490,7 @@ function updateLocalQty(productId, change) {
             addBtn.setAttribute('onclick', onclickAttr);
         }
     }
-}========================================================= */
+}
 </script>
 
 </body>
