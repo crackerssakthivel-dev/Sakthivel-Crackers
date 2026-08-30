@@ -2227,7 +2227,7 @@ async function checkAdminAuthorization(){
       .from("admin_profiles")
       .select("*")
       .eq("user_id",user.id)
-      .eq("active",true)
+      .eq("is_admin",true)
       .maybeSingle();
 
   if(adminError){
@@ -2965,7 +2965,7 @@ function renderOrders(){
 
                 <button
                   class="action-btn small"
-                  onclick="openOrderDetails(${order.id})"
+                  onclick="openOrderDetails('${order.id}')"
                 >
                   VIEW
                 </button>
@@ -3006,7 +3006,7 @@ async function openOrderDetails(orderId){
 
   const order =
     orders.find(
-      x=>Number(x.id) === Number(orderId)
+      x=>String(x.id) === String(orderId)
     );
 
   if(!order){
@@ -3111,14 +3111,14 @@ async function openOrderDetails(orderId){
         ? `
           <button
             class="action-btn green"
-            onclick="changeOrderStatus(${order.id},'CONFIRMED')"
+            onclick="changeOrderStatus('${order.id}','CONFIRMED')"
           >
             ✓ CONFIRM ORDER
           </button>
 
           <button
             class="action-btn red"
-            onclick="changeOrderStatus(${order.id},'CANCELLED')"
+            onclick="changeOrderStatus('${order.id}','CANCELLED')"
           >
             ✕ CANCEL ORDER
           </button>
@@ -3447,21 +3447,21 @@ function renderCategories(){
 
                 <button
                   class="action-btn small"
-                  onclick="openCategoryModal(${category.id})"
+                  onclick="openCategoryModal('${category.id}')"
                 >
                   EDIT
                 </button>
 
                 <button
                   class="action-btn small gray"
-                  onclick="toggleCategory(${category.id},${!category.active})"
+                  onclick="toggleCategory('${category.id}',${!category.active})"
                 >
                   ${category.active ? "DISABLE" : "ENABLE"}
                 </button>
 
                 <button
                   class="action-btn small red"
-                  onclick="deleteCategory(${category.id})"
+                  onclick="deleteCategory('${category.id}')"
                 >
                   DELETE
                 </button>
@@ -3487,7 +3487,7 @@ function openCategoryModal(id=null){
   const category =
     id
       ? categories.find(
-          x=>Number(x.id) === Number(id)
+          x=>String(x.id) === String(id)
         )
       : null;
 
@@ -3510,7 +3510,7 @@ function openCategoryModal(id=null){
 
     <form
       id="categoryForm"
-      onsubmit="saveCategory(event,${id || "null"})"
+      onsubmit="saveCategory(event,'${id || ""}')"
     >
 
       <div class="form-grid">
@@ -3645,7 +3645,7 @@ async function saveCategory(
       active
     };
 
-    if(id){
+    if(id && id !== "null" && id !== ""){
 
       const {
         error
@@ -4059,14 +4059,14 @@ function renderProducts(){
 
                 <button
                   class="action-btn small"
-                  onclick="window.openProductModal(${product.id})"
+                  onclick="window.openProductModal('${product.id}')"
                 >
                   EDIT
                 </button>
 
                 <button
                   class="action-btn small red"
-                  onclick="window.deleteProduct(${product.id})"
+                  onclick="window.deleteProduct('${product.id}')"
                 >
                   DELETE
                 </button>
@@ -4116,7 +4116,7 @@ function openProductModal(id=null){
   const product =
     id
       ? products.find(
-          x=>Number(x.id) === Number(id)
+          x=>String(x.id) === String(id)
         )
       : null;
 
@@ -4126,8 +4126,8 @@ function openProductModal(id=null){
       <option
         value="${category.id}"
         ${
-          Number(product?.category_id) ===
-          Number(category.id)
+          String(product?.category_id) ===
+          String(category.id)
           ? "selected"
           : ""
         }
@@ -4156,7 +4156,7 @@ function openProductModal(id=null){
 
     <form
       id="productForm"
-      onsubmit="saveProduct(event,${id || "null"})"
+      onsubmit="saveProduct(event,'${id || ""}')"
     >
 
       <div class="form-grid">
@@ -4466,11 +4466,9 @@ async function saveProduct(
         .trim();
 
     const category_id =
-      Number(
-        document
-          .getElementById("productCategory")
-          .value
-      );
+      document
+        .getElementById("productCategory")
+        .value;
 
     const unit =
       document
@@ -4565,7 +4563,7 @@ async function saveProduct(
 
     };
 
-    if(id){
+    if(id && id !== "null" && id !== ""){
 
       delete payload.slug;
 
@@ -4836,21 +4834,21 @@ function renderBanners(){
 
                 <button
                   class="action-btn small"
-                  onclick="openBannerModal(${banner.id})"
+                  onclick="openBannerModal('${banner.id}')"
                 >
                   EDIT
                 </button>
 
                 <button
                   class="action-btn small gray"
-                  onclick="toggleBanner(${banner.id},${!banner.active})"
+                  onclick="toggleBanner('${banner.id}',${!banner.active})"
                 >
                   ${banner.active ? "DISABLE" : "ENABLE"}
                 </button>
 
                 <button
                   class="action-btn small red"
-                  onclick="deleteBanner(${banner.id})"
+                  onclick="deleteBanner('${banner.id}')"
                 >
                   DELETE
                 </button>
@@ -4876,7 +4874,7 @@ function openBannerModal(id=null){
   const banner =
     id
       ? banners.find(
-          x=>Number(x.id) === Number(id)
+          x=>String(x.id) === String(id)
         )
       : null;
 
@@ -4898,7 +4896,7 @@ function openBannerModal(id=null){
     </div>
 
     <form
-      onsubmit="saveBanner(event,${id || "null"})"
+      onsubmit="saveBanner(event,'${id || ""}')"
     >
 
       <div class="form-grid">
@@ -5091,7 +5089,7 @@ async function saveBanner(
         .getElementById("bannerImage")
         .files[0];
 
-    if(id){
+    if(id && id !== "null" && id !== ""){
 
       const {
         error
@@ -5393,21 +5391,21 @@ function renderOffers(){
 
                 <button
                   class="action-btn small"
-                  onclick="openOfferModal(${offer.id})"
+                  onclick="openOfferModal('${offer.id}')"
                 >
                   EDIT
                 </button>
 
                 <button
                   class="action-btn small gray"
-                  onclick="toggleOffer(${offer.id},${!offer.active})"
+                  onclick="toggleOffer('${offer.id}',${!offer.active})"
                 >
                   ${offer.active ? "DISABLE" : "ENABLE"}
                 </button>
 
                 <button
                   class="action-btn small red"
-                  onclick="deleteOffer(${offer.id})"
+                  onclick="deleteOffer('${offer.id}')"
                 >
                   DELETE
                 </button>
@@ -5433,7 +5431,7 @@ function openOfferModal(id=null){
   const offer =
     id
       ? offers.find(
-          x=>Number(x.id) === Number(id)
+          x=>String(x.id) === String(id)
         )
       : null;
 
@@ -5455,7 +5453,7 @@ function openOfferModal(id=null){
     </div>
 
     <form
-      onsubmit="saveOffer(event,${id || "null"})"
+      onsubmit="saveOffer(event,'${id || ""}')"
     >
 
       <div class="form-grid">
@@ -5689,7 +5687,7 @@ async function saveOffer(
         .getElementById("offerImage")
         .files[0];
 
-    if(id){
+    if(id && id !== "null" && id !== ""){
 
       const {
         error
@@ -5987,21 +5985,21 @@ function renderPriceLists(){
 
                 <button
                   class="action-btn small"
-                  onclick="openPriceListModal(${item.id})"
+                  onclick="openPriceListModal('${item.id}')"
                 >
                   EDIT
                 </button>
 
                 <button
                   class="action-btn small gray"
-                  onclick="togglePriceList(${item.id},${!item.active})"
+                  onclick="togglePriceList('${item.id}',${!item.active})"
                 >
                   ${item.active ? "DEACTIVATE" : "ACTIVATE"}
                 </button>
 
                 <button
                   class="action-btn small red"
-                  onclick="deletePriceList(${item.id})"
+                  onclick="deletePriceList('${item.id}')"
                 >
                   DELETE
                 </button>
@@ -6027,7 +6025,7 @@ function openPriceListModal(id=null){
   const item =
     id
       ? priceLists.find(
-          x=>Number(x.id) === Number(id)
+          x=>String(x.id) === String(id)
         )
       : null;
 
@@ -6049,7 +6047,7 @@ function openPriceListModal(id=null){
     </div>
 
     <form
-      onsubmit="savePriceList(event,${id || "null"})"
+      onsubmit="savePriceList(event,'${id || ""}')"
     >
 
       <div class="form-grid">
@@ -6216,7 +6214,7 @@ async function savePriceList(
         file_url;
     }
 
-    if(id){
+    if(id && id !== "null" && id !== ""){
 
       const {
         error
@@ -6886,6 +6884,24 @@ window.deleteProduct = deleteProduct;
 window.closeModal = closeModal;
 window.saveProduct = saveProduct;
 window.loadProducts = loadProducts;
+window.openOrderDetails = openOrderDetails;
+window.changeOrderStatus = changeOrderStatus;
+window.openCategoryModal = openCategoryModal;
+window.toggleCategory = toggleCategory;
+window.deleteCategory = deleteCategory;
+window.saveCategory = saveCategory;
+window.openBannerModal = openBannerModal;
+window.toggleBanner = toggleBanner;
+window.deleteBanner = deleteBanner;
+window.saveBanner = saveBanner;
+window.openOfferModal = openOfferModal;
+window.toggleOffer = toggleOffer;
+window.deleteOffer = deleteOffer;
+window.saveOffer = saveOffer;
+window.openPriceListModal = openPriceListModal;
+window.togglePriceList = togglePriceList;
+window.deletePriceList = deletePriceList;
+window.savePriceList = savePriceList;
 
 </script>
 
