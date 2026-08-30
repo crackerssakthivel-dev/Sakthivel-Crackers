@@ -8470,7 +8470,27 @@ updateCartUI();
 
 /* =========================================================
    END OF INDEX.HTML
-========================================================= */
+function updateLocalQty(productId, change) {
+    const card = document.querySelector(`[data-product-id="${productId}"]`);
+    if (!card) return;
+    
+    const qtySpan = card.querySelector('.quantity-control span');
+    if (!qtySpan) return;
+    
+    let currentQty = parseInt(qtySpan.textContent, 10) || 1;
+    currentQty = Math.max(1, currentQty + change);
+    
+    qtySpan.textContent = currentQty;
+    
+    const addBtn = card.querySelector('.add-btn');
+    if (addBtn) {
+        let onclickAttr = addBtn.getAttribute('onclick');
+        if (onclickAttr) {
+            onclickAttr = onclickAttr.replace(/,\s*\d+,\s*event/, `, ${currentQty}, event`);
+            addBtn.setAttribute('onclick', onclickAttr);
+        }
+    }
+}========================================================= */
 </script>
 
 </body>
