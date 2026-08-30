@@ -3315,14 +3315,18 @@ function applySettings(){
         PLACEHOLDERS.logo,
         "SAKTHIVEL CRACKERS Logo"
     );
-
-    setImage(
+setImage(
         "loaderLogo",
         logo,
         PLACEHOLDERS.logo,
         "SAKTHIVEL CRACKERS"
     );
-if(primaryColor){
+
+    const primaryColor = settings.primary_color;
+    const secondaryColor = settings.secondary_color;
+    const accentColor = settings.accent_color;
+
+    if(primaryColor){
         document.documentElement.style.setProperty('--primary', primaryColor);
     }
     if(secondaryColor){
@@ -3332,9 +3336,8 @@ if(primaryColor){
     if(accentColor){
         document.documentElement.style.setProperty('--gold', accentColor);
         document.documentElement.style.setProperty('--gold2', accentColor);
-    
+    }
 }
-
 /* =========================================================
    10. SETTINGS HELPER
 ========================================================= */
