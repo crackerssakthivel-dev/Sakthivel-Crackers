@@ -1897,21 +1897,19 @@ a{
 
         <div class="container">
 
-            <div class="section-heading">
-
-                <div>
-
-                    <h2 class="section-title">
-                        Our <span>Products</span>
-                    </h2>
-
-                    <p class="section-subtitle" id="productResultText">
-                        Loading products...
-                    </p>
-
-                </div>
-
-            </div>
+       <div class="section-heading">
+    <div>
+        <h2 class="section-title">Our <span>Products</span></h2>
+        <p class="section-subtitle" id="productResultText">Loading products...</p>
+    </div>
+    
+    <!-- இங்கே புதிய VIEW ALL பட்டன் சேர்க்கப்பட்டுள்ளது -->
+    <button 
+        class="view-all" 
+        onclick="document.getElementById('categoryFilter').value = ''; if(typeof renderProducts === 'function') { renderProducts(); }">
+        VIEW ALL
+    </button>
+</div>
 
             <!-- SEARCH -->
 
