@@ -3322,7 +3322,17 @@ function applySettings(){
         PLACEHOLDERS.logo,
         "SAKTHIVEL CRACKERS"
     );
-
+if(primaryColor){
+        document.documentElement.style.setProperty('--primary', primaryColor);
+    }
+    if(secondaryColor){
+        document.documentElement.style.setProperty('--red', secondaryColor);
+        document.documentElement.style.setProperty('--crimson', secondaryColor);
+    }
+    if(accentColor){
+        document.documentElement.style.setProperty('--gold', accentColor);
+        document.documentElement.style.setProperty('--gold2', accentColor);
+    
 }
 
 /* =========================================================
