@@ -8483,6 +8483,30 @@ function changeProductQuantity(productId, change) {
     
     qtySpan.textContent = currentQty;
 }
+
+document.addEventListener('click', function(event) {
+    const btn = event.target.closest('button');
+    if (!btn) return;
+    
+    const control = btn.closest('.quantity-control');
+    if (!control) return;
+    
+    const card = control.closest('[data-product-id]');
+    if (!card) return;
+    
+    const textSpan = control.querySelector('span');
+    if (!textSpan) return;
+    
+    let currentQty = parseInt(textSpan.textContent, 10) || 1;
+    
+    if (btn.textContent.trim() === '+') {
+        currentQty++;
+    } else if (btn.textContent.trim() === '-') {
+        currentQty = Math.max(1, currentQty - 1);
+    }
+    
+    textSpan.textContent = currentQty;
+});
 </script>
 
 </body>
