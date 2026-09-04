@@ -3156,6 +3156,8 @@ async function openOrderDetails(orderId){
   (total, item) => total + Number(item.subtotal || 0),
   0
 );
+
+    document.getElementById("orderGrandTotal").textContent = money(grandTotal);
     
     const box =
       document.getElementById(
