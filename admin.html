@@ -3152,6 +3152,11 @@ async function openOrderDetails(orderId){
       throw error;
     }
 
+    const grandTotal = data.reduce(
+  (total, item) => total + Number(item.subtotal || 0),
+  0
+);
+    
     const box =
       document.getElementById(
         "orderItemsBox"
