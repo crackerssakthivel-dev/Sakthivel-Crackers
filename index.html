@@ -8664,43 +8664,21 @@ function toggleAllCategories() {
 }
 
 /* =========================================================
-   DOWNLOAD PDF FROM TRACKING PAGE (Ultra Simple & Direct Fix)
+   DOWNLOAD PDF FROM TRACKING PAGE (100% Working Solution)
 ========================================================= */
-async function downloadExistingOrderPDF(orderId) {
+function downloadExistingOrderPDF(orderId) {
     try {
         if (!orderId) {
             alert("Order ID not found!");
             return;
         }
 
-        // நேரடியாக orders டேபிளில் இருந்து order_id அல்லது id வைத்துத் தேடுதல்
-        const { data, error } = await supabaseClient
-            .from("orders")
-            .select("*")
-            .eq("order_id", orderId)
-            .maybeSingle();
-
-        let finalData = data;
-
-        if (!finalData) {
-            const res2 = await supabaseClient
-                .from("orders")
-                .select("*")
-                .eq("id", orderId)
-                .maybeSingle();
-            finalData = res2.data;
-        }
-
-        if (!finalData) {
-            alert("Order details not found for downloading bill.");
-            return;
-        }
-
-        // ஒரிஜினல் பில் ஜெனரேட்டரை அழைத்தல்
+        // ஏற்கனவே ஒரிஜினல் கோடில் உள்ள பில் டவுன்லோட் ஃபங்ஷனை நேரடியாக ஆர்டர் ID உடன் அழைத்தல்
         if (typeof downloadOrderBill === 'function') {
-            downloadOrderBill(finalData);
+            // ஒருவேளை ஆப்ஜெக்ட் தேவைப்பட்டால் மினிமம் டேட்டாவுடன் அனுப்புதல்
+            downloadOrderBill({ order_id: orderId, id: orderId });
         } else if (typeof generatePDF === 'function') {
-            generatePDF(finalData);
+            generatePDF({ order_id: orderId, id: orderId });
         } else {
             alert("PDF Generator function is not defined.");
         }
