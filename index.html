@@ -1834,56 +1834,61 @@ a{
 
     </section>
 
+<style>
+    /* எழுத்துகள் பல வண்ணங்களில் ஒளிரும் அனிமேஷன் (Multi-color Glowing & Blinking Effect) */
+    @keyframes textGlowBlink {
+        0% { color: #ffd966; text-shadow: 0 0 10px #ffd966, 0 0 20px #ff3333; }
+        33% { color: #00ffff; text-shadow: 0 0 10px #00ffff, 0 0 20px #ff0055; }
+        66% { color: #ff33cc; text-shadow: 0 0 10px #ff33cc, 0 0 20px #ff0055; }
+        100% { color: #ffd966; text-shadow: 0 0 10px #ffd966, 0 0 20px #ff3333; }
+    }
+
+    .blinking-cat-btn {
+        animation: textGlowBlink 2s infinite ease-in-out;
+    }
+</style>
+
 <!-- CATEGORIES -->
+<section class="section" id="categories" style="padding: 15px 0;">
+    <div class="container">
+        
+        <!-- ALL CATEGORIES மட்டும் முழு அகலத்தில் ஒளிரும் டெக்ஸ்டுடன் -->
+        <button 
+            type="button" 
+            onclick="toggleAllCategories()" 
+            style="
+                width: 100%; 
+                min-height: 65px;
+                padding: 16px; 
+                background: linear-gradient(135deg, #0d1b2a, #1b263b);
+                border: 2px solid #f5c542; 
+                border-radius: 16px; 
+                font-weight: 1000; 
+                font-size: 18px; 
+                letter-spacing: 2px;
+                cursor: pointer; 
+                box-shadow: 0 0 20px rgba(245, 197, 66, 0.4);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            ">
+            <span class="blinking-cat-btn">ALL CATEGORIES</span>
+        </button>
 
-    <section class="section" id="categories" style="padding: 15px 0;">
-
-        <div class="container">
-
-            <!-- மிகப் பிரகாசமான ஒளிரும் (Glowing) All Categories பட்டன் -->
-            <button 
-                type="button" 
-                onclick="toggleAllCategories()" 
-                style="
-                    width: 100%; 
-                    min-height: 70px;
-                    padding: 18px; 
-                    background: linear-gradient(135deg, #111b33 0%, #1a2b4c 100%);
-                    color: #ffd966; 
-                    border: 2px solid #f5c542; 
-                    border-radius: 16px; 
-                    font-weight: 1000; 
-                    font-size: 16px; 
-                    letter-spacing: 1px;
-                    cursor: pointer; 
-                    box-shadow: 0 0 20px rgba(245, 197, 66, 0.5), inset 0 0 10px rgba(245, 197, 66, 0.2);
-                    text-shadow: 0 0 8px rgba(245, 197, 66, 0.6);
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    gap: 12px;
-                    transition: 0.3s ease;
-                ">
-                <span style="font-size: 20px;">🎆</span> 
-                <span>ALL CATEGORIES (EXPLORE)</span>
-                <span style="font-size: 20px;">🎇</span>
-            </button>
-
-            <!-- கேட்டகிரி கட்டங்கள் (முதலில் மறைக்கப்பட்டிருக்கும்) -->
-            <div
-                class="category-grid"
-                id="categoryGrid"
-                style="display: none; margin-top: 15px;"
-            >
-                <div class="category-card skeleton"></div>
-                <div class="category-card skeleton"></div>
-                <div class="category-card skeleton"></div>
-                <div class="category-card skeleton"></div>
-            </div>
-
+        <!-- கேட்டகிரி கட்டங்கள் (முதலில் மறைக்கப்பட்டிருக்கும்) -->
+        <div
+            class="category-grid"
+            id="categoryGrid"
+            style="display: none; margin-top: 15px;"
+        >
+            <div class="category-card skeleton"></div>
+            <div class="category-card skeleton"></div>
+            <div class="category-card skeleton"></div>
+            <div class="category-card skeleton"></div>
         </div>
 
-    </section>
+    </div>
+</section>
 
     <!-- PRODUCTS -->
 
