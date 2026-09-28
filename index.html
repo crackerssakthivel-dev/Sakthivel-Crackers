@@ -7049,15 +7049,20 @@ function renderTrackingResults(
 
                             </div>
 
-                            <button
-                                class="btn btn-dark"
-                                style="width:100%;"
-                                onclick="viewTrackedOrder('${escapeAttr(order.id || order.order_id || "")}')"
-                            >
-                                VIEW ORDER DETAILS
-                            </button>
+<button
+        class="btn btn-dark"
+        style="width:100%; margin-bottom: 8px;"
+        onclick="viewTrackedOrder('${escapeAttr(order.id || order.order_id || '')}')">
+        VIEW ORDER DETAILS
+    </button>
 
-                        </div>
+    <button
+        class="btn btn-dark"
+        style="width:100%; background: #28a745; color: #fff; font-weight: bold;"
+        onclick="downloadExistingOrderPDF('${escapeAttr(order.id || order.order_id || '')}')">
+        📄 DOWNLOAD BILL (PDF)
+    </button>
+</div>
                     `;
 
                 }
