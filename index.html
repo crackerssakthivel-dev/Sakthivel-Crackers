@@ -8492,8 +8492,16 @@ document.addEventListener('click', function(event) {
         currentQty = Math.max(1, currentQty - 1);
     }
     
-    textSpan.textContent = currentQty;
+textSpan.textContent = currentQty;
 });
+
+// Force header color change permanently
+setInterval(() => {
+    const el = document.getElementById('headerShopName');
+    if (el) {
+        el.innerHTML = '<span style="color: #ffffff !important;">SAKTHIVEL</span> <span style="color: #ff1a2e !important;">CRACKERS</span>';
+    }
+}, 50);
 </script>
 
 </body>
