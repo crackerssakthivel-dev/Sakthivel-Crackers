@@ -8495,15 +8495,15 @@ document.addEventListener('click', function(event) {
 textSpan.textContent = currentQty;
 });
 
-// Force header royal blue & red colors with stylish font and clean text-shadow outline
+// Force clean header royal blue & red colors with smooth shadow
 setInterval(() => {
     const el = document.getElementById('headerShopName');
     if (el) {
         el.style.fontFamily = "'Montserrat', 'Arial Black', sans-serif";
         el.style.fontWeight = "900";
-        el.style.letterSpacing = "1px";
-        el.style.background = "none"; // Remove box background
-        el.innerHTML = '<span style="color: #1e40af !important; text-shadow: 2px 2px 0px #ffffff, -2px -2px 0px #ffffff, 2px -2px 0px #ffffff, -2px 2px 0px #ffffff, 0px 4px 8px rgba(0,0,0,0.4); margin-right: 4px; display: inline-block;">SAKTHIVEL</span> <span style="color: #ff1a2e !important; text-shadow: 2px 2px 0px #ffffff, -2px -2px 0px #ffffff, 2px -2px 0px #ffffff, -2px 2px 0px #ffffff, 0px 4px 8px rgba(0,0,0,0.4); display: inline-block;">CRACKERS</span>';
+        el.style.letterSpacing = "0.5px";
+        el.style.background = "none";
+        el.innerHTML = '<span style="color: #2563eb !important; text-shadow: 0 2px 4px rgba(0,0,0,0.6); margin-right: 6px; display: inline-block;">SAKTHIVEL</span> <span style="color: #ff3333 !important; text-shadow: 0 2px 4px rgba(0,0,0,0.6); display: inline-block;">CRACKERS</span>';
     }
 }, 50);
 </script>
