@@ -8664,7 +8664,7 @@ function toggleAllCategories() {
 }
 
 /* =========================================================
-   DOWNLOAD PDF FROM TRACKING PAGE (Fixed & Reliable)
+   2. DOWNLOAD PDF FROM TRACKING PAGE (Final Fix)
 ========================================================= */
 async function downloadExistingOrderPDF(orderId) {
     try {
@@ -8673,7 +8673,6 @@ async function downloadExistingOrderPDF(orderId) {
             return;
         }
 
-        // டேட்டாவில் இருந்து அந்த ஆர்டர் விவரங்களைத் தேடுதல் (id மற்றும் order_id இரண்டையும் செக் செய்யும்)
         let { data, error } = await supabaseClient
             .from("orders")
             .select("*")
@@ -8681,7 +8680,6 @@ async function downloadExistingOrderPDF(orderId) {
             .single();
 
         if (error || !data) {
-            // ஒருவேளை order_id மூலம் கிடைக்கவில்லை என்றால் id மூலமாகத் தேடும்
             const res = await supabaseClient
                 .from("orders")
                 .select("*")
@@ -8696,11 +8694,12 @@ async function downloadExistingOrderPDF(orderId) {
             return;
         }
 
-        // பில் ஜெனரேட்டர் ஃபங்ஷனை அழைத்தல்
-        if (typeof generatePDF === 'function') {
+        if (typeof downloadOrderBill === 'function') {
+            downloadOrderBill(data);
+        } else if (typeof generatePDF === 'function') {
             generatePDF(data);
         } else {
-            alert("PDF Generator function is not defined. Please check your script.");
+            alert("PDF Generator function is not defined.");
         }
 
     } catch (err) {
