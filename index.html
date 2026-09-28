@@ -8550,5 +8550,99 @@ setInterval(() => {
             border-radius: 18px !important;
         }
     }
+<style>
+    /* 1. படங்கள் தாமதமின்றி உடனே லோட் ஆக */
+    img, .logo, .hero, .banner-img, .product-img, .category-img, header img {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+        animation: none !important;
+    }
+
+    /* 2. யூடியூப் தம்ப்னைல் அளவு (16:9 ratio) மற்றும் 4 கார்னர்களும் வளைந்த வடிவம் */
+    @media (max-width: 768px) {
+        .hero-slider {
+            position: relative !important;
+            width: 94% !important;
+            aspect-ratio: 16 / 9 !important;
+            height: auto !important;
+            min-height: unset !important;
+            max-height: unset !important;
+            border-radius: 18px !important;
+            margin: 10px auto !important;
+            overflow: hidden !important;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3) !important;
+        }
+
+        .hero-slide {
+            position: absolute !important;
+            inset: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            border-radius: 18px !important;
+        }
+        
+        .hero-image {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+            border-radius: 18px !important;
+        }
+    }
+<style>
+    /* 1. படங்கள் தாமதமின்றி உடனே லோட் ஆக */
+    img, .logo, .hero, .banner-img, .product-img, .category-img, header img {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+        animation: none !important;
+    }
+
+    /* 2. யூடியூப் தம்ப்னைல் அளவு (16:9 ratio) மற்றும் 4 கார்னர்களும் வளைந்த வடிவம் */
+    @media (max-width: 768px) {
+        .hero-slider {
+            position: relative !important;
+            width: 94% !important;
+            aspect-ratio: 16 / 9 !important;
+            height: auto !important;
+            min-height: unset !important;
+            max-height: unset !important;
+            border-radius: 18px !important;
+            margin: 10px auto !important;
+            overflow: hidden !important;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3) !important;
+        }
+
+        .hero-slide {
+            position: absolute !important;
+            inset: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            border-radius: 18px !important;
+        }
+        
+        .hero-image {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+            border-radius: 18px !important;
+        }
+    }
 </style>
-</style>
+
+<script>
+/* =========================================================
+   ALL CATEGORIES TOGGLE FUNCTION
+========================================================= */
+function toggleAllCategories() {
+    const grid = document.getElementById('categoryGrid');
+    if (grid) {
+        if (grid.style.display === 'none' || grid.style.display === '') {
+            grid.style.display = 'grid';
+            grid.scrollIntoView({ behavior: 'smooth' });
+        } else {
+            grid.style.display = 'none';
+        }
+    }
+}
+</script>
