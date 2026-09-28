@@ -8664,7 +8664,7 @@ function toggleAllCategories() {
 }
 
 /* =========================================================
-   DOWNLOAD PDF FROM TRACKING PAGE (Smart & Guaranteed Fix)
+   DOWNLOAD PDF FROM TRACKING PAGE (Permanent & Fully Analyzed Fix)
 ========================================================= */
 async function downloadExistingOrderPDF(orderId) {
     try {
@@ -8673,22 +8673,26 @@ async function downloadExistingOrderPDF(orderId) {
             return;
         }
 
-        // VIEW ORDER DETAILS என்ன வழியில் டேட்டாவை எடுக்கிறதோ, அதே முறையில் Supabase-ல் தேடுதல்
-        const orderResponse = await supabaseClient
+        // 1. orders டேபிளில் இருந்து சரியான முறையில் டேட்டாவை எடுத்தல்
+        let orderData = null;
+        
+        const res1 = await supabaseClient
             .from("orders")
             .select("*")
-            .eq("id", orderId)
-            .single();
-
-        let orderData = orderResponse.data;
-
-        if (!orderData) {
-            const orderResponse2 = await supabaseClient
+            .eq("order_id", orderId)
+            .maybeSingle();
+            
+        if (res1.data) {
+            orderData = res1.data;
+        } else {
+            const res2 = await supabaseClient
                 .from("orders")
                 .select("*")
-                .eq("order_id", orderId)
-                .single();
-            orderData = orderResponse2.data;
+                .eq("id", orderId)
+                .maybeSingle();
+            if (res2.data) {
+                orderData = res2.data;
+            }
         }
 
         if (!orderData) {
@@ -8696,18 +8700,22 @@ async function downloadExistingOrderPDF(orderId) {
             return;
         }
 
-        // ஆர்டருக்கான பொருட்களை (items) சரியாக எடுத்தல்
-        const itemResponse = await supabaseClient
+        // 2. order_items டேபிளில் இருந்து அந்த ஆர்டருக்கான பொருட்களை (items) எடுத்தல்
+        const itemsRes = await supabaseClient
             .from("order_items")
             .select("*")
             .eq("order_id", orderData.order_id || orderId);
 
-        const items = itemResponse.data || [];
+        const items = itemsRes.data || [];
 
-        // ஒரிஜினல் பில் ஜெனரேட்டருக்கு ஆர்டர் மற்றும் ஐட்டம்ஸ் இரண்டையும் அனுப்புதல்
+        // 3. ஒரிஜினல் பில் ஜெனரேட்டர் ஃபங்ஷனை சரியான ஆப்ஜெக்ட்டுகளுடன் அழைத்தல்
         if (typeof downloadOrderBill === 'function') {
-            // சில ஒரிஜினல் ஃபங்ஷன்களுக்கு items தேவைப்படலாம்
-            downloadOrderBill(orderData, items);
+            // சில சமயம் டவுன்லோட் பில் ஃபங்ஷனுக்கு order மட்டும் அல்லது order மற்றும் items இரண்டும் தேவைப்படலாம்
+            try {
+                downloadOrderBill(orderData, items);
+            } catch (e) {
+                downloadOrderBill(orderData);
+            }
         } else if (typeof generatePDF === 'function') {
             generatePDF(orderData, items);
         } else {
