@@ -7056,10 +7056,10 @@ function renderTrackingResults(
         VIEW ORDER DETAILS
     </button>
 
-    <button
+<button
         class="btn btn-dark"
         style="width:100%; background: #28a745; color: #fff; font-weight: bold;"
-        onclick="downloadExistingOrderPDF('${escapeAttr(order.id || order.order_id || '')}')">
+        onclick="downloadExistingOrderPDF('${escapeAttr(order.order_id || order.id || '')}')">
         📄 DOWNLOAD BILL (PDF)
     </button>
 </div>
