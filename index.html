@@ -2663,33 +2663,20 @@ a{
                 "
             >
 
-                <button
-                    class="btn btn-primary"
-                    onclick="downloadOrderBill()"
-                >
-                    📄 DOWNLOAD ORDER BILL PDF
-                </button>
+<!-- 1. WhatsApp Button (First, Green background with blinking text) -->
+<button class="btn" style="width:100%; background: #28a745; color: #fff; font-weight: bold; margin-bottom: 8px; animation: blinker 1.5s linear infinite;" onclick="sendSuccessfulOrderWhatsapp()">
+    💬 PLEASE SEND IT TO WHATSAPP
+</button>
 
-                <button
-                    class="btn btn-red"
-                    onclick="sendSuccessfulOrderWhatsApp()"
-                >
-                    💬 SEND ORDER TO WHATSAPP
-                </button>
+<!-- 2. Download Bill Button (Second) -->
+<button class="btn btn-primary" style="width:100%; margin-bottom: 8px;" onclick="downloadOrderBill()">
+    📄 DOWNLOAD ORDER BILL PDF
+</button>
 
-                <button
-                    class="btn btn-dark"
-                    onclick="openTrackModal();closeModal('successModal');"
-                >
-                    🔎 TRACK ORDER
-                </button>
-
-                <button
-                    class="btn btn-dark"
-                    onclick="closeModal('successModal')"
-                >
-                    🛍️ CONTINUE SHOPPING
-                </button>
+<!-- 3. Continue Shopping Button (Third) -->
+<button class="btn btn-dark" style="width:100%;" onclick="closeModal('successModal')">
+    🛍️ CONTINUE SHOPPING
+</button>
 
             </div>
 
