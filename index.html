@@ -1836,37 +1836,44 @@ a{
 
 <!-- CATEGORIES -->
 
-    <section class="section" id="categories">
+    <section class="section" id="categories" style="padding: 20px 0;">
 
         <div class="container">
 
-            <div class="section-heading">
-
-                <div>
-                    <h2 class="section-title">
-                        Shop by <span>Category</span>
-                    </h2>
-
-                    <p class="section-subtitle">
-                        Explore all fireworks categories
-                    </p>
-                </div>
-
-            </div>
-
-            <!-- All Categories பட்டன் (இதை க்ளிக் செய்தால் கேட்டகிரிகள் திறக்கும்) -->
+            <!-- பட்டாசுப் பின்னணி மற்றும் மிளிரும் எஃபெக்ட் கொண்ட All Categories பட்டன் -->
             <button 
                 type="button" 
                 onclick="toggleAllCategories()" 
-                style="width: 100%; padding: 14px; background: linear-gradient(135deg, var(--gold2), var(--gold)); color: #07152f; border: none; border-radius: 14px; font-weight: 1000; font-size: 15px; margin-bottom: 15px; cursor: pointer; box-shadow: 0 4px 15px rgba(245,197,66,0.2);">
-                📂 ALL CATEGORIES (CLICK TO VIEW)
+                style="
+                    width: 100%; 
+                    min-height: 70px;
+                    padding: 18px; 
+                    background: linear-gradient(rgba(3, 10, 28, 0.75), rgba(3, 10, 28, 0.75)), url('assets/placeholders/category-placeholder.svg'); 
+                    background-size: cover;
+                    background-position: center;
+                    color: #ffffff; 
+                    border: 2px solid var(--gold); 
+                    border-radius: 16px; 
+                    font-weight: 1000; 
+                    font-size: 16px; 
+                    letter-spacing: 1px;
+                    cursor: pointer; 
+                    box-shadow: 0 0 20px rgba(245, 197, 66, 0.4), inset 0 0 15px rgba(255, 255, 255, 0.1);
+                    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8), 0 0 10px rgba(245, 197, 66, 0.8);
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 10px;
+                    transition: 0.3s ease;
+                ">
+                🎆 ALL CATEGORIES (EXPLORE) 🎇
             </button>
 
             <!-- கேட்டகிரி கட்டங்கள் (முதலில் மறைக்கப்பட்டிருக்கும்) -->
             <div
                 class="category-grid"
                 id="categoryGrid"
-                style="display: none;"
+                style="display: none; margin-top: 15px;"
             >
                 <div class="category-card skeleton"></div>
                 <div class="category-card skeleton"></div>
