@@ -8806,15 +8806,47 @@ async function downloadExistingOrderPDF(orderId) {
     }
 }
 
-    function sendOrderDirectToWhatsapp() {
+function sendOrderDirectToWhatsapp() {
     try {
         const whatsappNumber = typeof getSetting === 'function' ? getSetting(['whatsapp'], 1, '91' + DEFAULT_BUSINESS.whatsapp) : '919876543210';
         
-        const orderId = window.currentOrder ? (window.currentOrder.display_order_id || window.currentOrder.order_id || 'NEW') : 'NEW';
-        const customerName = window.currentOrder ? (window.currentOrder.customer_name || 'Customer') : 'Customer';
-        const totalAmount = window.currentOrder ? (window.currentOrder.total || 0) : 0;
+        const order = window.currentOrder || {};
+        const orderId = order.display_order_id || order.order_id || 'ORD-' + Math.floor(100000 + Math.random() * 900000);
+        const customerName = order.customer_name || document.getElementById('customerName')?.value || 'Customer';
+        const customerMobile = order.mobile || document.getElementById('customerMobile')?.value || '';
+        const customerAddress = order.address || document.getElementById('customerAddress')?.value || '';
+        const customerDistrict = order.district || '';
+        const customerPincode = order.pincode || '';
+        const totalAmount = order.total || order.grand_total || '0';
 
-        const message = `Hello, I have placed a new order!\nOrder ID: ${orderId}\nName: ${customerName}\nTotal: ₹${totalAmount}\nPlease confirm my order.`;
+        // பொருட்கள் விவரம்
+        let itemsList = "";
+        if (order.items && Array.isArray(order.items)) {
+            order.items.forEach((item) => {
+                const itemName = item.name || item.product_name || 'Item';
+                const itemQty = item.quantity || 1;
+                const itemTotal = item.total || (item.price * itemQty);
+                itemsList += `${itemName} × ${itemQty} = ₹${itemTotal}\n`;
+            });
+        } else if (window.cart && Array.isArray(window.cart)) {
+            window.cart.forEach((item) => {
+                const itemTotal = item.price * item.quantity;
+                itemsList += `${item.name} × ${item.quantity} = ₹${itemTotal}\n`;
+            });
+        }
+
+        // நீங்கள் கேட்ட அதே வடிவத்திலான மெசேஜ்
+        let message = `SAKTHIVEL CRACKERS\n`;
+        message += `NEW ORDER\n`;
+        message += `Order ID: ${orderId}\n`;
+        message += `Customer Name: ${customerName}\n`;
+        message += `Mobile: ${customerMobile}\n`;
+        message += `Address: ${customerAddress}\n`;
+        message += `District: ${customerDistrict}\n`;
+        message += `Pincode: ${customerPincode}\n\n`;
+        message += `ORDER ITEMS:\n${itemsList || 'No items found\n'}\n`;
+        message += `TOTAL: ₹${totalAmount}\n`;
+        message += `ORDER STATUS: PENDING`;
         
         const encodedMessage = encodeURIComponent(message);
         const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
@@ -8822,7 +8854,7 @@ async function downloadExistingOrderPDF(orderId) {
         window.open(whatsappUrl, '_blank');
     } catch (err) {
         console.error("WhatsApp error:", err);
-        alert("Could not open WhatsApp. Please try again.");
+        alert("Could not generate WhatsApp message. Please try again.");
     }
 }
 </script>
