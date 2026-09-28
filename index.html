@@ -2664,7 +2664,7 @@ a{
             >
 
 <!-- 1. WhatsApp Button (First, Green background with blinking text) -->
-<button class="btn" style="width:100%; background: #28a745; color: #fff; font-weight: bold; margin-bottom: 8px; animation: blinker 1.5s linear infinite;" onclick="sendSuccessfulOrderWhatsapp()">
+<button class="btn" style="width:100%; background: #28a745; color: #fff; font-weight: bold; margin-bottom: 8px; animation: myBlinker 1.5s linear infinite;" onclick="sendSuccessfulOrderWhatsapp()">
     💬 PLEASE SEND IT TO WHATSAPP
 </button>
 
@@ -2677,6 +2677,12 @@ a{
 <button class="btn btn-dark" style="width:100%;" onclick="closeModal('successModal')">
     🛍️ CONTINUE SHOPPING
 </button>
+
+<style>
+@keyframes myBlinker {
+    50% { opacity: 0.3; }
+}
+</style>
 
             </div>
 
