@@ -1707,9 +1707,10 @@ a{
 
 <header class="header" id="home">
 
-    <div class="container header-inner">
+    <div class="container header-inner" style="display: flex; align-items: center; justify-content: space-between; gap: 14px; min-height: 72px;">
 
-        <div class="brand">
+        <!-- Brand / Logo & Name -->
+        <div class="brand" style="display: flex; align-items: center; gap: 10px; min-width: 0;">
 
             <img
                 id="siteLogo"
@@ -1718,21 +1719,23 @@ a{
                 alt="SAKTHIVEL CRACKERS Logo"
             >
 
-            <div class="brand-text">
+            <div class="brand-text" style="min-width: 0;">
 
-<div class="brand-text">
-    <div class="brand-name" id="headerShopName" style="font-weight: 1000; letter-spacing: .8px;">
-        <span style="color: #ffffff;">SAKTHIVEL</span> <span style="color: var(--gold2); text-shadow: 0 0 10px rgba(245,197,66,0.4);">CRACKERS</span>
-    </div>
-    <div class="brand-location" id="headerAddress">
-        Kundayiruppu, Sivakasi, Tamil Nadu
-    </div>
-</div>
+                <div class="brand-name" id="headerShopName" style="font-family: 'Arial Black', Gadget, sans-serif; font-size: 16px; font-weight: 1000; letter-spacing: .8px; text-transform: uppercase;">
+                    <span style="color: #ffffff; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">SAKTHIVEL</span> 
+                    <span style="color: #ffd700; background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 2px 10px rgba(255,215,0,0.4);">CRACKERS</span>
+                </div>
+
+                <div class="brand-location" id="headerAddress" style="font-size: 10px; color: #aebbd5; letter-spacing: .5px;">
+                    Kundayiruppu, Sivakasi, Tamil Nadu
+                </div>
+
+            </div>
 
         </div>
 
+        <!-- Desktop Navigation Links -->
         <nav class="desktop-nav">
-
             <button onclick="navigateTo('home')">HOME</button>
             <button onclick="navigateTo('products')">PRODUCTS</button>
             <button onclick="navigateTo('categories')">CATEGORIES</button>
@@ -1740,10 +1743,10 @@ a{
             <button onclick="navigateTo('offers')">OFFERS</button>
             <button onclick="openTrackModal()">TRACK ORDER</button>
             <button onclick="navigateTo('contact')">CONTACT</button>
-
         </nav>
 
-        <div class="header-actions">
+        <!-- Header Actions (Right Side) -->
+        <div class="header-actions" style="display: flex; align-items: center; gap: 7px; margin-left: auto;">
 
             <button
                 class="whatsapp-header"
