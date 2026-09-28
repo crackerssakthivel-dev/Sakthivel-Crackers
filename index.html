@@ -8664,7 +8664,7 @@ function toggleAllCategories() {
 }
 
 /* =========================================================
-   DOWNLOAD PDF FROM TRACKING PAGE (Absolute Final & Bulletproof Fix)
+   DOWNLOAD PDF FROM TRACKING PAGE (Direct Iframe Print & PDF Fix)
 ========================================================= */
 async function downloadExistingOrderPDF(orderId) {
     try {
@@ -8673,8 +8673,8 @@ async function downloadExistingOrderPDF(orderId) {
             return;
         }
 
-        // 1. Supabase-ல் இருந்து அந்த ஆர்டரின் முழு விவரங்களையும் எடுத்தல்
-        let { data: orderData, error } = await supabaseClient
+        // 1. Supabase-ல் இருந்து ஆர்டர் விவரங்களை எடுத்தல்
+        let { data: orderData } = await supabaseClient
             .from("orders")
             .select("*")
             .eq("order_id", orderId)
@@ -8694,33 +8694,66 @@ async function downloadExistingOrderPDF(orderId) {
             return;
         }
 
-        // 2. அந்த ஆர்டருக்கான பொருட்களை (items) சரியாக எடுத்தல்
+        // 2. ஆர்டர் பொருட்களையும் எடுத்தல்
         const { data: itemData } = await supabaseClient
             .from("order_items")
             .select("*")
             .eq("order_id", orderData.order_id || orderId);
 
-        // 3. ஒரிஜினல் ஃபங்ஷன் முழுமையாக வேலை செய்யத் தேவையான அனைத்து வழிகளிலும் டேட்டாவை செட் செய்தல்
+        // 3. currentOrder மற்றும் items-ஐ சரியாக செட் செய்தல்
         window.currentOrder = orderData;
-        if (itemData && itemData.length > 0) {
-            window.currentOrder.items = itemData;
-        }
+        window.currentOrder.items = itemData || [];
+        window.currentItems = itemData || [];
 
-        // 4. ஒரிஜினல் பில் டவுன்லோட் ஃபங்ஷனை இயக்குதல்
+        // 4. புதிய விண்டோவைத் திறக்காமல், அதே பக்கத்தில் ரகசியமாக Iframe உருவாக்கி பிரிண்ட்/PDF தருவது
         if (typeof downloadOrderBill === 'function') {
+            // window.open-ஐ மாற்றி அமைத்து Iframe மூலமாக பிரிண்ட் டயலாக்கை வரவழைத்தல்
+            const oldOpen = window.open;
+            window.open = function(url, name, specs) {
+                const iframe = document.createElement('iframe');
+                iframe.style.position = 'fixed';
+                iframe.style.right = '0';
+                iframe.style.bottom = '0';
+                iframe.style.width = '0';
+                iframe.style.height = '0';
+                iframe.style.border = '0';
+                iframe.src = url;
+                document.body.appendChild(iframe);
+                
+                iframe.onload = function() {
+                    setTimeout(() => {
+                        try {
+                            iframe.contentWindow.focus();
+                            iframe.contentWindow.print();
+                        } catch (e) {
+                            console.error("Print error:", e);
+                        }
+                    }, 500);
+                };
+                return {
+                    document: {
+                        open: function() {},
+                        write: function(content) {
+                            iframe.srcdoc = content;
+                        },
+                        close: function() {}
+                    },
+                    focus: function() {},
+                    print: function() {
+                        iframe.contentWindow.print();
+                    }
+                };
+            };
+
             downloadOrderBill();
+
+            // சிறிது நேரத்திற்குப் பிறகு window.open-ஐ பழைய நிலைக்கு மாற்றுவது
+            setTimeout(() => {
+                window.open = oldOpen;
+            }, 2000);
+
         } else {
-            // ஒருவேளை ஒரிஜினல் ஃபங்ஷன் இல்லையென்றால் நேரடியாக விண்டோ ஓபன் செய்யும் முறை
-            const shopName = typeof getSetting === 'function' ? getSetting(['shop_name', 'business_name'], 1, DEFAULT_BUSINESS.name) : "Sakthivel Crackers";
-            const address = typeof getSetting === 'function' ? getSetting(['address', 'shop_address'], 1, DEFAULT_BUSINESS.address) : "";
-            const whatsapp = typeof getSetting === 'function' ? getSetting(['whatsapp'], 1, DEFAULT_BUSINESS.whatsapp) : "";
-            
-            // புதிய விண்டோவில் பில்லை உருவாக்குதல்
-            if (typeof generatePDF === 'function') {
-                generatePDF(orderData, itemData || []);
-            } else {
-                alert("PDF Generator function is not defined.");
-            }
+            alert("PDF Generator function is not defined.");
         }
 
     } catch (err) {
