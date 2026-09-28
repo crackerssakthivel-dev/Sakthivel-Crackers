@@ -8508,14 +8508,29 @@ setInterval(() => {
 }, 50);
 </script>
 
-    <style>
-    /* படங்களின் அனிமேஷன் தாமதத்தை நீக்கி உடனே தெரிய வைக்க */
-    img, .hero, .banner-img, .product-img, .category-img {
-        opacity: 1 !important;
-        transform: none !important;
-        transition: none !important;
-        animation: none !important;
+<style>
+    /* மொபைல் திரைக்கு மட்டும் ஹீரோ பேனரைச் சிம்பிளாக மாற்ற */
+    @media (max-width: 768px) {
+        .hero, .hero-banner {
+            min-height: 280px !important;
+            height: auto !important;
+            padding: 20px 10px !important;
+            background-size: cover !important;
+            background-position: center !important;
+            border-radius: 12px;
+            margin: 10px !important;
+        }
+        
+        .hero h1, .hero-title {
+            font-size: 22px !important;
+            line-height: 1.3 !important;
+        }
+        
+        .hero p, .hero-subtitle {
+            font-size: 13px !important;
+        }
     }
 </style>
+
 </body>
 </html>
