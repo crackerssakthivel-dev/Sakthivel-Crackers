@@ -8664,7 +8664,7 @@ function toggleAllCategories() {
 }
 
 /* =========================================================
-   2. DOWNLOAD PDF FROM TRACKING PAGE (Final Fix)
+   DOWNLOAD PDF FROM TRACKING PAGE (Direct & Perfect Fix)
 ========================================================= */
 async function downloadExistingOrderPDF(orderId) {
     try {
@@ -8673,31 +8673,31 @@ async function downloadExistingOrderPDF(orderId) {
             return;
         }
 
-        let { data, error } = await supabaseClient
+        // Supabase-ல் இருந்து அந்த ஆர்டர் மற்றும் அதன் பொருட்களை நேரடியாக எடுத்தல்
+        const orderRes = await supabaseClient
             .from("orders")
             .select("*")
-            .eq("order_id", orderId)
+            .or(`order_id.eq.${orderId},id.eq.${orderId}`)
             .single();
 
-        if (error || !data) {
-            const res = await supabaseClient
-                .from("orders")
-                .select("*")
-                .eq("id", orderId)
-                .single();
-            data = res.data;
-            error = res.error;
-        }
-
-        if (error || !data) {
+        if (orderRes.error || !orderRes.data) {
             alert("Order details not found for downloading bill.");
             return;
         }
 
+        const orderData = orderRes.data;
+
+        // ஆர்டருக்கான பொருட்களை (items) எடுத்தல்
+        const itemRes = await supabaseClient
+            .from("order_items")
+            .select("*")
+            .eq("order_id", orderData.order_id || orderId);
+
+        // ஒரிஜினல் பில் ஜெனரேட்டருக்கு ஆர்டர் மற்றும் ஐட்டம்ஸை அனுப்புதல்
         if (typeof downloadOrderBill === 'function') {
-            downloadOrderBill(data);
+            downloadOrderBill(orderData);
         } else if (typeof generatePDF === 'function') {
-            generatePDF(data);
+            generatePDF(orderData);
         } else {
             alert("PDF Generator function is not defined.");
         }
