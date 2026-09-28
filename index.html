@@ -8509,7 +8509,7 @@ setInterval(() => {
 </script>
 
 <style>
-    /* 1. லோகோ, ஹீரோ பேனர், கேட்டகிரி மற்றும் ப்ராடக்ட் படங்கள் உட்பட அனைத்தும் தாமதமின்றி உடனே லோட் ஆக */
+    /* 1. படங்கள் தாமதமின்றி உடனே லோட் ஆக */
     img, .logo, .hero, .banner-img, .product-img, .category-img, header img {
         opacity: 1 !important;
         transform: none !important;
@@ -8517,29 +8517,19 @@ setInterval(() => {
         animation: none !important;
     }
 
-    /* 2. மொபைல் திரையில் ஹீரோ பேனரின் உயரத்தை பாதியாகக் குறைக்க */
-    @media (max-width: 768px) {
-        .hero, .hero-banner, .carousel, .slider-container {
-            min-height: 160px !important;
-            max-height: 200px !important;
-            height: 180px !important;
-            overflow: hidden !important;
-            padding: 10px !important;
-            margin: 5px auto !important;
-        }
-        
-/* நீங்கள் காட்டிய மாதிரி ஹீரோ பேனர் மொபைலில் முழுமையாகப் பொருந்த */
+    /* 2. யூடியூப் தம்ப்னைல் அளவு (16:9 ratio) மற்றும் 4 கார்னர்களும் வளைந்த வடிவம் */
     @media (max-width: 768px) {
         .hero-slider {
-            width: 100% !important;
+            position: relative !important;
+            width: 94% !important;
+            aspect-ratio: 16 / 9 !important; /* யூடியூப் தம்ப்னைல் 16:9 விகிதம் */
             height: auto !important;
-            min-height: 150px !important;
-            max-height: 190px !important;
-            border-radius: 0 !important;
-            border-left: none !important;
-            border-right: none !important;
-            margin: 0 auto 10px auto !important;
-            box-shadow: none !important;
+            min-height: unset !important;
+            max-height: unset !important;
+            border-radius: 18px !important; /* நான்கு கார்னர்களும் வளைவாக இருக்க */
+            margin: 10px auto !important;
+            overflow: hidden !important;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3) !important;
         }
 
         .hero-slide {
@@ -8547,18 +8537,15 @@ setInterval(() => {
             inset: 0 !important;
             width: 100% !important;
             height: 100% !important;
-            border-radius: 0 !important;
+            border-radius: 18px !important;
         }
         
         .hero-image {
             width: 100% !important;
             height: 100% !important;
             object-fit: cover !important;
-            border-radius: 0 !important;
-        }
-
-        .hero-content {
-            display: none !important;
+            border-radius: 18px !important;
         }
     }
+</style>
 </style>
