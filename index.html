@@ -8664,7 +8664,7 @@ function toggleAllCategories() {
 }
 
 /* =========================================================
-   DOWNLOAD PDF FROM TRACKING PAGE (Permanent & Fully Analyzed Fix)
+   DOWNLOAD PDF FROM TRACKING PAGE (Absolute Final & Bulletproof Fix)
 ========================================================= */
 async function downloadExistingOrderPDF(orderId) {
     try {
@@ -8673,26 +8673,20 @@ async function downloadExistingOrderPDF(orderId) {
             return;
         }
 
-        // 1. orders டேபிளில் இருந்து சரியான முறையில் டேட்டாவை எடுத்தல்
-        let orderData = null;
-        
-        const res1 = await supabaseClient
+        // 1. Supabase-ல் இருந்து அந்த ஆர்டரின் முழு விவரங்களையும் எடுத்தல்
+        let { data: orderData, error } = await supabaseClient
             .from("orders")
             .select("*")
             .eq("order_id", orderId)
             .maybeSingle();
-            
-        if (res1.data) {
-            orderData = res1.data;
-        } else {
+
+        if (!orderData) {
             const res2 = await supabaseClient
                 .from("orders")
                 .select("*")
                 .eq("id", orderId)
                 .maybeSingle();
-            if (res2.data) {
-                orderData = res2.data;
-            }
+            orderData = res2.data;
         }
 
         if (!orderData) {
@@ -8700,26 +8694,33 @@ async function downloadExistingOrderPDF(orderId) {
             return;
         }
 
-        // 2. order_items டேபிளில் இருந்து அந்த ஆர்டருக்கான பொருட்களை (items) எடுத்தல்
-        const itemsRes = await supabaseClient
+        // 2. அந்த ஆர்டருக்கான பொருட்களை (items) சரியாக எடுத்தல்
+        const { data: itemData } = await supabaseClient
             .from("order_items")
             .select("*")
             .eq("order_id", orderData.order_id || orderId);
 
-        const items = itemsRes.data || [];
+        // 3. ஒரிஜினல் ஃபங்ஷன் முழுமையாக வேலை செய்யத் தேவையான அனைத்து வழிகளிலும் டேட்டாவை செட் செய்தல்
+        window.currentOrder = orderData;
+        if (itemData && itemData.length > 0) {
+            window.currentOrder.items = itemData;
+        }
 
-        // 3. ஒரிஜினல் பில் ஜெனரேட்டர் ஃபங்ஷனை சரியான ஆப்ஜெக்ட்டுகளுடன் அழைத்தல்
+        // 4. ஒரிஜினல் பில் டவுன்லோட் ஃபங்ஷனை இயக்குதல்
         if (typeof downloadOrderBill === 'function') {
-            // சில சமயம் டவுன்லோட் பில் ஃபங்ஷனுக்கு order மட்டும் அல்லது order மற்றும் items இரண்டும் தேவைப்படலாம்
-            try {
-                downloadOrderBill(orderData, items);
-            } catch (e) {
-                downloadOrderBill(orderData);
-            }
-        } else if (typeof generatePDF === 'function') {
-            generatePDF(orderData, items);
+            downloadOrderBill();
         } else {
-            alert("PDF Generator function is not defined.");
+            // ஒருவேளை ஒரிஜினல் ஃபங்ஷன் இல்லையென்றால் நேரடியாக விண்டோ ஓபன் செய்யும் முறை
+            const shopName = typeof getSetting === 'function' ? getSetting(['shop_name', 'business_name'], 1, DEFAULT_BUSINESS.name) : "Sakthivel Crackers";
+            const address = typeof getSetting === 'function' ? getSetting(['address', 'shop_address'], 1, DEFAULT_BUSINESS.address) : "";
+            const whatsapp = typeof getSetting === 'function' ? getSetting(['whatsapp'], 1, DEFAULT_BUSINESS.whatsapp) : "";
+            
+            // புதிய விண்டோவில் பில்லை உருவாக்குதல்
+            if (typeof generatePDF === 'function') {
+                generatePDF(orderData, itemData || []);
+            } else {
+                alert("PDF Generator function is not defined.");
+            }
         }
 
     } catch (err) {
