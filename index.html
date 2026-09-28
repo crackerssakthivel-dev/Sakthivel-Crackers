@@ -8805,4 +8805,24 @@ async function downloadExistingOrderPDF(orderId) {
         alert("Failed to download bill. Please try again.");
     }
 }
+
+    function sendOrderDirectToWhatsapp() {
+    try {
+        const whatsappNumber = typeof getSetting === 'function' ? getSetting(['whatsapp'], 1, '91' + DEFAULT_BUSINESS.whatsapp) : '919876543210';
+        
+        const orderId = window.currentOrder ? (window.currentOrder.display_order_id || window.currentOrder.order_id || 'NEW') : 'NEW';
+        const customerName = window.currentOrder ? (window.currentOrder.customer_name || 'Customer') : 'Customer';
+        const totalAmount = window.currentOrder ? (window.currentOrder.total || 0) : 0;
+
+        const message = `Hello, I have placed a new order!\nOrder ID: ${orderId}\nName: ${customerName}\nTotal: ₹${totalAmount}\nPlease confirm my order.`;
+        
+        const encodedMessage = encodeURIComponent(message);
+        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+        
+        window.open(whatsappUrl, '_blank');
+    } catch (err) {
+        console.error("WhatsApp error:", err);
+        alert("Could not open WhatsApp. Please try again.");
+    }
+}
 </script>
