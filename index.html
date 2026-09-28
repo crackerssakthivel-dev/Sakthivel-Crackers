@@ -8528,24 +8528,37 @@ setInterval(() => {
             margin: 5px auto !important;
         }
         
-        .hero img, .hero-banner img, .carousel img {
-            object-fit: cover !important;
-            height: 100% !important;
+/* நீங்கள் காட்டிய மாதிரி ஹீரோ பேனர் மொபைலில் முழுமையாகப் பொருந்த */
+    @media (max-width: 768px) {
+        .hero-slider {
             width: 100% !important;
-        }
-        
-        .hero h1, .hero-title {
-            font-size: 16px !important;
-            margin-bottom: 2px !important;
-        }
-        
-        .hero p, .hero-subtitle {
-            font-size: 11px !important;
+            height: auto !important;
+            min-height: 150px !important;
+            max-height: 190px !important;
+            border-radius: 0 !important;
+            border-left: none !important;
+            border-right: none !important;
+            margin: 0 auto 10px auto !important;
+            box-shadow: none !important;
         }
 
-        .hero .btn, .hero button {
-            padding: 4px 10px !important;
-            font-size: 11px !important;
+        .hero-slide {
+            position: absolute !important;
+            inset: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            border-radius: 0 !important;
+        }
+        
+        .hero-image {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
+            border-radius: 0 !important;
+        }
+
+        .hero-content {
+            display: none !important;
         }
     }
 </style>
