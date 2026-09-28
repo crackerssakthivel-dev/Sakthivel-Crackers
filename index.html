@@ -1834,7 +1834,7 @@ a{
 
     </section>
 
-    <!-- CATEGORIES -->
+<!-- CATEGORIES -->
 
     <section class="section" id="categories">
 
@@ -1852,18 +1852,21 @@ a{
                     </p>
                 </div>
 
-                <button
-                    class="view-all"
-           onclick="document.getElementById('categoryFilter').value = ''; document.getElementById('products').scrollIntoView({behavior: 'smooth'}); if(typeof renderProducts === 'function') { renderProducts(); }"
-                >
-                    VIEW ALL
-                </button>
-
             </div>
 
+            <!-- All Categories பட்டன் (இதை க்ளிக் செய்தால் கேட்டகிரிகள் திறக்கும்) -->
+            <button 
+                type="button" 
+                onclick="toggleAllCategories()" 
+                style="width: 100%; padding: 14px; background: linear-gradient(135deg, var(--gold2), var(--gold)); color: #07152f; border: none; border-radius: 14px; font-weight: 1000; font-size: 15px; margin-bottom: 15px; cursor: pointer; box-shadow: 0 4px 15px rgba(245,197,66,0.2);">
+                📂 ALL CATEGORIES (CLICK TO VIEW)
+            </button>
+
+            <!-- கேட்டகிரி கட்டங்கள் (முதலில் மறைக்கப்பட்டிருக்கும்) -->
             <div
                 class="category-grid"
                 id="categoryGrid"
+                style="display: none;"
             >
                 <div class="category-card skeleton"></div>
                 <div class="category-card skeleton"></div>
