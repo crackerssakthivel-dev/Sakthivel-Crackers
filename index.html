@@ -8664,7 +8664,7 @@ function toggleAllCategories() {
 }
 
 /* =========================================================
-   2. DOWNLOAD PDF FROM TRACKING PAGE (Consistent Design & Sequence)
+   DOWNLOAD PDF FROM TRACKING PAGE (Fixed & Reliable)
 ========================================================= */
 async function downloadExistingOrderPDF(orderId) {
     try {
@@ -8673,19 +8673,30 @@ async function downloadExistingOrderPDF(orderId) {
             return;
         }
 
-        // டேட்டாவில் இருந்து அந்த ஆர்டர் விவரங்களைத் தேடுதல்
-        const { data, error } = await supabaseClient
+        // டேட்டாவில் இருந்து அந்த ஆர்டர் விவரங்களைத் தேடுதல் (id மற்றும் order_id இரண்டையும் செக் செய்யும்)
+        let { data, error } = await supabaseClient
             .from("orders")
             .select("*")
             .eq("order_id", orderId)
             .single();
 
         if (error || !data) {
+            // ஒருவேளை order_id மூலம் கிடைக்கவில்லை என்றால் id மூலமாகத் தேடும்
+            const res = await supabaseClient
+                .from("orders")
+                .select("*")
+                .eq("id", orderId)
+                .single();
+            data = res.data;
+            error = res.error;
+        }
+
+        if (error || !data) {
             alert("Order details not found for downloading bill.");
             return;
         }
 
-        // கஸ்டமர் எந்த வரிசையில் பொருட்களைச் சேர்த்தாரோ அதே வரிசை மாறாமல் பில் ஜெனரேட்டருக்கு அனுப்பப்படும்
+        // பில் ஜெனரேட்டர் ஃபங்ஷனை அழைத்தல்
         if (typeof generatePDF === 'function') {
             generatePDF(data);
         } else {
