@@ -8664,21 +8664,52 @@ function toggleAllCategories() {
 }
 
 /* =========================================================
-   DOWNLOAD PDF FROM TRACKING PAGE (100% Working Solution)
+   DOWNLOAD PDF FROM TRACKING PAGE (Smart & Guaranteed Fix)
 ========================================================= */
-function downloadExistingOrderPDF(orderId) {
+async function downloadExistingOrderPDF(orderId) {
     try {
         if (!orderId) {
             alert("Order ID not found!");
             return;
         }
 
-        // ஏற்கனவே ஒரிஜினல் கோடில் உள்ள பில் டவுன்லோட் ஃபங்ஷனை நேரடியாக ஆர்டர் ID உடன் அழைத்தல்
+        // VIEW ORDER DETAILS என்ன வழியில் டேட்டாவை எடுக்கிறதோ, அதே முறையில் Supabase-ல் தேடுதல்
+        const orderResponse = await supabaseClient
+            .from("orders")
+            .select("*")
+            .eq("id", orderId)
+            .single();
+
+        let orderData = orderResponse.data;
+
+        if (!orderData) {
+            const orderResponse2 = await supabaseClient
+                .from("orders")
+                .select("*")
+                .eq("order_id", orderId)
+                .single();
+            orderData = orderResponse2.data;
+        }
+
+        if (!orderData) {
+            alert("Order details not found for downloading bill.");
+            return;
+        }
+
+        // ஆர்டருக்கான பொருட்களை (items) சரியாக எடுத்தல்
+        const itemResponse = await supabaseClient
+            .from("order_items")
+            .select("*")
+            .eq("order_id", orderData.order_id || orderId);
+
+        const items = itemResponse.data || [];
+
+        // ஒரிஜினல் பில் ஜெனரேட்டருக்கு ஆர்டர் மற்றும் ஐட்டம்ஸ் இரண்டையும் அனுப்புதல்
         if (typeof downloadOrderBill === 'function') {
-            // ஒருவேளை ஆப்ஜெக்ட் தேவைப்பட்டால் மினிமம் டேட்டாவுடன் அனுப்புதல்
-            downloadOrderBill({ order_id: orderId, id: orderId });
+            // சில ஒரிஜினல் ஃபங்ஷன்களுக்கு items தேவைப்படலாம்
+            downloadOrderBill(orderData, items);
         } else if (typeof generatePDF === 'function') {
-            generatePDF({ order_id: orderId, id: orderId });
+            generatePDF(orderData, items);
         } else {
             alert("PDF Generator function is not defined.");
         }
