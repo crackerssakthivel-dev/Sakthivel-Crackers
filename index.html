@@ -8649,7 +8649,7 @@ setInterval(() => {
 
 <script>
 /* =========================================================
-   ALL CATEGORIES TOGGLE FUNCTION
+   1. ALL CATEGORIES TOGGLE FUNCTION
 ========================================================= */
 function toggleAllCategories() {
     const grid = document.getElementById('categoryGrid');
@@ -8660,6 +8660,41 @@ function toggleAllCategories() {
         } else {
             grid.style.display = 'none';
         }
+    }
+}
+
+/* =========================================================
+   2. DOWNLOAD PDF FROM TRACKING PAGE (Consistent Design & Sequence)
+========================================================= */
+async function downloadExistingOrderPDF(orderId) {
+    try {
+        if (!orderId) {
+            alert("Order ID not found!");
+            return;
+        }
+
+        // டேட்டாவில் இருந்து அந்த ஆர்டர் விவரங்களைத் தேடுதல்
+        const { data, error } = await supabaseClient
+            .from("orders")
+            .select("*")
+            .eq("order_id", orderId)
+            .single();
+
+        if (error || !data) {
+            alert("Order details not found for downloading bill.");
+            return;
+        }
+
+        // கஸ்டமர் எந்த வரிசையில் பொருட்களைச் சேர்த்தாரோ அதே வரிசை மாறாமல் பில் ஜெனரேட்டருக்கு அனுப்பப்படும்
+        if (typeof generatePDF === 'function') {
+            generatePDF(data);
+        } else {
+            alert("PDF Generator function is not defined. Please check your script.");
+        }
+
+    } catch (err) {
+        console.error("Error downloading bill:", err);
+        alert("Failed to download bill. Please try again.");
     }
 }
 </script>
