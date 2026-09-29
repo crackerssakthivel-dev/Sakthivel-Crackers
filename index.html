@@ -5707,249 +5707,126 @@ async function handleCheckout(event){
     }
 
     if(!supabaseClient){
-        showToast(
-            "Supabase is not configured.",
-            "error"
-        );
+        showToast("Supabase is not configured.", "error");
         return;
     }
 
-    const button =
-        document.getElementById(
-            "placeOrderButton"
-        );
-
-    const originalText =
-        button.textContent;
+    const button = document.getElementById("placeOrderButton");
+    const originalText = button.textContent;
 
     button.disabled = true;
-
-    button.textContent =
-        "PLACING ORDER...";
+    button.textContent = "PLACING ORDER...";
 
     try{
         const customer = {
-            name:
-                document.getElementById(
-                    "customerName"
-                ).value.trim(),
-
-            mobile:
-                document.getElementById(
-                    "customerMobile"
-                ).value.trim(),
-
-            address:
-                document.getElementById(
-                    "customerAddress"
-                ).value.trim(),
-
-            district:
-                document.getElementById(
-                    "customerDistrict"
-                ).value.trim(),
-
-            pincode:
-                document.getElementById(
-                    "customerPincode"
-                ).value.trim(),
-
-            notes:
-                document.getElementById(
-                    "customerNotes"
-                ).value.trim()
+            name: document.getElementById("customerName").value.trim(),
+            mobile: document.getElementById("customerMobile").value.trim(),
+            address: document.getElementById("customerAddress").value.trim(),
+            district: document.getElementById("customerDistrict").value.trim(),
+            pincode: document.getElementById("customerPincode").value.trim(),
+            notes: document.getElementById("customerNotes").value.trim()
         };
 
-        const total =
-            getCartTotal();
+        const total = getCartTotal();
 
         const orderPayload = {
-            customer_name:
-                customer.name,
-
-            customer_mobile:
-                customer.mobile,
-
-            mobile:
-                customer.mobile,
-
-            customer_address:
-                customer.address,
-
-            address:
-                customer.address,
-
-            city_district:
-                customer.district,
-
-            district:
-                customer.district,
-
-            pincode:
-                customer.pincode,
-
-            notes:
-                customer.notes,
-
-            total:
-                total,
-
-            grand_total:
-                total,
-
-            status:
-                "PENDING"
+            customer_name: customer.name,
+            customer_mobile: customer.mobile,
+            mobile: customer.mobile,
+            customer_address: customer.address,
+            address: customer.address,
+            city_district: customer.district,
+            district: customer.district,
+            pincode: customer.pincode,
+            notes: customer.notes,
+            total: total,
+            grand_total: total,
+            status: "PENDING"
         };
 
-        const orderResponse =
-            await supabaseClient
-                .from("orders")
-                .insert(
-                    orderPayload
-                )
-                .select("*")
-                .single();
+        const orderResponse = await supabaseClient
+            .from("orders")
+            .insert(orderPayload)
+            .select("*")
+            .single();
 
         if(orderResponse.error){
             throw orderResponse.error;
         }
 
-        const createdOrder =
-            orderResponse.data;
+        const createdOrder = orderResponse.data;
+        const orderId = getOrderDisplayId(createdOrder);
 
-        const orderId =
-            getOrderDisplayId(
-                createdOrder
-            );
+        const itemRows = cart.map(function(item){
+            const quantity = Number(item.quantity) || 0;
+            const price = Number(item.price) || 0;
 
-        const itemRows =
-            cart.map(
-                function(item){
-                    const quantity =
-                        Number(item.quantity) || 0;
+            return {
+                order_id: createdOrder.id,
+                product_id: item.product_id,
+                product_name: item.product_name,
+                quantity: quantity,
+                unit: item.unit,
+                price: price,
+                unit_price: price,
+                subtotal: price * quantity
+            };
+        });
 
-                    const price =
-                        Number(item.price) || 0;
-
-                    return {
-                        order_id:
-                            createdOrder.id,
-
-                        product_id:
-                            item.product_id,
-
-                        product_name:
-                            item.product_name,
-
-                        quantity:
-                            quantity,
-
-                        unit:
-                            item.unit,
-
-                        price:
-                            price,
-
-                        unit_price:
-                            price,
-
-                        subtotal:
-                            price * quantity
-                    };
-                }
-            );
-
-        const itemResponse =
-            await supabaseClient
-                .from("order_items")
-                .insert(
-                    itemRows
-                );
+        const itemResponse = await supabaseClient
+            .from("order_items")
+            .insert(itemRows);
 
         if(itemResponse.error){
             throw itemResponse.error;
         }
 
-        // மிக முக்கியமானது: window.currentOrder-ல் கஸ்டமர் தகவல்களைப் பாதுகாப்பாகப் பதிவது
-        window.currentOrder = {
+        // பில் மற்றும் வாட்ஸ்அப்பிற்கான அனைத்து விவரங்களும் இங்கு சரியாகச் சேமிக்கப்படுகின்றன
+        currentOrder = window.currentOrder = {
             ...createdOrder,
-            display_order_id:
-                orderId,
-
-            customer_name:
-                customer.name,
-
-            customer_mobile:
-                customer.mobile,
-
-            customer_address:
-                customer.address,
-
-            city_district:
-                customer.district,
-
-            pincode:
-                customer.pincode,
-
-            notes:
-                customer.notes,
-
-            total:
-                total
+            display_order_id: orderId,
+            customer_name: customer.name,
+            customer_mobile: customer.mobile,
+            customer_address: customer.address,
+            city_district: customer.district,
+            pincode: customer.pincode,
+            notes: customer.notes,
+            total: total,
+            items: cart.map(item => ({
+                product_name: item.product_name,
+                quantity: item.quantity,
+                unit: item.unit,
+                price: item.price,
+                subtotal: item.price * item.quantity
+            }))
         };
 
         cart = [];
-
         saveCart();
-
         updateCartUI();
-
         renderProducts();
 
-        document
-            .getElementById("checkoutForm")
-            .reset();
-
-        closeModal(
-            "checkoutModal"
-        );
+        document.getElementById("checkoutForm").reset();
+        closeModal("checkoutModal");
 
         renderSuccess();
-
-        openModal(
-            "successModal"
-        );
-
-        showToast(
-            "Order placed successfully.",
-            "success"
-        );
+        openModal("successModal");
+        showToast("Order placed successfully.", "success");
 
     }catch(error){
-        console.error(
-            "Order creation error:",
-            error
-        );
-
-        showToast(
-            "Order could not be placed. Please try again.",
-            "error"
-        );
-
+        console.error("Order creation error:", error);
+        showToast("Order could not be placed. Please try again.", "error");
     }finally{
         button.disabled = false;
-
-        button.textContent =
-            originalText;
+        button.textContent = originalText;
     }
-
 }
 
 function sendOrderDirectToWhatsapp() {
     try {
         const whatsappNumber = typeof getSetting === 'function' ? getSetting(['whatsapp'], 1, '91' + DEFAULT_BUSINESS.whatsapp) : '919344265054';
         
-        const order = window.currentOrder || {};
+        const order = currentOrder || window.currentOrder || {};
         const orderId = order.display_order_id || order.order_id || document.getElementById('successOrderId')?.textContent || 'ORD-' + Math.floor(100000 + Math.random() * 900000);
         
         const customerName = order.customer_name || document.getElementById('customerName')?.value || 'Customer';
@@ -5958,7 +5835,7 @@ function sendOrderDirectToWhatsapp() {
         const customerDistrict = order.city_district || order.district || document.getElementById('customerDistrict')?.value || '';
         const customerPincode = order.pincode || document.getElementById('customerPincode')?.value || '';
 
-        // வாட்ஸ்அப் மெசேஜ் வடிவம் (பொருட்கள் மற்றும் டோட்டல் முற்றிலும் நீக்கப்பட்டது)
+        // வாட்ஸ்அப் மெசேஜ் வடிவம் (பெயர், அட்ரஸ், ஐடி மட்டும் இருக்கும்)
         let message = `SAKTHIVEL CRACKERS\n`;
         message += `NEW ORDER\n`;
         message += `Order ID: ${orderId}\n`;
@@ -5977,6 +5854,368 @@ function sendOrderDirectToWhatsapp() {
         console.error("WhatsApp error:", err);
         alert("Could not generate WhatsApp message. Please try again.");
     }
+}
+
+function downloadOrderBill(){
+
+    const activeOrder = currentOrder || window.currentOrder;
+
+    if(!activeOrder){
+        showToast(
+            "Order information not found.",
+            "error"
+        );
+        return;
+    }
+
+    try{
+        const orderId =
+            activeOrder.display_order_id ||
+            getOrderDisplayId(activeOrder);
+
+        const date =
+            activeOrder.created_at
+                ? new Date(
+                    activeOrder.created_at
+                  ).toLocaleString(
+                    "en-IN"
+                  )
+                : new Date()
+                    .toLocaleString(
+                        "en-IN"
+                    );
+
+        const shopName =
+            getSetting(
+                [
+                    "shop_name",
+                    "business_name"
+                ],
+                DEFAULT_BUSINESS.name
+            );
+
+        const address =
+            getSetting(
+                [
+                    "address",
+                    "shop_address"
+                ],
+                DEFAULT_BUSINESS.address
+            );
+
+        const whatsapp =
+            getSetting(
+                [
+                    "whatsapp"
+                ],
+                DEFAULT_BUSINESS.whatsapp
+            );
+
+        let rows = "";
+
+        (
+            activeOrder.items ||
+            []
+        ).forEach(
+            function(item){
+
+                rows +=
+                    `
+                    <tr>
+                        <td>${escapeHtml(item.product_name)}</td>
+                        <td>${escapeHtml(item.unit || "")}</td>
+                        <td>${item.quantity}</td>
+                        <td>₹${formatMoney(item.price)}</td>
+                        <td>₹${formatMoney(item.subtotal)}</td>
+                    </tr>
+                    `;
+
+            }
+        );
+
+        const bill =
+            `
+            <!DOCTYPE html>
+            <html>
+            <head>
+
+                <meta charset="UTF-8">
+
+                <title>
+                    ${escapeHtml(shopName)} - ${escapeHtml(orderId)}
+                </title>
+
+                <style>
+
+                    body{
+                        font-family:Arial,sans-serif;
+                        margin:0;
+                        padding:30px;
+                        color:#111827;
+                    }
+
+                    .header{
+                        padding:25px;
+                        background:#07152f;
+                        color:#fff;
+                        border-radius:15px;
+                        border-bottom:5px solid #f5c542;
+                    }
+
+                    h1{
+                        margin:0;
+                        color:#ffd966;
+                    }
+
+                    .muted{
+                        color:#5d687c;
+                        font-size:12px;
+                    }
+
+                    .header .muted{
+                        color:#d4dded;
+                    }
+
+                    .box{
+                        border:1px solid #d9deea;
+                        border-radius:12px;
+                        padding:15px;
+                        margin-top:15px;
+                    }
+
+                    table{
+                        width:100%;
+                        border-collapse:collapse;
+                        margin-top:15px;
+                    }
+
+                    th,
+                    td{
+                        border-bottom:1px solid #e2e6ee;
+                        padding:10px;
+                        text-align:left;
+                        font-size:12px;
+                    }
+
+                    th{
+                        background:#f4f6fa;
+                    }
+
+                    .total{
+                        text-align:right;
+                        font-size:20px;
+                        font-weight:900;
+                        color:#07152f;
+                        margin-top:15px;
+                    }
+
+                    .status{
+                        display:inline-block;
+                        padding:7px 12px;
+                        border-radius:30px;
+                        background:#fff3bd;
+                        font-weight:900;
+                    }
+
+                    @media print{
+                        body{
+                            padding:0;
+                        }
+
+                        .no-print{
+                            display:none;
+                        }
+                    }
+
+                </style>
+
+            </head>
+
+            <body>
+
+                <div class="header">
+
+                    <h1>
+                        ${escapeHtml(shopName)}
+                    </h1>
+
+                    <div class="muted">
+                        ${escapeHtml(address)}
+                    </div>
+
+                    <div class="muted">
+                        WhatsApp: ${escapeHtml(whatsapp)}
+                    </div>
+
+                </div>
+
+                <div class="box">
+
+                    <strong>
+                        ORDER BILL
+                    </strong>
+
+                    <p class="muted">
+                        Order ID: ${escapeHtml(orderId)}
+                    </p>
+
+                    <p class="muted">
+                        Date: ${escapeHtml(date)}
+                    </p>
+
+                    <span class="status">
+                        ${escapeHtml(
+                            String(
+                                activeOrder.status ||
+                                "PENDING"
+                            ).toUpperCase()
+                        )}
+                    </span>
+
+                </div>
+
+                <div class="box">
+
+                    <strong>
+                        CUSTOMER
+                    </strong>
+
+                    <p>
+                        ${escapeHtml(activeOrder.customer_name || "")}
+                    </p>
+
+                    <p>
+                        ${escapeHtml(activeOrder.customer_mobile || "")}
+                    </p>
+
+                    <p>
+                        ${escapeHtml(activeOrder.customer_address || "")}
+                    </p>
+
+                    <p>
+                        ${escapeHtml(activeOrder.city_district || "")}
+                        -
+                        ${escapeHtml(activeOrder.pincode || "")}
+                    </p>
+
+                </div>
+
+                <div class="box">
+
+                    <strong>
+                        ORDER ITEMS
+                    </strong>
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Product</th>
+                                <th>Unit</th>
+                                <th>Qty</th>
+                                <th>Unit Price</th>
+                                <th>Subtotal</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            ${rows}
+
+                        </tbody>
+
+                    </table>
+
+                    <div class="total">
+                        GRAND TOTAL:
+                        ₹${formatMoney(activeOrder.total)}
+                    </div>
+
+                </div>
+
+                <p
+                    class="muted"
+                    style="margin-top:25px;text-align:center;"
+                >
+                    Thank you for ordering from ${escapeHtml(shopName)}.
+                </p>
+
+                <script>
+                    window.onload = function(){
+                        setTimeout(
+                            function(){
+                                window.print();
+                            },
+                            400
+                        );
+                    };
+                <\/script>
+
+            </body>
+            </html>
+            `;
+
+        const blob =
+            new Blob(
+                [bill],
+                {
+                    type:"text/html"
+                }
+            );
+
+        const url =
+            URL.createObjectURL(
+                blob
+            );
+
+        const printWindow =
+            window.open(
+                url,
+                "_blank"
+            );
+
+        if(!printWindow){
+
+            URL.revokeObjectURL(
+                url
+            );
+
+            showToast(
+                "Please allow pop-ups to generate the bill.",
+                "error"
+            );
+
+            return;
+
+        }
+
+        setTimeout(
+            function(){
+
+                URL.revokeObjectURL(
+                    url
+                );
+
+            },
+            5000
+        );
+
+    }catch(error){
+
+        console.error(
+            "PDF error:",
+            error
+        );
+
+        showToast(
+            "Could not generate the order bill.",
+            "error"
+        );
+
+    }
+
 }
 
 
