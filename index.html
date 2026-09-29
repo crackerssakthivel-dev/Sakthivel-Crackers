@@ -1416,6 +1416,140 @@
       }
     );
 
+
+
+/* =========================================
+   HERO IMAGE SLIDER
+========================================= */
+
+const heroSlides =
+  document.querySelectorAll(".hero-slide");
+
+const heroDots =
+  document.getElementById("heroDots");
+
+let currentHeroSlide = 0;
+
+
+/* CREATE SLIDER DOTS */
+
+heroSlides.forEach(function (slide, index) {
+
+  const dot =
+    document.createElement("button");
+
+  dot.className = "hero-dot";
+
+  dot.type = "button";
+
+  dot.setAttribute(
+    "aria-label",
+    "Go to hero slide " + (index + 1)
+  );
+
+  dot.addEventListener(
+    "click",
+    function () {
+
+      showHeroSlide(index);
+
+      restartHeroSlider();
+
+    }
+  );
+
+  heroDots.appendChild(dot);
+
+});
+
+
+const heroDotButtons =
+  document.querySelectorAll(".hero-dot");
+
+
+/* SHOW HERO SLIDE */
+
+function showHeroSlide(index) {
+
+  heroSlides.forEach(function (slide) {
+
+    slide.classList.remove("active");
+
+  });
+
+  heroDotButtons.forEach(function (dot) {
+
+    dot.classList.remove("active");
+
+  });
+
+
+  if (heroSlides[index]) {
+
+    heroSlides[index].classList.add("active");
+
+  }
+
+  if (heroDotButtons[index]) {
+
+    heroDotButtons[index].classList.add("active");
+
+  }
+
+  currentHeroSlide = index;
+
+}
+
+
+/* NEXT SLIDE */
+
+function nextHeroSlide() {
+
+  let nextIndex =
+    currentHeroSlide + 1;
+
+  if (nextIndex >= heroSlides.length) {
+
+    nextIndex = 0;
+
+  }
+
+  showHeroSlide(nextIndex);
+
+}
+
+
+/* AUTO SLIDE — 4 SECONDS */
+
+let heroTimer =
+  setInterval(
+    nextHeroSlide,
+    4000
+  );
+
+
+/* RESTART TIMER AFTER DOT CLICK */
+
+function restartHeroSlider() {
+
+  clearInterval(heroTimer);
+
+  heroTimer =
+    setInterval(
+      nextHeroSlide,
+      4000
+    );
+
+}
+
+
+/* START FIRST SLIDE */
+
+if (heroSlides.length > 0) {
+
+  showHeroSlide(0);
+
+}
   </script>
 
 </body>
