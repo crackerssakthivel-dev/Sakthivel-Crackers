@@ -1,1283 +1,947 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>SAKTHIVEL CRACKERS</title>
+
+  <style>
+    /* =========================================
+       SAKTHIVEL CRACKERS
+       ROYAL BLUE — CLEAN & MODERN
+       HEADER
+    ========================================= */
+
+    :root {
+      --royal-blue: #4169E1;
+      --bright-blue: #2563EB;
+      --deep-blue: #1E40AF;
+      --light-blue: #E6F0FF;
+      --gold: #FFD700;
+      --white: #FFFFFF;
+      --red: #FF0000;
+      --dark-text: #172033;
+      --border: #D9E5F5;
+    }
 
-    <title>SAKTHIVEL CRACKERS</title>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-    <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #FFFFFF;
+      color: var(--dark-text);
+    }
 
-        /* =====================================================
-           ROYAL BLUE COLOR SYSTEM
-        ===================================================== */
+    button,
+    input {
+      font-family: inherit;
+    }
 
-        :root {
-            --deep-blue: #1E40AF;
-            --royal-blue: #4169E1;
-            --bright-blue: #2563EB;
-            --deep-blue: #1E40AF;
-            --light-blue: #E6F0FF;
-            --white: #FFFFFF;
-            --gold: #FFD700;
-            --red: #FF0000;
-            --dark-text: #172033;
-        }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
 
 
-        /* =====================================================
-           BASIC RESET
-        ===================================================== */
+    /* =========================================
+       HEADER
+    ========================================= */
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
 
-        html {
-            scroll-behavior: smooth;
-        }
+      width: 100%;
+      height: 68px;
 
-        body {
-            margin: 0;
-            background: #F5F7FA;
-            color: var(--dark-text);
-            font-family: Arial, Helvetica, sans-serif;
-        }
+      background: var(--deep-blue);
 
-        body.menu-open {
-            overflow: hidden;
-        }
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
+      box-shadow: 0 3px 14px rgba(0, 0, 0, 0.18);
+    }
 
-        /* =====================================================
-           HEADER
-        ===================================================== */
 
-        .site-header {
-            width: 100%;
-            height: 72px;
+    /* =========================================
+       HEADER INNER
+    ========================================= */
 
-            background: var(--deep-royal-blue);
+    .header-inner {
+      width: 100%;
+      max-width: 1200px;
+      height: 100%;
 
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+      padding: 0 14px;
 
-            padding: 0 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
 
-            position: relative;
-            z-index: 1000;
 
-            box-shadow:
-                0 3px 12px rgba(6, 26, 74, 0.25);
-        }
+    /* =========================================
+       LEFT — HAMBURGER
+    ========================================= */
 
+    .header-left {
+      width: 44px;
 
-        /* =====================================================
-           LEFT SIDE / HAMBURGER
-        ===================================================== */
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
 
-        .header-left {
-            width: 48px;
+    .menu-btn {
+      width: 40px;
+      height: 40px;
 
-            display: flex;
-            align-items: center;
-        }
+      border: none;
+      border-radius: 10px;
 
+      background: transparent;
+      color: var(--white);
 
-        /* =====================================================
-           CENTER LOGO
-        ===================================================== */
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-        .header-logo-link {
-            position: absolute;
+      cursor: pointer;
 
-            left: 50%;
-            top: 50%;
+      transition: 0.25s ease;
+    }
 
-            transform: translate(-50%, -50%);
+    .menu-btn:hover {
+      background: rgba(255, 255, 255, 0.14);
+    }
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+    .menu-btn:active {
+      transform: scale(0.94);
+    }
 
-            text-decoration: none;
-        }
+    .menu-icon {
+      font-size: 26px;
+      line-height: 1;
+    }
 
-        .header-logo {
-            width: auto;
-            height: 54px;
 
-            max-width: 210px;
+    /* =========================================
+       CENTER — LOGO
+    ========================================= */
 
-            object-fit: contain;
-        }
+    .header-logo {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
 
+      height: 52px;
 
-        /* =====================================================
-           RIGHT SIDE
-        ===================================================== */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-        .header-actions {
-            display: flex;
-            align-items: center;
+    .header-logo img {
+      display: block;
 
-            gap: 3px;
-        }
+      max-height: 48px;
+      max-width: 175px;
 
+      width: auto;
+      height: auto;
 
-        /* =====================================================
-           HEADER ICON BUTTON
-        ===================================================== */
+      object-fit: contain;
+    }
 
-        .header-icon-btn {
-            position: relative;
 
-            width: 43px;
-            height: 43px;
+    /* =========================================
+       RIGHT — SEARCH + CART
+    ========================================= */
 
-            border: none;
-            border-radius: 10px;
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
 
-            background: transparent;
+    .header-action {
+      width: 40px;
+      height: 40px;
 
-            color: var(--white);
+      border: none;
+      border-radius: 10px;
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+      background: transparent;
+      color: var(--white);
 
-            cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-            transition:
-                background 0.2s ease,
-                color 0.2s ease,
-                transform 0.15s ease;
-        }
+      cursor: pointer;
 
-        .header-icon-btn:hover {
-            background: rgba(65, 105, 225, 0.35);
-        }
+      transition: 0.25s ease;
+    }
 
-        .header-icon-btn:active {
-            transform: scale(0.93);
-        }
+    .header-action:hover {
+      background: rgba(255, 255, 255, 0.14);
+    }
 
+    .header-action:active {
+      transform: scale(0.94);
+    }
 
-        /* =====================================================
-           ICON
-        ===================================================== */
+    .header-action span {
+      font-size: 22px;
+      line-height: 1;
+    }
 
-        .header-icon {
-            width: 24px;
-            height: 24px;
 
-            fill: none;
+    /* =========================================
+       CART COUNT
+    ========================================= */
 
-            stroke: currentColor;
+    .cart-wrapper {
+      position: relative;
+    }
 
-            stroke-width: 2;
+    .cart-count {
+      position: absolute;
 
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
+      top: 1px;
+      right: 0;
 
+      min-width: 17px;
+      height: 17px;
 
-        /* =====================================================
-           CART COUNT
-        ===================================================== */
+      padding: 0 4px;
 
-        .cart-count {
-            position: absolute;
+      border-radius: 50%;
 
-            top: 2px;
-            right: 1px;
+      background: var(--gold);
+      color: #172033;
 
-            min-width: 18px;
-            height: 18px;
+      font-size: 10px;
+      font-weight: 700;
 
-            padding: 0 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-            border-radius: 50px;
 
-            background: var(--red);
-            color: var(--white);
+    /* =========================================
+       SEARCH PANEL
+    ========================================= */
 
-            font-size: 10px;
-            font-weight: 800;
+    .search-panel {
+      position: absolute;
 
-            display: none;
+      top: 68px;
+      left: 0;
+      right: 0;
 
-            align-items: center;
-            justify-content: center;
+      background: var(--white);
 
-            border: 2px solid var(--deep-royal-blue);
-        }
+      padding: 12px 14px;
 
-        .cart-count.show {
-            display: flex;
-        }
+      border-bottom: 1px solid var(--border);
 
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.12);
 
-        /* =====================================================
-           SEARCH PANEL
-        ===================================================== */
+      display: none;
+    }
 
-        .search-panel {
-            position: absolute;
+    .search-panel.active {
+      display: block;
+    }
 
-            top: 72px;
-            left: 0;
-            right: 0;
+    .search-box {
+      width: 100%;
+      max-width: 700px;
 
-            padding: 14px;
+      margin: 0 auto;
 
-            background: var(--white);
+      display: flex;
+      align-items: center;
 
-            border-bottom:
-                2px solid var(--royal-blue);
+      background: var(--light-blue);
 
-            box-shadow:
-                0 8px 24px rgba(6, 26, 74, 0.18);
+      border: 1px solid #C9DAF2;
+      border-radius: 10px;
 
-            display: none;
-        }
+      overflow: hidden;
+    }
 
-        .search-panel.active {
-            display: block;
-        }
+    .search-box input {
+      flex: 1;
 
-        .search-input {
-            width: 100%;
-            height: 46px;
+      min-width: 0;
 
-            border:
-                2px solid var(--royal-blue);
+      border: none;
+      outline: none;
 
-            border-radius: 10px;
+      background: transparent;
 
-            padding: 0 14px;
+      padding: 13px 14px;
 
-            background: var(--white);
+      font-size: 14px;
+      color: var(--dark-text);
+    }
 
-            color: var(--dark-text);
+    .search-box button {
+      width: 48px;
+      height: 44px;
 
-            font-size: 15px;
+      border: none;
 
-            outline: none;
-        }
+      background: var(--bright-blue);
+      color: var(--white);
 
-        .search-input:focus {
-            border-color: var(--bright-blue);
+      cursor: pointer;
+    }
 
-            box-shadow:
-                0 0 0 3px rgba(37, 99, 235, 0.12);
-        }
 
+    /* =========================================
+       SIDE MENU OVERLAY
+    ========================================= */
 
-        /* =====================================================
-           MENU OVERLAY
-        ===================================================== */
+    .menu-overlay {
+      position: fixed;
 
-        .menu-overlay {
-            position: fixed;
+      inset: 0;
 
-            inset: 0;
+      background: rgba(0, 0, 0, 0.48);
 
-            background:
-                rgba(6, 26, 74, 0.48);
+      z-index: 2000;
 
-            opacity: 0;
-            visibility: hidden;
+      opacity: 0;
+      visibility: hidden;
 
-            transition:
-                opacity 0.25s ease,
-                visibility 0.25s ease;
+      transition: 0.25s ease;
+    }
 
-            z-index: 1090;
-        }
+    .menu-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
 
-        .menu-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
 
+    /* =========================================
+       SIDE DRAWER
+    ========================================= */
 
-        /* =====================================================
-           SIDE MENU
-        ===================================================== */
+    .side-menu {
+      position: fixed;
 
-        .side-menu {
-            position: fixed;
+      top: 0;
+      left: 0;
 
-            top: 0;
-            left: 0;
+      width: min(86%, 360px);
+      height: 100vh;
 
-            width: min(86vw, 380px);
-            height: 100vh;
+      background: var(--white);
 
-            background: var(--white);
+      z-index: 2100;
 
-            z-index: 1100;
+      transform: translateX(-100%);
 
-            transform: translateX(-100%);
+      transition: transform 0.3s ease;
 
-            transition:
-                transform 0.3s ease;
+      box-shadow: 5px 0 20px rgba(0, 0, 0, 0.18);
 
-            display: flex;
-            flex-direction: column;
+      overflow-y: auto;
+    }
 
-            box-shadow:
-                8px 0 30px rgba(6, 26, 74, 0.22);
-        }
+    .side-menu.active {
+      transform: translateX(0);
+    }
 
-        .side-menu.active {
-            transform: translateX(0);
-        }
 
+    /* =========================================
+       MENU TOP
+    ========================================= */
 
-        /* =====================================================
-           MENU TOP
-        ===================================================== */
+    .menu-top {
+      min-height: 92px;
 
-        .menu-top {
-            min-height: 105px;
+      background: var(--deep-blue);
 
-            padding: 14px;
+      padding: 18px 18px;
 
-            background:
-                linear-gradient(
-                    135deg,
-                    var(--deep-royal-blue),
-                    var(--deep-blue)
-                );
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
 
-            display: flex;
+    .menu-brand {
+      color: var(--white);
+    }
 
-            align-items: center;
-            justify-content: space-between;
-        }
+    .menu-brand h2 {
+      font-size: 17px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+    }
 
+    .menu-brand p {
+      margin-top: 4px;
 
-        /* =====================================================
-           MENU BRAND
-        ===================================================== */
+      font-size: 11px;
 
-        .menu-brand {
-            display: flex;
+      color: #DCE8FF;
+    }
 
-            align-items: center;
+    .menu-close {
+      width: 40px;
+      height: 40px;
 
-            gap: 11px;
-        }
+      border: none;
+      border-radius: 10px;
 
-        .menu-logo {
-            width: 58px;
-            height: 58px;
+      background: rgba(255, 255, 255, 0.12);
 
-            object-fit: contain;
+      color: var(--white);
 
-            background: var(--white);
+      font-size: 25px;
 
-            border-radius: 10px;
+      cursor: pointer;
+    }
 
-            padding: 3px;
-        }
+    .menu-close:hover {
+      background: rgba(255, 255, 255, 0.20);
+    }
 
-        .menu-brand-name {
-            color: var(--white);
 
-            font-size: 15px;
+    /* =========================================
+       MENU ITEMS
+    ========================================= */
 
-            font-weight: 800;
+    .menu-list {
+      padding: 14px 12px 22px;
+    }
 
-            line-height: 1.25;
-        }
+    .menu-item {
+      width: 100%;
 
-        .menu-brand-subtitle {
-            margin-top: 4px;
+      min-height: 50px;
 
-            color: var(--gold);
+      margin-bottom: 7px;
 
-            font-size: 10px;
+      border: none;
+      border-radius: 10px;
 
-            font-weight: 700;
-        }
+      background: transparent;
 
+      color: var(--dark-text);
 
-        /* =====================================================
-           CLOSE BUTTON
-        ===================================================== */
+      display: flex;
+      align-items: center;
 
-        .menu-close {
-            width: 40px;
-            height: 40px;
+      padding: 0 14px;
 
-            border: none;
+      font-size: 14px;
+      font-weight: 700;
 
-            border-radius: 10px;
+      cursor: pointer;
 
-            background:
-                rgba(255,255,255,0.12);
+      transition: 0.2s ease;
+    }
 
-            color: var(--white);
+    .menu-item:hover,
+    .menu-item:active {
+      background: var(--light-blue);
+      color: var(--deep-blue);
+    }
 
-            cursor: pointer;
+    .menu-item-icon {
+      width: 34px;
 
-            display: flex;
+      font-size: 18px;
 
-            align-items: center;
-            justify-content: center;
-        }
+      color: var(--royal-blue);
 
-        .menu-close:hover {
-            background:
-                rgba(255,255,255,0.22);
-        }
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+    }
 
 
-        /* =====================================================
-           MENU CONTENT
-        ===================================================== */
+    /* =========================================
+       CONTACT DETAILS
+    ========================================= */
 
-        .menu-content {
-            flex: 1;
+    .menu-contact {
+      margin: 8px 12px 20px;
 
-            overflow-y: auto;
+      padding: 15px;
 
-            padding: 12px;
-        }
+      background: var(--light-blue);
 
+      border: 1px solid var(--border);
 
-        /* =====================================================
-           MENU ITEM
-        ===================================================== */
+      border-radius: 10px;
+    }
 
-        .menu-item {
-            width: 100%;
+    .menu-contact-title {
+      margin-bottom: 10px;
 
-            min-height: 52px;
+      color: var(--deep-blue);
 
-            margin-bottom: 7px;
+      font-size: 13px;
+      font-weight: 800;
+    }
 
-            padding: 0 14px;
+    .contact-row {
+      margin-bottom: 8px;
 
-            border: none;
+      font-size: 12px;
+      line-height: 1.5;
 
-            border-radius: 10px;
+      color: var(--dark-text);
+    }
 
-            background: var(--white);
+    .contact-row:last-child {
+      margin-bottom: 0;
+    }
 
-            color: var(--dark-text);
+    .contact-row strong {
+      color: var(--deep-blue);
+    }
 
-            display: flex;
 
-            align-items: center;
+    /* =========================================
+       DESKTOP / LAPTOP
+    ========================================= */
 
-            gap: 13px;
+    @media (min-width: 768px) {
 
-            text-decoration: none;
+      .site-header {
+        height: 74px;
+      }
 
-            font-size: 14px;
+      .header-inner {
+        padding: 0 24px;
+      }
 
-            font-weight: 700;
+      .header-logo {
+        height: 58px;
+      }
 
-            cursor: pointer;
+      .header-logo img {
+        max-height: 54px;
+        max-width: 220px;
+      }
 
-            transition:
-                background 0.2s ease,
-                color 0.2s ease,
-                transform 0.15s ease;
-        }
+      .search-panel {
+        top: 74px;
+      }
 
-        .menu-item:hover {
-            background: var(--light-blue);
+      .header-action,
+      .menu-btn {
+        width: 44px;
+        height: 44px;
+      }
 
-            color: var(--deep-blue);
-        }
-
-        .menu-item:active {
-            transform: scale(0.98);
-        }
-
-
-        /* =====================================================
-           MENU ICON
-        ===================================================== */
-
-        .menu-item-icon {
-            width: 22px;
-            height: 22px;
-
-            color: var(--royal-blue);
-
-            flex-shrink: 0;
-        }
-
-
-        /* =====================================================
-           CONTACT INFORMATION
-        ===================================================== */
-
-        .menu-contact {
-            margin: 4px 12px 16px;
-
-            padding: 14px;
-
-            border-radius: 12px;
-
-            background: var(--light-blue);
-
-            border:
-                1px solid rgba(65, 105, 225, 0.20);
-        }
-
-        .menu-contact-title {
-            color: var(--deep-royal-blue);
-
-            font-size: 12px;
-
-            font-weight: 800;
-
-            margin-bottom: 9px;
-
-            text-transform: uppercase;
-        }
-
-        .menu-contact-line {
-            margin-top: 7px;
-
-            color: var(--dark-text);
-
-            font-size: 12px;
-
-            line-height: 1.45;
-        }
-
-        .menu-contact-line strong {
-            color: var(--deep-blue);
-        }
-
-
-        /* =====================================================
-           DESKTOP / LAPTOP
-        ===================================================== */
-
-        @media (min-width: 768px) {
-
-            .site-header {
-                height: 82px;
-
-                padding: 0 28px;
-            }
-
-            .header-logo {
-                height: 62px;
-
-                max-width: 250px;
-            }
-
-            .header-icon-btn {
-                width: 46px;
-                height: 46px;
-            }
-
-            .search-panel {
-                top: 82px;
-
-                left: auto;
-                right: 28px;
-
-                width: 430px;
-
-                border-radius:
-                    0 0 12px 12px;
-            }
-
-            .side-menu {
-                width: 390px;
-            }
-        }
-
-    </style>
+      .side-menu {
+        width: 360px;
+      }
+    }
+  </style>
 </head>
 
 
 <body>
 
 
-    <!-- =====================================================
-         HEADER
-    ===================================================== -->
+  <!-- =======================================
+       HEADER
+  ======================================== -->
 
-    <header class="site-header">
+  <header class="site-header">
 
+    <div class="header-inner">
 
-        <!-- HAMBURGER -->
+      <!-- LEFT -->
+      <div class="header-left">
 
-        <div class="header-left">
+        <button
+          class="menu-btn"
+          id="menuOpenBtn"
+          aria-label="Open Menu"
+          type="button"
+        >
+          <span class="menu-icon">☰</span>
+        </button>
 
-            <button
-                type="button"
-                class="header-icon-btn"
-                id="openMenu"
-                aria-label="Open Menu"
-            >
-
-                <svg
-                    class="header-icon"
-                    viewBox="0 0 24 24"
-                >
-
-                    <line x1="4" y1="6" x2="20" y2="6"></line>
-
-                    <line x1="4" y1="12" x2="20" y2="12"></line>
-
-                    <line x1="4" y1="18" x2="20" y2="18"></line>
-
-                </svg>
-
-            </button>
-
-        </div>
+      </div>
 
 
-        <!-- LOGO -->
+      <!-- CENTER LOGO -->
+      <a href="#" class="header-logo" aria-label="SAKTHIVEL CRACKERS Home">
 
-        <a
-            href="#"
-            class="header-logo-link"
-            aria-label="SAKTHIVEL CRACKERS Home"
+        <img
+          src="logo-placeholder.svg.jpeg"
+          alt="SAKTHIVEL CRACKERS"
         >
 
-            <img
-                src="logo-placeholder.svg.jpeg"
-                alt="SAKTHIVEL CRACKERS"
-                class="header-logo"
-            >
-
-        </a>
+      </a>
 
 
-        <!-- SEARCH + CART -->
+      <!-- RIGHT -->
+      <div class="header-right">
 
-        <div class="header-actions">
-
-
-            <!-- SEARCH -->
-
-            <button
-                type="button"
-                class="header-icon-btn"
-                id="searchButton"
-                aria-label="Search"
-            >
-
-                <svg
-                    class="header-icon"
-                    viewBox="0 0 24 24"
-                >
-
-                    <circle
-                        cx="11"
-                        cy="11"
-                        r="7"
-                    ></circle>
-
-                    <line
-                        x1="16.5"
-                        y1="16.5"
-                        x2="21"
-                        y2="21"
-                    ></line>
-
-                </svg>
-
-            </button>
-
-
-            <!-- CART -->
-
-            <button
-                type="button"
-                class="header-icon-btn"
-                id="cartButton"
-                aria-label="Shopping Cart"
-            >
-
-                <svg
-                    class="header-icon"
-                    viewBox="0 0 24 24"
-                >
-
-                    <path
-                        d="M3 4h2l2.2 10.2a2 2 0 0 0 2 1.6h7.9a2 2 0 0 0 1.9-1.4L21 8H6"
-                    ></path>
-
-                    <circle
-                        cx="10"
-                        cy="19"
-                        r="1.5"
-                    ></circle>
-
-                    <circle
-                        cx="18"
-                        cy="19"
-                        r="1.5"
-                    ></circle>
-
-                </svg>
-
-                <span
-                    class="cart-count"
-                    id="cartCount"
-                >
-                    0
-                </span>
-
-            </button>
-
-        </div>
-
-
-        <!-- SEARCH PANEL -->
-
-        <div
-            class="search-panel"
-            id="searchPanel"
+        <!-- SEARCH -->
+        <button
+          class="header-action"
+          id="searchBtn"
+          aria-label="Search"
+          type="button"
         >
+          <span>⌕</span>
+        </button>
 
-            <input
-                type="search"
-                class="search-input"
-                placeholder="Search products..."
-                id="searchInput"
-                autocomplete="off"
-            >
+
+        <!-- CART -->
+        <div class="cart-wrapper">
+
+          <button
+            class="header-action"
+            id="cartBtn"
+            aria-label="Cart"
+            type="button"
+          >
+            <span>🛒</span>
+          </button>
+
+          <span
+            class="cart-count"
+            id="cartCount"
+          >0</span>
 
         </div>
 
-    </header>
+      </div>
+
+    </div>
 
 
-
-    <!-- =====================================================
-         OVERLAY
-    ===================================================== -->
-
+    <!-- SEARCH PANEL -->
     <div
-        class="menu-overlay"
-        id="menuOverlay"
-    ></div>
-
-
-
-    <!-- =====================================================
-         HAMBURGER SIDE MENU
-    ===================================================== -->
-
-    <aside
-        class="side-menu"
-        id="sideMenu"
+      class="search-panel"
+      id="searchPanel"
     >
 
+      <div class="search-box">
 
-        <!-- MENU TOP -->
+        <input
+          type="search"
+          id="searchInput"
+          placeholder="Search products..."
+          aria-label="Search products"
+        >
 
-        <div class="menu-top">
+        <button
+          type="button"
+          id="searchSubmit"
+          aria-label="Search"
+        >
+          🔍
+        </button>
 
-            <div class="menu-brand">
+      </div>
 
-                <img
-                    src="logo-placeholder.svg.jpeg"
-                    alt="SAKTHIVEL CRACKERS Logo"
-                    class="menu-logo"
-                >
+    </div>
 
-                <div>
+  </header>
 
-                    <div class="menu-brand-name">
-                        SAKTHIVEL CRACKERS
-                    </div>
 
-                    <div class="menu-brand-subtitle">
-                        QUALITY • TRUST • VALUE
-                    </div>
 
-                </div>
+  <!-- =======================================
+       MENU OVERLAY
+  ======================================== -->
 
-            </div>
+  <div
+    class="menu-overlay"
+    id="menuOverlay"
+  ></div>
 
 
-            <!-- CLOSE -->
 
-            <button
-                type="button"
-                class="menu-close"
-                id="closeMenu"
-                aria-label="Close Menu"
-            >
+  <!-- =======================================
+       SIDE MENU
+  ======================================== -->
 
-                <svg
-                    class="header-icon"
-                    viewBox="0 0 24 24"
-                >
+  <aside
+    class="side-menu"
+    id="sideMenu"
+    aria-label="Main Menu"
+  >
 
-                    <line
-                        x1="6"
-                        y1="6"
-                        x2="18"
-                        y2="18"
-                    ></line>
+    <!-- MENU TOP -->
+    <div class="menu-top">
 
-                    <line
-                        x1="18"
-                        y1="6"
-                        x2="6"
-                        y2="18"
-                    ></line>
+      <div class="menu-brand">
 
-                </svg>
+        <h2>SAKTHIVEL CRACKERS</h2>
 
-            </button>
+        <p>Fireworks & Crackers</p>
 
-        </div>
+      </div>
 
+      <button
+        class="menu-close"
+        id="menuCloseBtn"
+        aria-label="Close Menu"
+        type="button"
+      >
+        ×
+      </button>
 
+    </div>
 
-        <!-- MENU ITEMS -->
 
-        <nav class="menu-content">
+    <!-- MENU LIST -->
+    <nav class="menu-list">
 
+      <a
+        href="#"
+        class="menu-item"
+      >
+        <span class="menu-item-icon">⌂</span>
+        HOME
+      </a>
 
-            <!-- HOME -->
 
-            <a
-                href="#"
-                class="menu-item"
-            >
+      <a
+        href="#"
+        class="menu-item"
+      >
+        <span class="menu-item-icon">▦</span>
+        PRODUCTS
+      </a>
 
-                <svg
-                    class="menu-item-icon"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                >
 
-                    <path d="M3 10.5L12 3l9 7.5"></path>
+      <a
+        href="#"
+        class="menu-item"
+      >
+        <span class="menu-item-icon">☷</span>
+        CATEGORIES
+      </a>
 
-                    <path d="M5 9.5V21h14V9.5"></path>
 
-                    <path d="M9 21v-7h6v7"></path>
+      <a
+        href="#"
+        class="menu-item"
+      >
+        <span class="menu-item-icon">▤</span>
+        PRICE LIST
+      </a>
 
-                </svg>
 
-                HOME
+      <a
+        href="#"
+        class="menu-item"
+      >
+        <span class="menu-item-icon">⌕</span>
+        TRACK ORDER
+      </a>
 
-            </a>
 
+      <a
+        href="https://wa.me/919344265054"
+        class="menu-item"
+        target="_blank"
+        rel="noopener"
+      >
+        <span class="menu-item-icon">◉</span>
+        WHATSAPP SUPPORT
+      </a>
 
-            <!-- PRODUCTS -->
 
-            <a
-                href="#"
-                class="menu-item"
-            >
+      <a
+        href="#"
+        class="menu-item"
+      >
+        <span class="menu-item-icon">ⓘ</span>
+        ABOUT US
+      </a>
 
-                <svg
-                    class="menu-item-icon"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                >
 
-                    <path d="M6 7h12"></path>
+      <a
+        href="tel:+917780942656"
+        class="menu-item"
+      >
+        <span class="menu-item-icon">☎</span>
+        CONTACT US
+      </a>
 
-                    <path d="M7 7l1 14h8l1-14"></path>
+    </nav>
 
-                    <path d="M9 7V4h6v3"></path>
 
-                </svg>
+    <!-- CONTACT DETAILS -->
+    <div class="menu-contact">
 
-                PRODUCTS
+      <div class="menu-contact-title">
+        SHOP DETAILS
+      </div>
 
-            </a>
+      <div class="contact-row">
+        <strong>WhatsApp:</strong>
+        9344265054
+      </div>
 
+      <div class="contact-row">
+        <strong>Contact:</strong>
+        7780942656
+      </div>
 
-            <!-- CATEGORIES -->
+      <div class="contact-row">
+        <strong>Address:</strong>
+        TNC Alangulam Main Road, Kundayiruppu, Sivakasi
+      </div>
 
-            <a
-                href="#"
-                class="menu-item"
-            >
+      <div class="contact-row">
+        <strong>Timing:</strong>
+        9:00 AM – 9:00 PM
+      </div>
 
-                <svg
-                    class="menu-item-icon"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                >
+    </div>
 
-                    <rect
-                        x="4"
-                        y="4"
-                        width="6"
-                        height="6"
-                        rx="1"
-                    ></rect>
+  </aside>
 
-                    <rect
-                        x="14"
-                        y="4"
-                        width="6"
-                        height="6"
-                        rx="1"
-                    ></rect>
 
-                    <rect
-                        x="4"
-                        y="14"
-                        width="6"
-                        height="6"
-                        rx="1"
-                    ></rect>
 
-                    <rect
-                        x="14"
-                        y="14"
-                        width="6"
-                        height="6"
-                        rx="1"
-                    ></rect>
+  <!-- =======================================
+       HEADER JAVASCRIPT
+  ======================================== -->
 
-                </svg>
+  <script>
 
-                CATEGORIES
+    /* ---------------------------------------
+       ELEMENTS
+    --------------------------------------- */
 
-            </a>
+    const menuOpenBtn = document.getElementById("menuOpenBtn");
+    const menuCloseBtn = document.getElementById("menuCloseBtn");
+    const sideMenu = document.getElementById("sideMenu");
+    const menuOverlay = document.getElementById("menuOverlay");
 
+    const searchBtn = document.getElementById("searchBtn");
+    const searchPanel = document.getElementById("searchPanel");
+    const searchInput = document.getElementById("searchInput");
 
-            <!-- PRICE LIST -->
 
-            <a
-                href="#"
-                class="menu-item"
-            >
 
-                <svg
-                    class="menu-item-icon"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                >
+    /* ---------------------------------------
+       OPEN MENU
+    --------------------------------------- */
 
-                    <path d="M6 2h9l3 3v17H6z"></path>
+    function openMenu() {
 
-                    <path d="M14 2v4h4"></path>
+      sideMenu.classList.add("active");
+      menuOverlay.classList.add("active");
 
-                    <path d="M9 12h6"></path>
+      document.body.style.overflow = "hidden";
 
-                    <path d="M9 16h6"></path>
+    }
 
-                </svg>
 
-                PRICE LIST
 
-            </a>
+    /* ---------------------------------------
+       CLOSE MENU
+    --------------------------------------- */
 
+    function closeMenu() {
 
-            <!-- TRACK ORDER -->
+      sideMenu.classList.remove("active");
+      menuOverlay.classList.remove("active");
 
-            <a
-                href="#"
-                class="menu-item"
-            >
+      document.body.style.overflow = "";
 
-                <svg
-                    class="menu-item-icon"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                >
+    }
 
-                    <rect
-                        x="3"
-                        y="5"
-                        width="18"
-                        height="14"
-                        rx="2"
-                    ></rect>
 
-                    <path d="M7 9h10"></path>
 
-                    <path d="M7 13h6"></path>
+    /* ---------------------------------------
+       MENU EVENTS
+    --------------------------------------- */
 
-                </svg>
+    menuOpenBtn.addEventListener(
+      "click",
+      openMenu
+    );
 
-                TRACK ORDER
+    menuCloseBtn.addEventListener(
+      "click",
+      closeMenu
+    );
 
-            </a>
+    menuOverlay.addEventListener(
+      "click",
+      closeMenu
+    );
 
 
-            <!-- WHATSAPP -->
 
-            <a
-                href="https://wa.me/919344265054"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="menu-item"
-            >
+    /* ---------------------------------------
+       SEARCH TOGGLE
+    --------------------------------------- */
 
-                <svg
-                    class="menu-item-icon"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                >
+    searchBtn.addEventListener(
+      "click",
+      function () {
 
-                    <path
-                        d="M20 11.5a8 8 0 0 1-11.8 7L4 20l1.5-4A8 8 0 1 1 20 11.5z"
-                    ></path>
+        searchPanel.classList.toggle("active");
 
-                    <path d="M9 9c.3 1.5 1.5 2.7 3 3"></path>
+        if (searchPanel.classList.contains("active")) {
 
-                </svg>
-
-                WHATSAPP SUPPORT
-
-            </a>
-
-
-            <!-- ABOUT US -->
-
-            <a
-                href="#"
-                class="menu-item"
-            >
-
-                <svg
-                    class="menu-item-icon"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                >
-
-                    <circle
-                        cx="12"
-                        cy="12"
-                        r="9"
-                    ></circle>
-
-                    <line
-                        x1="12"
-                        y1="10"
-                        x2="12"
-                        y2="16"
-                    ></line>
-
-                    <circle
-                        cx="12"
-                        cy="7"
-                        r="0.7"
-                        fill="currentColor"
-                    ></circle>
-
-                </svg>
-
-                ABOUT US
-
-            </a>
-
-
-            <!-- CONTACT US -->
-
-            <a
-                href="tel:+917780942656"
-                class="menu-item"
-            >
-
-                <svg
-                    class="menu-item-icon"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                >
-
-                    <path
-                        d="M22 16.9v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 3.1 5.2 2 2 0 0 1 5 3h3a2 2 0 0 1 2 1.7c.1 1 .3 2 .7 2.9a2 2 0 0 1-.5 2.1L9 10.9a16 16 0 0 0 4.1 4.1l1.2-1.2a2 2 0 0 1 2.1-.5c.9.4 1.9.6 2.9.7A2 2 0 0 1 22 16.9z"
-                    ></path>
-
-                </svg>
-
-                CONTACT US
-
-            </a>
-
-        </nav>
-
-
-
-        <!-- CONTACT DETAILS -->
-
-        <div class="menu-contact">
-
-            <div class="menu-contact-title">
-                SAKTHIVEL CRACKERS
-            </div>
-
-            <div class="menu-contact-line">
-                <strong>WhatsApp:</strong>
-                9344265054
-            </div>
-
-            <div class="menu-contact-line">
-                <strong>Contact:</strong>
-                7780942656
-            </div>
-
-            <div class="menu-contact-line">
-                <strong>Address:</strong><br>
-                TNC Alangulam Main Road,
-                Kundayiruppu, Sivakasi
-            </div>
-
-            <div class="menu-contact-line">
-                <strong>Timing:</strong>
-                9:00 AM – 9:00 PM
-            </div>
-
-        </div>
-
-    </aside>
-
-
-
-    <!-- =====================================================
-         HEADER JAVASCRIPT
-    ===================================================== -->
-
-    <script>
-
-        const openMenu =
-            document.getElementById("openMenu");
-
-        const closeMenu =
-            document.getElementById("closeMenu");
-
-        const sideMenu =
-            document.getElementById("sideMenu");
-
-        const menuOverlay =
-            document.getElementById("menuOverlay");
-
-        const searchButton =
-            document.getElementById("searchButton");
-
-        const searchPanel =
-            document.getElementById("searchPanel");
-
-        const searchInput =
-            document.getElementById("searchInput");
-
-
-        /* OPEN MENU */
-
-        function showMenu() {
-
-            sideMenu.classList.add("active");
-
-            menuOverlay.classList.add("active");
-
-            document.body.classList.add("menu-open");
+          setTimeout(
+            function () {
+              searchInput.focus();
+            },
+            100
+          );
 
         }
 
+      }
+    );
 
-        /* CLOSE MENU */
 
-        function hideMenu() {
 
-            sideMenu.classList.remove("active");
+    /* ---------------------------------------
+       ESC KEY
+    --------------------------------------- */
 
-            menuOverlay.classList.remove("active");
+    document.addEventListener(
+      "keydown",
+      function (event) {
 
-            document.body.classList.remove("menu-open");
+        if (event.key === "Escape") {
+
+          closeMenu();
+
+          searchPanel.classList.remove("active");
 
         }
 
+      }
+    );
 
-        openMenu.addEventListener(
-            "click",
-            showMenu
-        );
-
-
-        closeMenu.addEventListener(
-            "click",
-            hideMenu
-        );
-
-
-        menuOverlay.addEventListener(
-            "click",
-            hideMenu
-        );
-
-
-        /* SEARCH */
-
-        searchButton.addEventListener(
-            "click",
-            () => {
-
-                searchPanel.classList.toggle("active");
-
-                if (
-                    searchPanel.classList.contains("active")
-                ) {
-
-                    setTimeout(
-                        () => searchInput.focus(),
-                        100
-                    );
-
-                }
-
-            }
-        );
-
-
-        /* ESC */
-
-        document.addEventListener(
-            "keydown",
-            (event) => {
-
-                if (event.key === "Escape") {
-
-                    hideMenu();
-
-                    searchPanel.classList.remove(
-                        "active"
-                    );
-
-                }
-
-            }
-        );
-
-    </script>
+  </script>
 
 </body>
 </html>
