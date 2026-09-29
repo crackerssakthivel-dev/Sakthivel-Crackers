@@ -7,8 +7,26 @@
     <title>SAKTHIVEL CRACKERS</title>
 
     <style>
+
         /* =====================================================
-           GLOBAL
+           ROYAL BLUE COLOR SYSTEM
+        ===================================================== */
+
+        :root {
+            --deep-royal-blue: #061A4A;
+            --royal-blue: #4169E1;
+            --bright-blue: #2563EB;
+            --deep-blue: #1E40AF;
+            --light-blue: #E6F0FF;
+            --white: #FFFFFF;
+            --gold: #FFD700;
+            --red: #FF0000;
+            --dark-text: #172033;
+        }
+
+
+        /* =====================================================
+           BASIC RESET
         ===================================================== */
 
         * {
@@ -17,10 +35,15 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
-            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
             background: #F5F7FA;
-            color: #172033;
+            color: var(--dark-text);
+            font-family: Arial, Helvetica, sans-serif;
         }
 
         body.menu-open {
@@ -35,22 +58,25 @@
         .site-header {
             width: 100%;
             height: 72px;
-            background: #FFFFFF;
-            border-bottom: 1px solid #E6F0FF;
+
+            background: var(--deep-royal-blue);
 
             display: flex;
             align-items: center;
             justify-content: space-between;
 
-            padding: 0 14px;
+            padding: 0 12px;
 
             position: relative;
             z-index: 1000;
+
+            box-shadow:
+                0 3px 12px rgba(6, 26, 74, 0.25);
         }
 
 
         /* =====================================================
-           HEADER LEFT
+           LEFT SIDE / HAMBURGER
         ===================================================== */
 
         .header-left {
@@ -58,51 +84,66 @@
 
             display: flex;
             align-items: center;
-            justify-content: flex-start;
         }
 
 
         /* =====================================================
-           HEADER CENTER / LOGO
+           CENTER LOGO
         ===================================================== */
 
-        .header-logo {
+        .header-logo-link {
             position: absolute;
+
             left: 50%;
             top: 50%;
 
             transform: translate(-50%, -50%);
 
-            height: 54px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            text-decoration: none;
+        }
+
+        .header-logo {
             width: auto;
+            height: 54px;
+
+            max-width: 210px;
 
             object-fit: contain;
         }
 
 
         /* =====================================================
-           HEADER RIGHT
+           RIGHT SIDE
         ===================================================== */
 
         .header-actions {
             display: flex;
             align-items: center;
-            gap: 5px;
+
+            gap: 3px;
         }
 
 
         /* =====================================================
-           HEADER BUTTONS
+           HEADER ICON BUTTON
         ===================================================== */
 
         .header-icon-btn {
-            width: 42px;
-            height: 42px;
+            position: relative;
+
+            width: 43px;
+            height: 43px;
 
             border: none;
+            border-radius: 10px;
+
             background: transparent;
 
-            border-radius: 10px;
+            color: var(--white);
 
             display: flex;
             align-items: center;
@@ -110,34 +151,35 @@
 
             cursor: pointer;
 
-            color: #061A4A;
-
             transition:
                 background 0.2s ease,
                 color 0.2s ease,
-                transform 0.2s ease;
+                transform 0.15s ease;
         }
 
         .header-icon-btn:hover {
-            background: #E6F0FF;
-            color: #2563EB;
+            background: rgba(65, 105, 225, 0.35);
         }
 
         .header-icon-btn:active {
-            transform: scale(0.94);
+            transform: scale(0.93);
         }
 
 
         /* =====================================================
-           SVG ICONS
+           ICON
         ===================================================== */
 
         .header-icon {
             width: 24px;
             height: 24px;
-            stroke: currentColor;
+
             fill: none;
+
+            stroke: currentColor;
+
             stroke-width: 2;
+
             stroke-linecap: round;
             stroke-linejoin: round;
         }
@@ -146,10 +188,6 @@
         /* =====================================================
            CART COUNT
         ===================================================== */
-
-        .cart-button {
-            position: relative;
-        }
 
         .cart-count {
             position: absolute;
@@ -162,17 +200,20 @@
 
             padding: 0 4px;
 
-            background: #FF0000;
-            color: #FFFFFF;
-
             border-radius: 50px;
 
+            background: var(--red);
+            color: var(--white);
+
             font-size: 10px;
-            font-weight: 700;
+            font-weight: 800;
 
             display: none;
+
             align-items: center;
             justify-content: center;
+
+            border: 2px solid var(--deep-royal-blue);
         }
 
         .cart-count.show {
@@ -191,13 +232,15 @@
             left: 0;
             right: 0;
 
-            background: #FFFFFF;
-
             padding: 14px;
 
-            border-bottom: 1px solid #DCE8FA;
+            background: var(--white);
 
-            box-shadow: 0 8px 25px rgba(6, 26, 74, 0.10);
+            border-bottom:
+                2px solid var(--royal-blue);
+
+            box-shadow:
+                0 8px 24px rgba(6, 26, 74, 0.18);
 
             display: none;
         }
@@ -206,29 +249,36 @@
             display: block;
         }
 
-        .search-box {
+        .search-input {
             width: 100%;
             height: 46px;
 
-            border: 2px solid #4169E1;
+            border:
+                2px solid var(--royal-blue);
+
             border-radius: 10px;
 
             padding: 0 14px;
 
-            font-size: 16px;
-            outline: none;
+            background: var(--white);
 
-            color: #172033;
+            color: var(--dark-text);
+
+            font-size: 15px;
+
+            outline: none;
         }
 
-        .search-box:focus {
-            border-color: #1E40AF;
-            box-shadow: 0 0 0 3px rgba(65, 105, 225, 0.12);
+        .search-input:focus {
+            border-color: var(--bright-blue);
+
+            box-shadow:
+                0 0 0 3px rgba(37, 99, 235, 0.12);
         }
 
 
         /* =====================================================
-           DARK OVERLAY
+           MENU OVERLAY
         ===================================================== */
 
         .menu-overlay {
@@ -236,7 +286,8 @@
 
             inset: 0;
 
-            background: rgba(0, 0, 0, 0.45);
+            background:
+                rgba(6, 26, 74, 0.48);
 
             opacity: 0;
             visibility: hidden;
@@ -264,21 +315,23 @@
             top: 0;
             left: 0;
 
-            width: min(86vw, 370px);
+            width: min(86vw, 380px);
             height: 100vh;
 
-            background: #FFFFFF;
+            background: var(--white);
 
             z-index: 1100;
 
             transform: translateX(-100%);
 
-            transition: transform 0.3s ease;
+            transition:
+                transform 0.3s ease;
 
             display: flex;
             flex-direction: column;
 
-            box-shadow: 8px 0 30px rgba(0, 0, 0, 0.15);
+            box-shadow:
+                8px 0 30px rgba(6, 26, 74, 0.22);
         }
 
         .side-menu.active {
@@ -287,30 +340,38 @@
 
 
         /* =====================================================
-           MENU HEADER
+           MENU TOP
         ===================================================== */
 
-        .menu-header {
-            min-height: 100px;
+        .menu-top {
+            min-height: 105px;
+
+            padding: 14px;
 
             background:
                 linear-gradient(
                     135deg,
-                    #061A4A,
-                    #1E40AF
+                    var(--deep-royal-blue),
+                    var(--deep-blue)
                 );
 
             display: flex;
+
             align-items: center;
             justify-content: space-between;
-
-            padding: 16px;
         }
+
+
+        /* =====================================================
+           MENU BRAND
+        ===================================================== */
 
         .menu-brand {
             display: flex;
+
             align-items: center;
-            gap: 12px;
+
+            gap: 11px;
         }
 
         .menu-logo {
@@ -319,17 +380,18 @@
 
             object-fit: contain;
 
-            background: #FFFFFF;
+            background: var(--white);
 
-            border-radius: 12px;
+            border-radius: 10px;
 
-            padding: 4px;
+            padding: 3px;
         }
 
         .menu-brand-name {
-            color: #FFFFFF;
+            color: var(--white);
 
             font-size: 15px;
+
             font-weight: 800;
 
             line-height: 1.25;
@@ -338,9 +400,11 @@
         .menu-brand-subtitle {
             margin-top: 4px;
 
-            color: #E6F0FF;
+            color: var(--gold);
 
-            font-size: 11px;
+            font-size: 10px;
+
+            font-weight: 700;
         }
 
 
@@ -354,26 +418,29 @@
 
             border: none;
 
-            background: rgba(255, 255, 255, 0.12);
-
-            color: #FFFFFF;
-
             border-radius: 10px;
 
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background:
+                rgba(255,255,255,0.12);
+
+            color: var(--white);
 
             cursor: pointer;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
         }
 
         .menu-close:hover {
-            background: rgba(255, 255, 255, 0.22);
+            background:
+                rgba(255,255,255,0.22);
         }
 
 
         /* =====================================================
-           MENU ITEMS
+           MENU CONTENT
         ===================================================== */
 
         .menu-content {
@@ -384,101 +451,114 @@
             padding: 12px;
         }
 
+
+        /* =====================================================
+           MENU ITEM
+        ===================================================== */
+
         .menu-item {
             width: 100%;
 
             min-height: 52px;
 
+            margin-bottom: 7px;
+
+            padding: 0 14px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: var(--white);
+
+            color: var(--dark-text);
+
             display: flex;
+
             align-items: center;
 
             gap: 13px;
 
-            padding: 0 14px;
-            margin-bottom: 7px;
-
-            border: none;
-
-            background: #FFFFFF;
-
-            color: #172033;
-
-            border-radius: 10px;
-
             text-decoration: none;
 
-            font-size: 15px;
-            font-weight: 600;
+            font-size: 14px;
+
+            font-weight: 700;
 
             cursor: pointer;
 
             transition:
                 background 0.2s ease,
                 color 0.2s ease,
-                transform 0.2s ease;
+                transform 0.15s ease;
         }
 
         .menu-item:hover {
-            background: #E6F0FF;
-            color: #1E40AF;
+            background: var(--light-blue);
+
+            color: var(--deep-blue);
         }
 
         .menu-item:active {
             transform: scale(0.98);
         }
 
-        .menu-item-icon {
-            width: 23px;
-            height: 23px;
 
-            color: #4169E1;
+        /* =====================================================
+           MENU ICON
+        ===================================================== */
+
+        .menu-item-icon {
+            width: 22px;
+            height: 22px;
+
+            color: var(--royal-blue);
 
             flex-shrink: 0;
         }
 
 
         /* =====================================================
-           MENU CONTACT AREA
+           CONTACT INFORMATION
         ===================================================== */
 
-        .menu-contact-box {
-            margin: 6px 12px 16px;
+        .menu-contact {
+            margin: 4px 12px 16px;
 
             padding: 14px;
 
-            background: #F5F7FA;
-
-            border: 1px solid #E6F0FF;
-
             border-radius: 12px;
+
+            background: var(--light-blue);
+
+            border:
+                1px solid rgba(65, 105, 225, 0.20);
         }
 
         .menu-contact-title {
-            color: #061A4A;
+            color: var(--deep-royal-blue);
 
             font-size: 12px;
+
             font-weight: 800;
 
-            margin-bottom: 10px;
+            margin-bottom: 9px;
 
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
         .menu-contact-line {
-            display: block;
-
-            color: #172033;
-
-            text-decoration: none;
-
-            font-size: 13px;
-
             margin-top: 7px;
+
+            color: var(--dark-text);
+
+            font-size: 12px;
+
+            line-height: 1.45;
         }
 
         .menu-contact-line strong {
-            color: #1E40AF;
+            color: var(--deep-blue);
         }
 
 
@@ -490,15 +570,14 @@
 
             .site-header {
                 height: 82px;
+
                 padding: 0 28px;
             }
 
             .header-logo {
-                height: 64px;
-            }
+                height: 62px;
 
-            .header-actions {
-                gap: 8px;
+                max-width: 250px;
             }
 
             .header-icon-btn {
@@ -512,15 +591,17 @@
                 left: auto;
                 right: 28px;
 
-                width: 420px;
+                width: 430px;
 
-                border-radius: 0 0 12px 12px;
+                border-radius:
+                    0 0 12px 12px;
             }
 
             .side-menu {
-                width: 380px;
+                width: 390px;
             }
         }
+
     </style>
 </head>
 
@@ -530,28 +611,33 @@
 
     <!-- =====================================================
          HEADER
-    ====================================================== -->
+    ===================================================== -->
 
     <header class="site-header">
 
 
         <!-- HAMBURGER -->
+
         <div class="header-left">
 
             <button
-                class="header-icon-btn"
-                id="menuOpenButton"
                 type="button"
-                aria-label="Open menu"
+                class="header-icon-btn"
+                id="openMenu"
+                aria-label="Open Menu"
             >
 
                 <svg
                     class="header-icon"
                     viewBox="0 0 24 24"
                 >
+
                     <line x1="4" y1="6" x2="20" y2="6"></line>
+
                     <line x1="4" y1="12" x2="20" y2="12"></line>
+
                     <line x1="4" y1="18" x2="20" y2="18"></line>
+
                 </svg>
 
             </button>
@@ -561,21 +647,16 @@
 
         <!-- LOGO -->
 
-        <!--
-            IMPORTANT:
-            Replace this file name with your actual logo file
-            inside your GitHub repository.
-
-            Example:
-            assets/logo.jpeg
-        -->
-
-        <a href="#" aria-label="SAKTHIVEL CRACKERS Home">
+        <a
+            href="#"
+            class="header-logo-link"
+            aria-label="SAKTHIVEL CRACKERS Home"
+        >
 
             <img
-                class="header-logo"
                 src="logo-placeholder.svg.jpeg"
                 alt="SAKTHIVEL CRACKERS"
+                class="header-logo"
             >
 
         </a>
@@ -589,9 +670,9 @@
             <!-- SEARCH -->
 
             <button
+                type="button"
                 class="header-icon-btn"
                 id="searchButton"
-                type="button"
                 aria-label="Search"
             >
 
@@ -599,8 +680,20 @@
                     class="header-icon"
                     viewBox="0 0 24 24"
                 >
-                    <circle cx="11" cy="11" r="7"></circle>
-                    <line x1="16.5" y1="16.5" x2="21" y2="21"></line>
+
+                    <circle
+                        cx="11"
+                        cy="11"
+                        r="7"
+                    ></circle>
+
+                    <line
+                        x1="16.5"
+                        y1="16.5"
+                        x2="21"
+                        y2="21"
+                    ></line>
+
                 </svg>
 
             </button>
@@ -609,9 +702,9 @@
             <!-- CART -->
 
             <button
-                class="header-icon-btn cart-button"
-                id="cartButton"
                 type="button"
+                class="header-icon-btn"
+                id="cartButton"
                 aria-label="Shopping Cart"
             >
 
@@ -619,15 +712,31 @@
                     class="header-icon"
                     viewBox="0 0 24 24"
                 >
-                    <path d="M3 4h2l2.2 10.2a2 2 0 0 0 2 1.6h7.9a2 2 0 0 0 1.9-1.4L21 8H6"></path>
-                    <circle cx="10" cy="19" r="1.5"></circle>
-                    <circle cx="18" cy="19" r="1.5"></circle>
+
+                    <path
+                        d="M3 4h2l2.2 10.2a2 2 0 0 0 2 1.6h7.9a2 2 0 0 0 1.9-1.4L21 8H6"
+                    ></path>
+
+                    <circle
+                        cx="10"
+                        cy="19"
+                        r="1.5"
+                    ></circle>
+
+                    <circle
+                        cx="18"
+                        cy="19"
+                        r="1.5"
+                    ></circle>
+
                 </svg>
 
                 <span
                     class="cart-count"
                     id="cartCount"
-                >0</span>
+                >
+                    0
+                </span>
 
             </button>
 
@@ -642,10 +751,10 @@
         >
 
             <input
-                class="search-box"
-                id="searchInput"
                 type="search"
+                class="search-input"
                 placeholder="Search products..."
+                id="searchInput"
                 autocomplete="off"
             >
 
@@ -656,8 +765,8 @@
 
 
     <!-- =====================================================
-         MENU OVERLAY
-    ====================================================== -->
+         OVERLAY
+    ===================================================== -->
 
     <div
         class="menu-overlay"
@@ -668,25 +777,24 @@
 
     <!-- =====================================================
          HAMBURGER SIDE MENU
-    ====================================================== -->
+    ===================================================== -->
 
     <aside
         class="side-menu"
         id="sideMenu"
-        aria-label="Main Menu"
     >
 
 
-        <!-- MENU HEADER -->
+        <!-- MENU TOP -->
 
-        <div class="menu-header">
+        <div class="menu-top">
 
             <div class="menu-brand">
 
                 <img
-                    class="menu-logo"
                     src="logo-placeholder.svg.jpeg"
                     alt="SAKTHIVEL CRACKERS Logo"
+                    class="menu-logo"
                 >
 
                 <div>
@@ -696,7 +804,7 @@
                     </div>
 
                     <div class="menu-brand-subtitle">
-                        Best Quality • Best Product
+                        QUALITY • TRUST • VALUE
                     </div>
 
                 </div>
@@ -704,19 +812,34 @@
             </div>
 
 
+            <!-- CLOSE -->
+
             <button
-                class="menu-close"
-                id="menuCloseButton"
                 type="button"
-                aria-label="Close menu"
+                class="menu-close"
+                id="closeMenu"
+                aria-label="Close Menu"
             >
 
                 <svg
                     class="header-icon"
                     viewBox="0 0 24 24"
                 >
-                    <line x1="6" y1="6" x2="18" y2="18"></line>
-                    <line x1="18" y1="6" x2="6" y2="18"></line>
+
+                    <line
+                        x1="6"
+                        y1="6"
+                        x2="18"
+                        y2="18"
+                    ></line>
+
+                    <line
+                        x1="18"
+                        y1="6"
+                        x2="6"
+                        y2="18"
+                    ></line>
+
                 </svg>
 
             </button>
@@ -725,7 +848,7 @@
 
 
 
-        <!-- MENU CONTENT -->
+        <!-- MENU ITEMS -->
 
         <nav class="menu-content">
 
@@ -743,12 +866,14 @@
                     fill="none"
                     stroke="currentColor"
                     stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
                 >
-                    <path d="M3 10.5 12 3l9 7.5"></path>
+
+                    <path d="M3 10.5L12 3l9 7.5"></path>
+
                     <path d="M5 9.5V21h14V9.5"></path>
+
                     <path d="M9 21v-7h6v7"></path>
+
                 </svg>
 
                 HOME
@@ -769,13 +894,14 @@
                     fill="none"
                     stroke="currentColor"
                     stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
                 >
+
                     <path d="M6 7h12"></path>
-                    <path d="M7 7 8 21h8l1-14"></path>
+
+                    <path d="M7 7l1 14h8l1-14"></path>
+
                     <path d="M9 7V4h6v3"></path>
-                    <path d="M4 7h16"></path>
+
                 </svg>
 
                 PRODUCTS
@@ -797,10 +923,39 @@
                     stroke="currentColor"
                     stroke-width="2"
                 >
-                    <rect x="4" y="4" width="6" height="6" rx="1"></rect>
-                    <rect x="14" y="4" width="6" height="6" rx="1"></rect>
-                    <rect x="4" y="14" width="6" height="6" rx="1"></rect>
-                    <rect x="14" y="14" width="6" height="6" rx="1"></rect>
+
+                    <rect
+                        x="4"
+                        y="4"
+                        width="6"
+                        height="6"
+                        rx="1"
+                    ></rect>
+
+                    <rect
+                        x="14"
+                        y="4"
+                        width="6"
+                        height="6"
+                        rx="1"
+                    ></rect>
+
+                    <rect
+                        x="4"
+                        y="14"
+                        width="6"
+                        height="6"
+                        rx="1"
+                    ></rect>
+
+                    <rect
+                        x="14"
+                        y="14"
+                        width="6"
+                        height="6"
+                        rx="1"
+                    ></rect>
+
                 </svg>
 
                 CATEGORIES
@@ -821,14 +976,16 @@
                     fill="none"
                     stroke="currentColor"
                     stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
                 >
+
                     <path d="M6 2h9l3 3v17H6z"></path>
+
                     <path d="M14 2v4h4"></path>
+
                     <path d="M9 12h6"></path>
+
                     <path d="M9 16h6"></path>
-                    <path d="M9 8h2"></path>
+
                 </svg>
 
                 PRICE LIST
@@ -849,12 +1006,20 @@
                     fill="none"
                     stroke="currentColor"
                     stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
                 >
-                    <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+
+                    <rect
+                        x="3"
+                        y="5"
+                        width="18"
+                        height="14"
+                        rx="2"
+                    ></rect>
+
                     <path d="M7 9h10"></path>
+
                     <path d="M7 13h6"></path>
+
                 </svg>
 
                 TRACK ORDER
@@ -862,7 +1027,7 @@
             </a>
 
 
-            <!-- WHATSAPP SUPPORT -->
+            <!-- WHATSAPP -->
 
             <a
                 href="https://wa.me/919344265054"
@@ -877,11 +1042,14 @@
                     fill="none"
                     stroke="currentColor"
                     stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
                 >
-                    <path d="M20 11.5a8 8 0 0 1-11.8 7L4 20l1.5-4A8 8 0 1 1 20 11.5z"></path>
+
+                    <path
+                        d="M20 11.5a8 8 0 0 1-11.8 7L4 20l1.5-4A8 8 0 1 1 20 11.5z"
+                    ></path>
+
                     <path d="M9 9c.3 1.5 1.5 2.7 3 3"></path>
+
                 </svg>
 
                 WHATSAPP SUPPORT
@@ -902,11 +1070,28 @@
                     fill="none"
                     stroke="currentColor"
                     stroke-width="2"
-                    stroke-linecap="round"
                 >
-                    <circle cx="12" cy="12" r="9"></circle>
-                    <line x1="12" y1="10" x2="12" y2="16"></line>
-                    <circle cx="12" cy="7" r="0.7" fill="currentColor"></circle>
+
+                    <circle
+                        cx="12"
+                        cy="12"
+                        r="9"
+                    ></circle>
+
+                    <line
+                        x1="12"
+                        y1="10"
+                        x2="12"
+                        y2="16"
+                    ></line>
+
+                    <circle
+                        cx="12"
+                        cy="7"
+                        r="0.7"
+                        fill="currentColor"
+                    ></circle>
+
                 </svg>
 
                 ABOUT US
@@ -927,10 +1112,12 @@
                     fill="none"
                     stroke="currentColor"
                     stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
                 >
-                    <path d="M22 16.9v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 3.1 5.2 2 2 0 0 1 5 3h3a2 2 0 0 1 2 1.7c.1 1 .3 2 .7 2.9a2 2 0 0 1-.5 2.1L9 10.9a16 16 0 0 0 4.1 4.1l1.2-1.2a2 2 0 0 1 2.1-.5c.9.4 1.9.6 2.9.7A2 2 0 0 1 22 16.9z"></path>
+
+                    <path
+                        d="M22 16.9v3a2 2 0 0 1-2.2 2A19.8 19.8 0 0 1 3.1 5.2 2 2 0 0 1 5 3h3a2 2 0 0 1 2 1.7c.1 1 .3 2 .7 2.9a2 2 0 0 1-.5 2.1L9 10.9a16 16 0 0 0 4.1 4.1l1.2-1.2a2 2 0 0 1 2.1-.5c.9.4 1.9.6 2.9.7A2 2 0 0 1 22 16.9z"
+                    ></path>
+
                 </svg>
 
                 CONTACT US
@@ -941,29 +1128,23 @@
 
 
 
-        <!-- CONTACT INFORMATION -->
+        <!-- CONTACT DETAILS -->
 
-        <div class="menu-contact-box">
+        <div class="menu-contact">
 
             <div class="menu-contact-title">
                 SAKTHIVEL CRACKERS
             </div>
 
-            <a
-                href="https://wa.me/919344265054"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="menu-contact-line"
-            >
-                <strong>WhatsApp:</strong> 9344265054
-            </a>
+            <div class="menu-contact-line">
+                <strong>WhatsApp:</strong>
+                9344265054
+            </div>
 
-            <a
-                href="tel:+917780942656"
-                class="menu-contact-line"
-            >
-                <strong>Contact:</strong> 7780942656
-            </a>
+            <div class="menu-contact-line">
+                <strong>Contact:</strong>
+                7780942656
+            </div>
 
             <div class="menu-contact-line">
                 <strong>Address:</strong><br>
@@ -983,20 +1164,16 @@
 
 
     <!-- =====================================================
-         JAVASCRIPT — HEADER ONLY
-    ====================================================== -->
+         HEADER JAVASCRIPT
+    ===================================================== -->
 
     <script>
 
-        /* -----------------------------------------------------
-           ELEMENTS
-        ----------------------------------------------------- */
+        const openMenu =
+            document.getElementById("openMenu");
 
-        const menuOpenButton =
-            document.getElementById("menuOpenButton");
-
-        const menuCloseButton =
-            document.getElementById("menuCloseButton");
+        const closeMenu =
+            document.getElementById("closeMenu");
 
         const sideMenu =
             document.getElementById("sideMenu");
@@ -1013,15 +1190,10 @@
         const searchInput =
             document.getElementById("searchInput");
 
-        const cartButton =
-            document.getElementById("cartButton");
 
+        /* OPEN MENU */
 
-        /* -----------------------------------------------------
-           OPEN MENU
-        ----------------------------------------------------- */
-
-        function openMenu() {
+        function showMenu() {
 
             sideMenu.classList.add("active");
 
@@ -1032,11 +1204,9 @@
         }
 
 
-        /* -----------------------------------------------------
-           CLOSE MENU
-        ----------------------------------------------------- */
+        /* CLOSE MENU */
 
-        function closeMenu() {
+        function hideMenu() {
 
             sideMenu.classList.remove("active");
 
@@ -1047,29 +1217,25 @@
         }
 
 
-        /* -----------------------------------------------------
-           MENU EVENTS
-        ----------------------------------------------------- */
-
-        menuOpenButton.addEventListener(
+        openMenu.addEventListener(
             "click",
-            openMenu
+            showMenu
         );
 
-        menuCloseButton.addEventListener(
+
+        closeMenu.addEventListener(
             "click",
-            closeMenu
+            hideMenu
         );
+
 
         menuOverlay.addEventListener(
             "click",
-            closeMenu
+            hideMenu
         );
 
 
-        /* -----------------------------------------------------
-           SEARCH
-        ----------------------------------------------------- */
+        /* SEARCH */
 
         searchButton.addEventListener(
             "click",
@@ -1077,11 +1243,14 @@
 
                 searchPanel.classList.toggle("active");
 
-                if (searchPanel.classList.contains("active")) {
+                if (
+                    searchPanel.classList.contains("active")
+                ) {
 
-                    setTimeout(() => {
-                        searchInput.focus();
-                    }, 100);
+                    setTimeout(
+                        () => searchInput.focus(),
+                        100
+                    );
 
                 }
 
@@ -1089,9 +1258,7 @@
         );
 
 
-        /* -----------------------------------------------------
-           ESC KEY
-        ----------------------------------------------------- */
+        /* ESC */
 
         document.addEventListener(
             "keydown",
@@ -1099,30 +1266,13 @@
 
                 if (event.key === "Escape") {
 
-                    closeMenu();
+                    hideMenu();
 
-                    searchPanel.classList.remove("active");
+                    searchPanel.classList.remove(
+                        "active"
+                    );
 
                 }
-
-            }
-        );
-
-
-        /* -----------------------------------------------------
-           CART
-           
-           Cart functionality will be connected later
-           when we build the Cart section.
-        ----------------------------------------------------- */
-
-        cartButton.addEventListener(
-            "click",
-            () => {
-
-                alert(
-                    "Cart section will be connected in the next step."
-                );
 
             }
         );
