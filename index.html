@@ -7,10 +7,8 @@
 
   <style>
     /* =========================================
-        SAKTHIVEL CRACKERS
-        ROYAL BLUE — CLEAN & MODERN
+        SAKTHIVEL CRACKERS — ROYAL BLUE THEME
     ========================================= */
-
     :root {
       --royal-blue: #4169E1;
       --bright-blue: #2563EB;
@@ -39,8 +37,7 @@
       color: var(--dark-text);
     }
 
-    button,
-    input {
+    button, input {
       font-family: inherit;
     }
 
@@ -49,11 +46,7 @@
       color: inherit;
     }
 
-
-    /* =========================================
-       HEADER
-    ========================================= */
-
+    /* HEADER */
     .site-header {
       position: sticky;
       top: 0;
@@ -225,7 +218,7 @@
       cursor: pointer;
     }
 
-    /* SIDE MENU DRAWER */
+    /* SIDE MENU OVERLAY & DRAWER */
     .menu-overlay {
       position: fixed;
       inset: 0;
@@ -321,31 +314,6 @@
       width: 34px;
       font-size: 18px;
       color: var(--royal-blue);
-    }
-
-    .menu-contact {
-      margin: 8px 12px 20px;
-      padding: 15px;
-      background: var(--light-blue);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-    }
-
-    .menu-contact-title {
-      margin-bottom: 10px;
-      color: var(--deep-blue);
-      font-size: 13px;
-      font-weight: 800;
-    }
-
-    .contact-row {
-      margin-bottom: 8px;
-      font-size: 12px;
-      color: var(--dark-text);
-    }
-
-    .contact-row strong {
-      color: var(--deep-blue);
     }
 
     /* SCROLLING OFFER BAR */
@@ -466,11 +434,7 @@
       background: var(--gold);
     }
 
-
-    /* =========================================
-       PROMO BOXES (SPECIAL OFFER + COMBO PACKS)
-    ========================================= */
-
+    /* SPECIAL OFFER + COMBO PACKS PROMO BOXES */
     .promo-section {
       width: 100%;
       max-width: 1200px;
@@ -489,7 +453,7 @@
       aspect-ratio: 16 / 7;
       min-height: 110px;
       border: 1px solid rgba(65, 105, 225, 0.35);
-      border-radius: 8px; /* Light rounded corners */
+      border-radius: 8px;
       background: linear-gradient(135deg, #0F2F75 0%, #1E40AF 100%);
       overflow: hidden;
       position: relative;
@@ -546,7 +510,6 @@
       text-shadow: 0 1px 3px rgba(0,0,0,0.5);
     }
 
-    /* Subtle Glow Animation */
     @keyframes subtleGlow {
       0%, 100% { opacity: 1; transform: scale(1); }
       50% { opacity: 0.8; transform: scale(1.02); }
@@ -554,77 +517,188 @@
 
 
     /* =========================================
-       EXPANDABLE CONTENT SECTIONS
+       SHOP MY CATEGORIES SECTION (EXPANDABLE)
     ========================================= */
-
-    .dynamic-content-section {
+    .categories-section {
+      width: 100%;
       max-width: 1200px;
       margin: 12px auto 0;
       padding: 0 12px;
-      display: none;
     }
 
-    .dynamic-content-section.active {
-      display: block;
+    .categories-toggle-btn {
+      width: 100%;
+      padding: 14px 18px;
+      background: var(--deep-blue);
+      color: var(--white);
+      border: 1px solid rgba(65, 105, 225, 0.4);
+      border-radius: 8px;
+      font-family: "Arial Black", Arial, sans-serif;
+      font-size: 15px;
+      font-weight: 900;
+      letter-spacing: 0.8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      box-shadow: 0 3px 10px rgba(30, 64, 175, 0.15);
+      transition: background 0.2s ease;
     }
 
-    .content-box-inner {
+    .categories-toggle-btn:hover {
+      background: var(--royal-blue);
+    }
+
+    .categories-arrow {
+      font-size: 14px;
+      color: var(--gold);
+      transition: transform 0.3s ease;
+    }
+
+    .categories-dropdown-panel {
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.35s ease-out, opacity 0.25s ease-out;
       background: var(--light-blue);
+      border-radius: 0 0 8px 8px;
+      margin-top: 2px;
+    }
+
+    .categories-dropdown-panel.open {
+      max-height: 1200px;
+      opacity: 1;
+      border: 1px solid var(--border);
+      padding: 16px;
+    }
+
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .category-box {
+      background: var(--white);
       border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 18px;
-      position: relative;
+      padding: 10px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
-    .content-header {
+    .category-box:hover {
+      transform: translateY(-2px);
+      border-color: var(--royal-blue);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+    }
+
+    .category-img-wrap {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      border-radius: 6px;
+      overflow: hidden;
+      background: #f0f4fa;
+      margin-bottom: 8px;
+    }
+
+    .category-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .category-name {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--deep-blue);
+      line-height: 1.3;
+    }
+
+    /* Filtered Products Area */
+    .filtered-products-container {
+      width: 100%;
+    }
+
+    .filtered-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       margin-bottom: 12px;
       border-bottom: 2px solid var(--royal-blue);
-      padding-bottom: 8px;
+      padding-bottom: 6px;
     }
 
-    .content-header h3 {
+    .filtered-header h4 {
+      font-size: 14px;
       color: var(--deep-blue);
-      font-size: 16px;
       font-weight: 800;
     }
 
-    .close-content-btn {
+    .back-to-categories-btn {
       background: var(--deep-blue);
       color: var(--white);
       border: none;
-      width: 30px;
-      height: 30px;
+      padding: 5px 10px;
       border-radius: 6px;
-      font-size: 16px;
+      font-size: 11px;
+      font-weight: 700;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.2s;
     }
 
-    .close-content-btn:hover {
-      background: var(--red);
+    .back-to-categories-btn:hover {
+      background: var(--bright-blue);
     }
 
-    .content-body {
-      font-size: 14px;
-      color: var(--dark-text);
-      line-height: 1.5;
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
     }
 
 
-    /* RESPONSIVE MEDIA QUERIES */
+    /* =========================================
+       OUR PRODUCTS HEADING BAR (Non-Expandable)
+    ========================================= */
+    .our-products-section {
+      width: 100%;
+      max-width: 1200px;
+      margin: 18px auto 0;
+      padding: 0 12px;
+    }
+
+    .section-heading-bar {
+      width: 100%;
+      padding: 12px 16px;
+      background: #0F2F75;
+      border-left: 4px solid var(--gold);
+      border-radius: 6px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .section-heading-bar h3 {
+      font-family: "Arial Black", Arial, sans-serif;
+      font-size: 15px;
+      color: var(--white);
+      letter-spacing: 0.6px;
+    }
+
+
+    /* RESPONSIVE BREAKPOINTS */
     @media (min-width: 768px) {
       .site-header { height: 74px; }
       .header-inner { padding: 0 24px; }
-      .hero-section, .promo-section, .dynamic-content-section { padding: 0 24px; }
+      .hero-section, .promo-section, .categories-section, .our-products-section { padding: 0 24px; }
       .promo-box { min-height: 130px; }
       .promo-title { font-size: 19px; }
-      .promo-subtitle { font-size: 13px; }
+      .categories-grid { grid-template-columns: repeat(4, 1fr); gap: 14px; }
+      .category-name { font-size: 13px; }
+      .categories-toggle-btn { font-size: 16px; padding: 16px 20px; }
+      .products-grid { grid-template-columns: repeat(4, 1fr); }
     }
 
     @media (max-width: 480px) {
@@ -718,79 +792,92 @@
   <!-- SPECIAL OFFER + COMBO PACKS PROMO BOXES -->
   <section class="promo-section" aria-label="Promotional Offers">
     <div class="promo-boxes">
-      
-      <!-- SPECIAL OFFER BOX -->
-      <button class="promo-box" id="specialOfferBtn" type="button">
+      <div class="promo-box">
         <img src="assets/placeholders/special-offer.jpg" alt="Special Offer">
         <div class="promo-overlay">
           <strong class="promo-title">SPECIAL OFFER</strong>
-          <span class="promo-subtitle">Click to view deals</span>
+          <span class="promo-subtitle">Festive Discount Deals</span>
         </div>
-      </button>
-
-      <!-- COMBO PACKS BOX -->
-      <button class="promo-box" id="comboPacksBtn" type="button">
+      </div>
+      <div class="promo-box">
         <img src="assets/placeholders/combo-packs.jpg" alt="Combo Packs">
         <div class="promo-overlay">
           <strong class="promo-title">COMBO PACKS</strong>
-          <span class="promo-subtitle">Click to view packs</span>
+          <span class="promo-subtitle">Family Gift Boxes</span>
         </div>
-      </button>
-
-    </div>
-  </section>
-
-
-  <!-- EXPANDABLE SECTION: SPECIAL OFFER PRODUCTS -->
-  <section class="dynamic-content-section" id="specialOfferSection">
-    <div class="content-box-inner">
-      <div class="content-header">
-        <h3>SPECIAL OFFER PRODUCTS</h3>
-        <button class="close-content-btn" id="closeSpecialOffer" type="button" aria-label="Close">×</button>
-      </div>
-      <div class="content-body">
-        <p>✨ Exciting special offers and festival discounted items will be listed here. Contact via WhatsApp for instant booking!</p>
       </div>
     </div>
   </section>
 
 
-  <!-- EXPANDABLE SECTION: COMBO PACKS PRODUCTS -->
-  <section class="dynamic-content-section" id="comboPacksSection">
-    <div class="content-box-inner">
-      <div class="content-header">
-        <h3>COMBO PACKS COLLECTION</h3>
-        <button class="close-content-btn" id="closeComboPacks" type="button" aria-label="Close">×</button>
+  <!-- SHOP MY CATEGORIES SECTION (EXPANDABLE) -->
+  <section class="categories-section" aria-label="Shop My Categories">
+    <button class="categories-toggle-btn" id="categoriesToggleBtn" type="button" aria-expanded="false">
+      <span class="categories-title-text">SHOP MY CATEGORIES</span>
+      <span class="categories-arrow" id="categoriesArrow">▼</span>
+    </button>
+
+    <div class="categories-dropdown-panel" id="categoriesDropdownPanel">
+      <div class="categories-grid" id="categoriesGrid">
+        <!-- Category Boxes -->
+        <div class="category-box" data-category="one-sound">
+          <div class="category-img-wrap"><img src="assets/placeholders/cat-one-sound.jpg" alt="One Sound"></div>
+          <span class="category-name">ONE SOUND CRACKERS</span>
+        </div>
+        <div class="category-box" data-category="sparklers">
+          <div class="category-img-wrap"><img src="assets/placeholders/cat-sparklers.jpg" alt="Sparklers"></div>
+          <span class="category-name">SPARKLERS & FOUNTAINS</span>
+        </div>
+        <div class="category-box" data-category="ground-chakkars">
+          <div class="category-img-wrap"><img src="assets/placeholders/cat-chakkars.jpg" alt="Chakkars"></div>
+          <span class="category-name">GROUND CHAKKARS</span>
+        </div>
+        <div class="category-box" data-category="fancy-noveltiles">
+          <div class="category-img-wrap"><img src="assets/placeholders/cat-fancy.jpg" alt="Fancy"></div>
+          <span class="category-name">FANCY NOVELTIES</span>
+        </div>
       </div>
-      <div class="content-body">
-        <p>🎁 Family gift boxes, assorted cracker combos, and special gift packs are available here at best factory prices.</p>
+
+      <!-- Filtered Products View -->
+      <div class="filtered-products-container" id="filteredProductsContainer" style="display: none;">
+        <div class="filtered-header">
+          <h4 id="selectedCategoryTitle">Selected Products</h4>
+          <button class="back-to-categories-btn" id="backToCategoriesBtn" type="button">← All Categories</button>
+        </div>
+        <div class="products-grid" id="categoryProductsGrid"></div>
       </div>
     </div>
   </section>
 
 
-  <!-- MENU OVERLAY & SIDE DRAWER -->
+  <!-- OUR PRODUCTS SECTION (Non-Expandable) -->
+  <section class="our-products-section" aria-label="Our Products">
+    <div class="section-heading-bar">
+      <h3>OUR PRODUCTS</h3>
+    </div>
+  </section>
+
+
+  <!-- SIDE MENU DRAWER & OVERLAY -->
   <div class="menu-overlay" id="menuOverlay"></div>
-
   <aside class="side-menu" id="sideMenu" aria-label="Main Menu">
     <div class="menu-top">
       <div class="menu-brand">
         <h2>SAKTHIVEL CRACKERS</h2>
         <p>Fireworks & Crackers</p>
       </div>
-      <button class="menu-close" id="menuCloseBtn" aria-label="Close Menu" type="button">×</button>
+      <button class="menu-close" id="menuCloseBtn" type="button">×</button>
     </div>
     <nav class="menu-list">
       <a href="#" class="menu-item"><span class="menu-item-icon">⌂</span>HOME</a>
       <a href="#" class="menu-item"><span class="menu-item-icon">▦</span>PRODUCTS</a>
-      <a href="#" class="menu-item"><span class="menu-item-icon">☷</span>CATEGORIES</a>
       <a href="https://wa.me/919344265054" class="menu-item" target="_blank" rel="noopener"><span class="menu-item-icon">◉</span>WHATSAPP SUPPORT</a>
       <a href="tel:+917780942656" class="menu-item"><span class="menu-item-icon">☎</span>CONTACT US</a>
     </nav>
   </aside>
 
 
-  <!-- JAVASCRIPT -->
+  <!-- JAVASCRIPT LOGIC -->
   <script>
     // Menu & Search Logic
     const menuOpenBtn = document.getElementById("menuOpenBtn");
@@ -824,7 +911,7 @@
       }
     });
 
-    // Hero Image Slider Logic
+    // Hero Slider Logic
     const heroSlides = document.querySelectorAll(".hero-slide");
     const heroDots = document.getElementById("heroDots");
     let currentHeroSlide = 0;
@@ -867,34 +954,94 @@
 
 
     // ==========================================
-    // EXPANDABLE PROMO BOXES LOGIC
+    // SHOP MY CATEGORIES EXPANDABLE LOGIC
     // ==========================================
-    const specialOfferBtn = document.getElementById("specialOfferBtn");
-    const comboPacksBtn = document.getElementById("comboPacksBtn");
-    const specialOfferSection = document.getElementById("specialOfferSection");
-    const comboPacksSection = document.getElementById("comboPacksSection");
-    const closeSpecialOffer = document.getElementById("closeSpecialOffer");
-    const closeComboPacks = document.getElementById("closeComboPacks");
+    const categoriesToggleBtn = document.getElementById("categoriesToggleBtn");
+    const categoriesDropdownPanel = document.getElementById("categoriesDropdownPanel");
+    const categoriesArrow = document.getElementById("categoriesArrow");
+    const categoriesGrid = document.getElementById("categoriesGrid");
+    const filteredProductsContainer = document.getElementById("filteredProductsContainer");
+    const categoryProductsGrid = document.getElementById("categoryProductsGrid");
+    const selectedCategoryTitle = document.getElementById("selectedCategoryTitle");
+    const backToCategoriesBtn = document.getElementById("backToCategoriesBtn");
 
-    specialOfferBtn.addEventListener("click", function () {
-      specialOfferSection.classList.add("active");
-      comboPacksSection.classList.remove("active");
-      specialOfferSection.scrollIntoView({ behavior: 'smooth' });
+    categoriesToggleBtn.addEventListener("click", function () {
+      const isOpen = categoriesDropdownPanel.classList.toggle("open");
+      categoriesToggleBtn.setAttribute("aria-expanded", isOpen);
+      
+      if (isOpen) {
+        categoriesArrow.textContent = "▲";
+      } else {
+        categoriesArrow.textContent = "▼";
+        resetCategoryView();
+      }
     });
 
-    comboPacksBtn.addEventListener("click", function () {
-      comboPacksSection.classList.add("active");
-      specialOfferSection.classList.remove("active");
-      comboPacksSection.scrollIntoView({ behavior: 'smooth' });
+    // Category Box Click & Filtering (Supabase Ready)
+    const categoryBoxes = document.querySelectorAll(".category-box");
+    categoryBoxes.forEach(function (box) {
+      box.addEventListener("click", function () {
+        const categoryKey = box.getAttribute("data-category");
+        const categoryName = box.querySelector(".category-name").textContent;
+
+        selectedCategoryTitle.textContent = categoryName;
+        renderFilteredProducts(categoryKey);
+
+        categoriesGrid.style.display = "none";
+        filteredProductsContainer.style.display = "block";
+      });
     });
 
-    closeSpecialOffer.addEventListener("click", function () {
-      specialOfferSection.classList.remove("active");
+    backToCategoriesBtn.addEventListener("click", function () {
+      resetCategoryView();
     });
 
-    closeComboPacks.addEventListener("click", function () {
-      comboPacksSection.classList.remove("active");
-    });
+    function resetCategoryView() {
+      filteredProductsContainer.style.display = "none";
+      categoriesGrid.style.display = "grid";
+    }
+
+    // Mock Product Filter Function (Supabase Integration Placeholder)
+    function renderFilteredProducts(categoryKey) {
+      categoryProductsGrid.innerHTML = "";
+
+      // Future Supabase fetch can replace this mock data object
+      const databaseMock = {
+        "one-sound": [
+          { name: "2 Sound Crackers", price: 120 },
+          { name: "Laxmi Bomb Standard", price: 80 }
+        ],
+        "sparklers": [
+          { name: "10cm Electric Sparklers", price: 50 },
+          { name: "30cm Colour Sparklers", price: 150 }
+        ],
+        "ground-chakkars": [
+          { name: "Ground Chakkar Big", price: 110 },
+          { name: "Ground Chakkar Special", price: 220 }
+        ],
+        "fancy-noveltiles": [
+          { name: "7 Shots Aerial", price: 350 },
+          { name: "12 Shots Multi-Color", price: 650 }
+        ]
+      };
+
+      const mockProducts = databaseMock[categoryKey] || [];
+
+      if (mockProducts.length === 0) {
+        categoryProductsGrid.innerHTML = "<p style='grid-column: span 2; font-size:12px; text-align:center;'>No products available.</p>";
+        return;
+      }
+
+      mockProducts.forEach(function (product) {
+        const pCard = document.createElement("div");
+        pCard.style.cssText = "background:white; border:1px solid var(--border); border-radius:6px; padding:8px; text-align:center;";
+        pCard.innerHTML = `
+          <div style="font-size:11px; font-weight:700; color:var(--deep-blue); margin-bottom:4px;">${product.name}</div>
+          <div style="font-size:12px; font-weight:900; color:#16a34a;">₹${product.price}</div>
+        `;
+        categoryProductsGrid.appendChild(pCard);
+      });
+    }
   </script>
 </body>
 </html>
